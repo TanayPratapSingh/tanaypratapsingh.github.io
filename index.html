@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tanay Pratap Singh: Applied Data Scientist</title>
+  <meta name="description" content="Tanay Pratap Singh, Applied Data Science graduate student at Syracuse University. Machine learning, deep learning, and data engineering projects.">
+
+  <style>
+    @font-face {
+      font-family: 'Aptos Serif';
+      src: url('https://fonts.cdnfonts.com/s/118825/AptosSerif.woff') format('woff');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Aptos Serif';
+      src: url('https://fonts.cdnfonts.com/s/118825/AptosSerif-Bold.woff') format('woff');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Aptos Serif';
+      src: url('https://fonts.cdnfonts.com/s/118825/AptosSerif-Italic.woff') format('woff');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+
+    :root {
+      --font-serif: 'Aptos Serif', Georgia, 'Times New Roman', serif;
+      --font-mono: 'SFMono-Regular', Menlo, Consolas, monospace;
+      --cream: #F5EBE1;
+      --cream-muted: rgba(245, 235, 225, 0.6);
+      --cream-faint: rgba(245, 235, 225, 0.12);
+    }
+
+    [data-theme="dark"] {
+      --body-bg: #14110f;
+      --sidebar-bg: #0e0c0a;
+      --card-bg: #1c1815;
+      --card-hover: #221d19;
+      --text: #F5EBE1;
+      --text-muted: rgba(245, 235, 225, 0.55);
+      --text-strong: #F5EBE1;
+      --border: rgba(245, 235, 225, 0.12);
+      --border-strong: rgba(245, 235, 225, 0.25);
+      --link: #F5EBE1;
+      --link-hover: #ffffff;
+      --accent: #d4a574;
+      --code-bg: rgba(245, 235, 225, 0.06);
+    }
+
+    [data-theme="light"] {
+      --body-bg: #F5EBE1;
+      --sidebar-bg: #ede0d2;
+      --card-bg: #ede0d2;
+      --card-hover: #e3d4c2;
+      --text: #2a221c;
+      --text-muted: rgba(42, 34, 28, 0.6);
+      --text-strong: #1a130d;
+      --border: rgba(42, 34, 28, 0.15);
+      --border-strong: rgba(42, 34, 28, 0.3);
+      --link: #5a3e1f;
+      --link-hover: #2a221c;
+      --accent: #8a5a2a;
+      --code-bg: rgba(42, 34, 28, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; padding: 0;
+      background: var(--body-bg);
+      color: var(--text);
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 1.7;
+      text-align: justify;
+      hyphens: auto;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid var(--cream-faint);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    a:hover { border-bottom-color: var(--link-hover); color: var(--link-hover); }
+
+    strong { color: var(--text-strong); font-weight: 700; }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
+    /* ========== LAYOUT ========== */
+    .site {
+      min-height: 100vh;
+    }
+
+    /* ========== SIDEBAR (fixed left) ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 36px 28px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      text-align: left;
+      z-index: 10;
+    }
+
+    .sidebar-brand {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-strong);
+      margin: 0 0 4px 0;
+      letter-spacing: 0.005em;
+      border: none;
+    }
+    .sidebar-brand:hover { color: var(--accent); border: none; }
+
+    .sidebar-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 32px 0;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .sidebar-section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 10px 0;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 28px 0;
+    }
+    .sidebar-nav li { margin: 0; }
+    .sidebar-nav a {
+      display: block;
+      padding: 7px 0;
+      font-size: 14.5px;
+      color: var(--text);
+      border: none;
+      transition: color 0.15s ease, padding-left 0.15s ease;
+    }
+    .sidebar-nav a:hover {
+      color: var(--accent);
+      padding-left: 6px;
+      border: none;
+    }
+    .sidebar-nav a.active {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .sidebar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 14px;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      background: var(--text);
+      color: var(--body-bg);
+      border-color: var(--text);
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--body-bg);
+      border-color: var(--text);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    .sidebar-contact {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      text-align: left;
+    }
+    .sidebar-contact div { margin-bottom: 4px; }
+    .sidebar-contact a {
+      color: var(--text-muted);
+      border: none;
+    }
+    .sidebar-contact a:hover { color: var(--text); border: none; }
+
+    /* ========== MAIN CONTENT ========== */
+    .main {
+      margin-left: 280px;
+      padding: 56px 80px 100px 64px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 28px 0;
+      color: var(--text-strong);
+      letter-spacing: 0.005em;
+      text-align: left;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 64px 0 22px 0;
+      color: var(--text-strong);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    h2:first-of-type { margin-top: 0; }
+
+    h3 {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 30px 0 6px 0;
+      color: var(--text-strong);
+      text-align: left;
+    }
+
+    p { margin: 0 0 16px 0; }
+    ul, ol { margin: 0 0 16px 0; padding-left: 24px; }
+    li { margin: 6px 0; }
+
+    .meta-line {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin: 14px 0;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .metric {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 11px 15px;
+      background: var(--code-bg);
+      border-left: 3px solid var(--accent);
+      color: var(--text);
+      margin: 16px 0 22px 0;
+      display: block;
+      text-align: left;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ========== PROJECT CARDS (collapsible) ========== */
+    .project {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 18px;
+      transition: border-color 0.2s ease;
+    }
+    .project:hover { border-color: var(--border-strong); }
+    .project[open] { border-color: var(--accent); }
+
+    .project-header {
+      list-style: none;
+      padding: 24px 60px 24px 28px;
+      cursor: pointer;
+      position: relative;
+    }
+    .project-header::-webkit-details-marker { display: none; }
+    .project-header::marker { content: ''; }
+    .project-header:hover { background: var(--card-hover); }
+    .project[open] .project-header { border-bottom: 1px solid var(--border); }
+
+    .project-header::after {
+      content: '+';
+      position: absolute;
+      right: 28px; top: 28px;
+      font-size: 24px; font-weight: 400;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+    .project[open] .project-header::after {
+      content: '\00D7';
+      color: var(--accent);
+      font-size: 28px;
+      top: 24px;
+    }
+
+    .project-title {
+      font-size: 21px; font-weight: 700;
+      color: var(--text-strong);
+      margin: 0 0 4px 0;
+      line-height: 1.3;
+    }
+    .project-summary {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin: 8px 0 0 0;
+      line-height: 1.6;
+    }
+    .project-body { padding: 14px 28px 28px 28px; }
+    .project-body h4 {
+      font-size: 15px; font-weight: 700;
+      color: var(--text-strong);
+      margin: 24px 0 8px 0;
+      text-align: left;
+      letter-spacing: 0.01em;
+    }
+    .project-body h4:first-child { margin-top: 8px; }
+
+    .callout {
+      background: var(--code-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+      padding: 16px 18px;
+      margin: 22px 0;
+    }
+    .callout h4 { margin-top: 0 !important; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    /* ========== PROJECT FIGURES ========== */
+    .project-figure {
+      margin: 24px 0;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px;
+      text-align: center;
+    }
+    .project-figure img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .project-figure figcaption {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #555555;
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    [data-theme="light"] .project-figure {
+      background: #ffffff;
+      border-color: var(--border-strong);
+    }
+    .figure-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .figure-row .project-figure { margin: 0; }
+    @media (max-width: 720px) {
+      .figure-row { grid-template-columns: 1fr; }
+    }
+
+    /* ========== TABLE ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 20px 0;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    td { color: var(--text); }
+    .winner { color: var(--accent); font-weight: 700; }
+
+    /* ========== EXPERIENCE / SKILLS / EDUCATION ========== */
+    .exp-block {
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-block:last-child { border-bottom: none; }
+
+    /* Experience: structured grid header + body */
+    .exp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 18px;
+      padding: 22px 26px;
+      transition: border-color 0.2s ease;
+    }
+    .exp-card:hover { border-color: var(--border-strong); }
+    .exp-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px 16px;
+      margin-bottom: 6px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .exp-card-org {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .exp-card-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 14px;
+    }
+    .exp-card-body { font-size: 15px; line-height: 1.65; }
+    .exp-card-body p { margin-bottom: 12px; }
+    .exp-card-body p:last-child { margin-bottom: 0; }
+    .exp-card-body ul { margin-bottom: 12px; }
+
+    .exp-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px 16px;
+      margin: 14px 0 16px 0;
+      padding: 12px 14px;
+      background: var(--code-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 3px 3px 0;
+      list-style: none;
+      padding-left: 14px;
+    }
+    .exp-highlights li {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+    .exp-highlights li strong {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    /* Skills: chip grid */
+    .skill-group {
+      margin-bottom: 28px;
+    }
+    .skill-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      text-align: left;
+    }
+    .skill-chip {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 11px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text);
+      letter-spacing: 0.01em;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .skill-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Education: card variant */
+    .edu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 22px 26px;
+      margin-bottom: 16px;
+    }
+    .edu-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px 16px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .edu-card-degree {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-strong);
+      margin: 0;
+    }
+    .edu-card-org {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .edu-card-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+    .edu-card-body {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* ========== MOBILE ========== */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0; z-index: 50;
+      background: var(--sidebar-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mobile-brand { font-weight: 700; color: var(--text-strong); border: none; }
+    .mobile-toggle {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-family: var(--font-serif);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 880px) {
+      .sidebar {
+        transform: translateX(-100%);
+        z-index: 60;
+        transition: transform 0.25s ease;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-header { display: flex; }
+      .main {
+        margin-left: 0;
+        padding: 32px 22px 80px 22px;
+        max-width: 100%;
+      }
+      h1 { font-size: 26px; }
+      h2 { font-size: 22px; margin-top: 48px; }
+      .project-header { padding: 20px 50px 20px 22px; }
+      .project-header::after { right: 22px; }
+      .project-body { padding: 12px 22px 22px 22px; }
+      body { text-align: left; hyphens: none; }
+      .scrim {
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 55;
+        opacity: 0; pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      .scrim.visible { opacity: 1; pointer-events: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile header (only shows below 880px) -->
+  <div class="mobile-header">
+    <a href="#projects" class="mobile-brand">Tanay Pratap Singh</a>
+    <button class="mobile-toggle" id="mobileToggle">Menu</button>
+  </div>
+
+  <div class="site">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+      <a href="#projects" class="sidebar-brand">Tanay Pratap Singh</a>
+      <p class="sidebar-tagline">MS Applied Data Science @ Syracuse <br> Graduate Research Assistant (Gravity Spy 2.0) <br> Lean Six Sigma Green Belt</p>
+      
+      <div class="sidebar-section-label">Sections</div>
+      <ul class="sidebar-nav" id="navList">
+        <li><a href="#projects" class="active">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Technical Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="sidebar-actions">
+        <a href="Resume April 2026.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" download="Tanay_Pratap_Singh_Resume.pdf">Download Resume</a>
+        <button class="btn" id="themeToggle" aria-label="Toggle theme"><span id="themeIcon">&#9788;</span> <span id="themeLabel">Light Mode</span></button>
+      </div>
+
+      <div class="sidebar-contact">
+        <div><a href="mailto:tanayp1769@gmail.com" target="_blank" rel="noopener noreferrer">tanayp1769@gmail.com</a></div>
+        <div>+1 (315) 418 2156</div>
+        <div><a href="https://www.linkedin.com/in/tanay-pratap-singh-8360681b0/" target="_blank" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="https://github.com/TanayPratapSingh" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+        <div>Syracuse, New York</div>
+      </div>
+    </aside>
+
+    <div class="scrim" id="scrim"></div>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="main">
+
+      <!-- ============ PROJECTS (FIRST) ============ -->
+      <h1 id="projects">Projects</h1>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 28px; text-align: left;">
+      </p>
+
+      <!-- JMA WIRELESS LSS DASHBOARD -->
+      <details class="project" open>
+        <summary class="project-header">
+          <div class="meta-line">Lean Six Sigma &middot; Process Improvement &middot; Spring 2026</div>
+          <div class="project-title">JMA Wireless: Lean Six Sigma DMAIC Manufacturing Dashboard</div>
+          <p class="project-summary">
+            Full DMAIC engagement with JMA Wireless (US manufacturer of 5G cell tower equipment) to standardize manufacturing KPIs, build a Python ETL pipeline that flattened 31 GB of nested PLC JSON into a 5 MB Power BI ready dataset, and deliver a Power BI dashboard comparing two assembly lines. Projected recurring impact of roughly $355,000 annualized through recovered throughput and analyst time.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">DMAIC</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">openpyxl</span>
+            <span class="tag">SIPOC</span>
+            <span class="tag">FMEA</span>
+            <span class="tag">Pugh Matrix</span>
+            <span class="tag">KPI Design</span>
+            <span class="tag">Manufacturing</span>
+          </div>
+          <div class="metric">$355K+ annualized recovery &nbsp;|&nbsp; 31 GB JSON to 5 MB Excel &nbsp;|&nbsp; 4 KPIs standardized across 2 lines &nbsp;|&nbsp; 48 analyst hours saved per week</div>
+
+          <h4>Engagement</h4>
+          <p>
+            Spring 2026 capstone for SCM 755 Lean Six Sigma at Syracuse Whitman School of Management, sponsored by JMA Wireless (Liverpool, NY), a US based manufacturer of cell tower transmitters and active 5G wireless infrastructure. Project sponsor: Ted Ens, SVP Global Operations. Project champion: Michael Harris. Faculty advisor: Prof. Gary E. La Point. Team of five graduate students delivering on a fifteen week academic schedule with weekly on site stakeholder access.
+          </p>
+
+          <h4>Problem</h4>
+          <p>
+            JMA's Jumper Department produces radio frequency cables that connect transmitters to antennas, and runs two parallel final assembly lines with very different characteristics. Jumper 1.0 is a manual line with eight or more operators across two shifts. Jumper 2.0 is a fully automated PLC controlled cell installed in 2025. Despite both lines feeding the same financial plan, leadership had no consolidated, real time view of either line. Production data lived in four separate systems (SAP MB51, ADP payroll, the Jumper 2.0 automation system, and an inspection database) and was manually reconciled into a slide deck on a three to five day lag, consuming approximately 48 analyst hours per week.
+          </p>
+
+          <h4>DMAIC Approach</h4>
+          <ul>
+            <li><strong>Define.</strong> Wrote a structured problem statement, drafted the project charter with sponsor approval, mapped the SIPOC diagram for the data pipeline, built the CTQC tree translating Voice of the Customer statements into measurable dashboard characteristics, and established a tiered communication plan across weekly, bi weekly, and milestone cadences.</li>
+            <li><strong>Measure.</strong> Inventoried four source systems, agreed standardized definitions for five KPIs (Parts per Labor Hour, Uptime, First Time Throughput, Schedule Attainment, plus a derived total), and built the Python ETL pipeline that made the Jumper 2.0 PLC data usable. Captured the baseline measurement window from February to April 2026.</li>
+            <li><strong>Analyze.</strong> Applied Pareto reasoning and fishbone (Ishikawa) analysis on the largest gap (Jumper 2.0 schedule attainment), surfacing material flow and kitting cadence as the dominant root causes rather than equipment availability. Verified hypotheses with Minitab descriptive statistics.</li>
+            <li><strong>Improve.</strong> Used a Pugh matrix to score three candidate interventions against weighted criteria, recommended a daily standup at the dashboard wall screen, a continuous kitting feed for Jumper 2.0, and a recalibration of Jumper 2.0 weekly targets to demonstrated capability during ramp.</li>
+            <li><strong>Control.</strong> Wrote the FMEA for dashboard reliability, named owners for each maintenance task, drafted the escalation framework, and delivered the Control Plan summary that lets JMA sustain the dashboard after the engagement closed.</li>
+          </ul>
+
+          <h4>Data Engineering</h4>
+          <p>
+            The largest technical effort was making the Jumper 2.0 automation feed usable. The cell publishes one <code>TestReportComplete</code> JSON record per test event, deeply nested four layers deep (tests within measurements within channel readings). Two raw datasets totaling 31 GB of JSON were unusable in Power BI: the modeling engine could not flatten the structure efficiently, and the file would not open on any analyst laptop with less than 64 GB of RAM.
+          </p>
+          <p>
+            I built a Python pipeline using Pandas <code>json_normalize</code> with explicit record paths and openpyxl as the writer. The pipeline extracts the nested JSON, walks the structure with explicit record paths, type casts timestamps to <code>datetime64</code>, channel readings to <code>float64</code>, and pass and fail flags to boolean, computes a <code>CycleTime_sec</code> column from start and end timestamps, and writes a wide format Excel file with frozen headers. Output is under 5 MB and loads instantly in Power BI. Pipeline runtime for a full week of cycles is under 30 seconds on a standard analyst laptop.
+          </p>
+
+          <h4>Standardized KPI Framework</h4>
+          <p>
+            The single most important Define Phase deliverable was a written, sponsor approved KPI definition document. Prior to the project, terms like Uptime and Schedule Attainment were used inconsistently across JMA functions. The team interviewed sponsor, champion, manufacturing manager, manufacturing engineer, quality engineer, and production supervisor to align on definitions:
+          </p>
+          <ul>
+            <li><strong>Parts per Labor Hour (PPLH).</strong> Good Parts divided by Total Labor Hours. Target: 50 or above. The cleanest metric for comparing manual vs automated line economics.</li>
+            <li><strong>Uptime.</strong> Runtime divided by Runtime plus Downtime. Target: 85 percent or above. Leading indicator of throughput problems.</li>
+            <li><strong>First Time Throughput (FTT).</strong> Good Parts divided by Total Parts Tested. Target: 95 percent or above. Direct quality measure; rework consumes capacity and inflates cost per cable.</li>
+            <li><strong>Schedule Attainment (SA).</strong> Actual Weekly Production divided by Weekly Target. Target: 100 percent or above. The most direct link between operations and the financial plan.</li>
+          </ul>
+
+          <h4>Baseline Findings</h4>
+          <p>
+            The standardized measurement revealed sharp asymmetries between the two lines that the prior reporting cycle had not surfaced:
+          </p>
+          <ul>
+            <li>FTT: 87.9 percent on Jumper 1.0 and 92.5 percent on Jumper 2.0, both below the 95 percent target.</li>
+            <li>PPLH: 34.91 on Jumper 1.0 and 7.94 on Jumper 2.0, both below the 50 target but for opposite reasons (high labor denominator vs low output numerator).</li>
+            <li>Uptime: 31.3 percent on Jumper 1.0 vs 97.3 percent on Jumper 2.0. The widest gap in the analysis and the clearest evidence for the value of automation.</li>
+            <li>Schedule Attainment: 139.7 percent on Jumper 1.0 vs 46.3 percent on Jumper 2.0. The manual line is being pushed past design rate to absorb the gap the automated line is leaving behind.</li>
+          </ul>
+          <p>
+            The combination of 97.3 percent uptime and 46.3 percent schedule attainment on Jumper 2.0 pointed directly to a material flow constraint rather than a hardware constraint: the cell is running fine when it has work, but is starved for inputs.
+          </p>
+
+          <h4>Power BI Dashboard</h4>
+          <p>
+            The dashboard sits on top of the cleaned data and presents an Overview page (executive summary tiles, color coded against targets), one detail page per KPI, and a what if parameter slider that lets users adjust weekly targets dynamically. The Overview page is designed to be readable in twenty seconds at the wall screen during a shift change. Conditional formatting uses a three tier color system (green at or above target, amber between 85 and 100 percent of target, red below 85 percent), driven by DAX <code>KPI_Status_Color</code> measures. DAX library covers ten measures across the four KPIs, with separate measures for each line and aggregate totals.
+          </p>
+
+          <div class="callout">
+            <h4>Quantified Impact</h4>
+            <p>
+              Closing the Jumper 2.0 schedule attainment gap from 46.3 percent to 100 percent of weekly target recovers approximately 27,000 jumper cables per year with no additional labor required. At an assumed contribution margin of $12 per cable, the recurring annualized opportunity is roughly $324,000.
+            </p>
+            <p>
+              The dashboard also eliminates approximately 48 analyst hours per week previously spent manually assembling the weekly KPI report. At a fully loaded analyst rate of $12.50 per hour, that is an additional $31,200 annualized.
+            </p>
+            <p style="margin-bottom: 0;">
+              Combined recurring annualized value of roughly <strong>$355,000 per year</strong> from a single department pilot, with a standardized data pipeline pattern that JMA can extend to other manufacturing departments at Liverpool.
+            </p>
+          </div>
+
+          <h4>Tools and Frameworks Used</h4>
+          <p>
+            DMAIC framework throughout. Project Charter, SIPOC, CTQC tree, Communication Plan, and Stakeholder Analysis in Define. Data Collection Plan, Data Map, and operational definitions in Measure. Fishbone (Ishikawa) and Pareto in Analyze. Pugh Matrix and Benefit Effort prioritization in Improve. FMEA, Control Plan, and Escalation Framework in Control. Python (Pandas, openpyxl), Excel, Power BI, DAX, and Minitab for the supporting analysis.
+          </p>
+        </div>
+      </details>
+
+      <!-- F1 PIT STOP -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Machine Learning &middot; Jul 2025 to Dec 2025</div>
+          <div class="project-title">The Perfect Lap: F1 Pit Stop Strategy Optimization</div>
+          <p class="project-summary">
+            Race engineers in Formula 1 have seconds to decide when to pit, and a single bad call can cost a team millions in lost prize money. This project builds a Random Forest model trained on twenty years of race data that predicts the optimal first pit lap within 2.78 laps of the actual decision, deployed as a Streamlit app race strategists can use as a live second opinion.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">Random Forest</span>
+            <span class="tag">Python</span>
+            <span class="tag">Scikit learn</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">SHAP</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">CatBoost</span>
+            <span class="tag">Extra Trees</span>
+          </div>
+          <div class="metric">Test MAE = 2.78 laps &nbsp;|&nbsp; Test R&sup2; = 0.591 &nbsp;|&nbsp; 250,000+ records &nbsp;|&nbsp; 45 engineered features &nbsp;|&nbsp; Streamlit deployed</div>
+
+          <h4>Why This Matters</h4>
+          <p>
+            Pit stop timing is one of the highest leverage decisions in motorsport. A miscall on lap selection can cost a team between two and five constructor championship positions over a season, translating to millions of dollars in lost prize money and sponsorship value. Race engineers currently make these calls in the moment with limited time, leaning on experience and real time telemetry. The premise of this project was simple: if the model can predict the optimal lap accurately enough, it becomes a live sanity check that the human strategist either validates or knowingly overrides, instead of a guess they make alone.
+          </p>
+
+          <h4>Stakeholders and Value</h4>
+          <ul>
+            <li><strong>Race engineers</strong> get a data driven baseline against which to justify or override intuition on race day.</li>
+            <li><strong>Strategy directors</strong> get a tool that surfaces broad patterns across decades of races, supporting pre season strategic planning.</li>
+            <li><strong>Broadcast analysts and fantasy F1 platforms</strong> get credible strategy probabilities they can communicate to viewers.</li>
+          </ul>
+
+          <h4>Data and Cleaning</h4>
+          <p>
+            Source: Formula 1 World Championship dataset on Kaggle (1950 to 2020), 250,000+ records across thirteen interconnected tables (races, results, pit stops, drivers, constructors, lap times, qualifying, status codes, circuits, and more). A custom <code>track_features</code> table was added for tire degradation level and pit lane time loss per circuit, since these physical realities drive strategy more than the raw schedule data captures. The data was filtered to post 2000 races to focus on the modern tire era, since pre 2000 strategy was driven by fuel weight rather than tire compounds. The final modeling dataset is 14,000+ driver race rows with 45 engineered features.
+          </p>
+          <p>
+            Cleaning rules: removed invalid pit lap records (below lap 1 or above lap 40 are data entry errors), stripped drivers with more than two pit stops per race (these signal damage or weather chaos rather than normal strategy), and dropped early DNFs so the training set reflects strategic behavior rather than mechanical failures.
+          </p>
+
+          <h4>Recovering Missing Data</h4>
+          <p>
+            Pit records before 2012 were sparse. A naive drop missing strategy would have shrunk the dataset from 10,000 rows to 3,000. I trained a dedicated Random Forest imputer that recovered roughly 70% of missing first pit laps using six predictors that are reliably present even in older races: driver ID, constructor ID, race year, starting grid position, total race laps, and circuit ID. Imputation MAE was about six laps on a held out validation set, which is tolerable given pit windows typically span ten to fifteen laps.
+          </p>
+
+          <h4>Models Compared</h4>
+          <p>
+            Four tree based regressors plus a decision tree baseline, identical splits and cross validation. Neural networks and SVMs were deliberately excluded because they are computationally heavier and consistently underperform tree ensembles on tabular data with this feature mix.
+          </p>
+
+          <table>
+            <thead>
+              <tr><th>Model</th><th>Train MAE</th><th>Test MAE</th><th>Train R&sup2;</th><th>Test R&sup2;</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr class="winner"><td><strong>Random Forest</strong></td><td>1.007</td><td><strong>2.78</strong></td><td>0.943</td><td><strong>0.591</strong></td><td>Selected</td></tr>
+              <tr><td>Extra Trees</td><td>~0</td><td>2.91</td><td>1.000</td><td>0.551</td><td>Overfits</td></tr>
+              <tr><td>CatBoost</td><td>2.540</td><td>3.02</td><td>0.702</td><td>0.523</td><td>2nd best</td></tr>
+              <tr><td>Gradient Boosting</td><td>3.234</td><td>3.15</td><td>0.564</td><td>0.487</td><td>Weakest</td></tr>
+            </tbody>
+          </table>
+
+          <p>
+            Random Forest landed at Test MAE 2.78 laps and Test R&sup2; 0.591, meaning predicted pit windows fall within roughly three laps of what teams actually did. Extra Trees showed near perfect training scores but worse generalization, the classic memorization signature. Gradient Boosting struggled with the noise introduced by safety cars and weather changes, since it prefers smoother data patterns. CatBoost would normally have a categorical handling advantage, but our pipeline pre encoded categorical variables for fair comparison, neutralizing that edge.
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/f1_01.png" alt="Feature importance comparison across four models">
+            <figcaption>FIGURE 1. FEATURE IMPORTANCE ACROSS RANDOM FOREST, EXTRA TREES, GRADIENT BOOSTING, AND CATBOOST</figcaption>
+          </figure>
+
+          <h4>What the Model Learned</h4>
+          <p>
+            SHAP analysis on the Random Forest model revealed that race structure features dominate the prediction. The top five contributors are total laps, planned pit stop count, year (proxying for regulation changes), round, and starting grid position. Driver and constructor identities mattered considerably less than F1 commentary tradition suggests.
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/f1_03.png" alt="SHAP beeswarm plot of feature impact on model output">
+            <figcaption>FIGURE 2. SHAP BEESWARM SHOWING DIRECTION AND MAGNITUDE OF EACH FEATURE'S IMPACT ON PREDICTED PIT LAP</figcaption>
+          </figure>
+
+          <div class="callout">
+            <h4>Practical Implication</h4>
+            <p style="margin-bottom: 0;">
+              Pit timing is more a property of the physical system (circuit, race length, planned stops) than of the person behind the wheel. The practical instruction for engineers: adapt strategy to circuit and race length first, team history second, driver style third.
+            </p>
+          </div>
+
+          <h4>Deployment</h4>
+          <p>
+            The final Random Forest model was serialized and packaged into a Streamlit web application (<code>team_omega_rf_app.py</code>). Race engineers input live race context (circuit, grid position, planned stops, weather) and the app returns a predicted first pit stop lap in real time, alongside the SHAP feature importances that drove the prediction. Serialized model artifacts (<code>f1_random_forest_model.pkl</code>, <code>model_features.pkl</code>) live in the project repository.
+          </p>
+
+          <h4>Honest Limitations</h4>
+          <ul>
+            <li><strong>No live race signals.</strong> Safety car deployments, sudden weather changes, and real time tire telemetry are absent. These dynamic elements drive real pit decisions and represent a genuine information gap between the static model and live race conditions.</li>
+            <li><strong>First stop only.</strong> The model predicts only the first pit lap, not full multi stop strategies. Subsequent stops depend on the first, creating interdependencies the current approach does not capture.</li>
+            <li><strong>No competitor model.</strong> Real strategy reacts to opponents (undercuts, overcuts). The model encodes neither opponent positions nor gap sizes.</li>
+            <li><strong>Regulation drift.</strong> F1 rules change often. Patterns from early 2000s races may not apply directly to current regulations, slightly diluting accuracy for contemporary strategy prediction.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- KP INDEX -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Deep Learning &middot; 2026</div>
+          <div class="project-title">Multi Horizon Geomagnetic Kp Index Prediction</div>
+          <p class="project-summary">
+            Geomagnetic storms cost billions in satellite damage and grid disruption when they catch operators off guard. This LSTM forecasts the Kp storm index at 1, 3, 6, and 12 hour horizons simultaneously, cutting RMSE by 45% vs the mean baseline at the operationally critical 1 hour mark. Eleven years of NASA OMNI2 data, 96,000+ hourly measurements, single multi output model.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">LSTM</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">Keras</span>
+            <span class="tag">Time Series</span>
+            <span class="tag">NASA OMNI2</span>
+            <span class="tag">Multi Output</span>
+            <span class="tag">Regularization</span>
+          </div>
+          <div class="metric">1h RMSE = 0.738 (45% better than baseline) &nbsp;|&nbsp; 1h MAE = 0.476 &nbsp;|&nbsp; 1h R&sup2; = 0.690 &nbsp;|&nbsp; 96,000+ hourly observations</div>
+
+          <h4>Why This Matters</h4>
+          <p>
+            Geomagnetic storms, caused by solar wind disturbances interacting with Earth's magnetosphere, are not abstract. The 1989 Quebec blackout cut power to six million people for nine hours. The 2003 Halloween storms damaged satellites and disrupted aviation. The economic exposure of severe storms is in the billions of dollars. Operators need lead time, ideally six to twelve hours, to safe satellites, derate transformers, and reroute aviation away from polar GPS dead zones. The Kp index (a 0 to 9 quasi logarithmic scale measured every three hours) is the standard operational trigger. Anything that improves Kp forecasting at multiple horizons translates directly into action lead time.
+          </p>
+
+          <h4>Stakeholders and Why Multi Horizon Matters</h4>
+          <p>
+            Different operators need different lead times. Satellite mission controllers need 6 to 12 hour notice to plan orbital maneuvers and power down sensitive instruments. National grid operators need a few hours to derate transformers ahead of geomagnetically induced currents. GPS dependent industries (aviation, surveying, autonomous vehicles, precision agriculture) act on shorter horizons. The reason this model predicts all four horizons in one forward pass instead of training four separate models is that a single, internally consistent forecast across the full operational range is far more useful than four separate forecasts whose predictions might silently disagree.
+          </p>
+
+          <h4>Data</h4>
+          <p>
+            Source: NASA's OMNI2 high resolution database, hourly measurements of solar wind and interplanetary magnetic field parameters. Eleven years of coverage (January 2013 to December 2024), totaling 96,552 hourly records. The window spans the declining phase of solar cycle 24, the 2019 to 2020 solar minimum, and the rising phase of solar cycle 25, giving the model exposure to both quiet and active regimes.
+          </p>
+          <p>
+            From the original 55 parameters I selected 15 features grounded in physics literature and correlation analysis against Kp. Feature importance fell into clear physical categories:
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/aurora_-000.jpg" alt="Pearson correlation of 15 selected features with Kp, grouped by category">
+            <figcaption>FIGURE 1. PEARSON CORRELATION OF SELECTED FEATURES WITH KP, GROUPED BY IMF, SOLAR WIND, DERIVED, AND GEOMAGNETIC INDICES</figcaption>
+          </figure>
+
+          <p>
+            The strongest predictor was ap_Index (r = 0.825), followed by auroral electrojet indices (AE r = 0.732, AL r = -0.663, AU r = 0.690). IMF_Bz_GSM showed weaker correlation than expected (r = -0.238), reflecting that the dataset includes all periods rather than just storm windows.
+          </p>
+
+          <h4>Architecture</h4>
+          <p>
+            Two layer LSTM with the following structure:
+          </p>
+          <table>
+            <thead>
+              <tr><th>Parameter</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Input sequence length</td><td>24 hours (24 timesteps &times; 15 features)</td></tr>
+              <tr><td>Output</td><td>4 predictions (Kp_1h, Kp_3h, Kp_6h, Kp_12h)</td></tr>
+              <tr><td>Loss function</td><td>Mean Squared Error</td></tr>
+              <tr><td>Optimizer</td><td>Adam, initial learning rate 0.001</td></tr>
+              <tr><td>Batch size</td><td>64 sequences</td></tr>
+              <tr><td>Epochs</td><td>Maximum 50, early stopping at epoch 39</td></tr>
+              <tr><td>Normalization</td><td>StandardScaler on all features</td></tr>
+            </tbody>
+          </table>
+
+          <p>
+            Chronological split (50% train / 16.6% validation / 16.6% test) with 8,761 hour temporal gaps between sets to prevent leakage, since this is a time series problem where the sequential boundary matters. Training converged cleanly with the best validation loss at epoch 39, after which validation loss plateaued and training kept improving (the textbook overfit signature, caught by early stopping).
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/aurora_-001.jpg" alt="Training and validation loss curves over 49 epochs">
+            <figcaption>FIGURE 2. TRAINING AND VALIDATION LOSS OVER EPOCHS, WITH BEST EPOCH 39 MARKED</figcaption>
+          </figure>
+
+          <h4>Results by Horizon</h4>
+
+          <table>
+            <thead>
+              <tr><th>Horizon</th><th>RMSE</th><th>MAE</th><th>R&sup2;</th><th>Baseline RMSE</th><th>Improvement</th></tr>
+            </thead>
+            <tbody>
+              <tr class="winner"><td><strong>1 hour</strong></td><td><strong>0.738</strong></td><td><strong>0.476</strong></td><td><strong>0.690</strong></td><td>1.34</td><td><strong>+44.9%</strong></td></tr>
+              <tr><td>3 hours</td><td>0.910</td><td>0.655</td><td>0.528</td><td>1.34</td><td>+32.1%</td></tr>
+              <tr><td>6 hours</td><td>1.073</td><td>0.793</td><td>0.343</td><td>1.34</td><td>+19.9%</td></tr>
+              <tr><td>12 hours</td><td>1.207</td><td>0.906</td><td>0.170</td><td>1.34</td><td>+9.9%</td></tr>
+            </tbody>
+          </table>
+
+          <figure class="project-figure">
+            <img src="images/aurora_-002.jpg" alt="LSTM RMSE vs mean baseline RMSE for all four horizons">
+            <figcaption>FIGURE 3. LSTM RMSE VS MEAN BASELINE RMSE ACROSS 1, 3, 6, AND 12 HOUR HORIZONS</figcaption>
+          </figure>
+
+          <p>
+            Performance degrades smoothly with horizon, which is the expected behavior for any forecasting system since the signal to noise ratio falls with lead time. The 1 hour horizon is the most operationally useful for short term tactical actions (GPS protection, immediate satellite ops), while the 6 and 12 hour horizons support strategic planning even with reduced confidence.
+          </p>
+
+          <h4>Behavior During Real Storm Events</h4>
+          <p>
+            The most useful diagnostic is whether the model can flag a storm coming, even imperfectly. Below is a 200 hour window from the test set covering a real storm event (red shaded zone, where actual Kp crosses the threshold of 5). All four horizons capture the storm onset, but with different lag and magnitude. The 1 hour forecast tracks actual Kp closely; the 12 hour forecast smooths the peak but still indicates elevated activity, which is exactly what an operator needs.
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/aurora_-003.jpg" alt="Multi-horizon LSTM predictions vs actual Kp over a 200 hour test window">
+            <figcaption>FIGURE 4. MULTI HORIZON LSTM PREDICTIONS VS ACTUAL KP OVER A 200 HOUR TEST WINDOW, STORM PERIOD HIGHLIGHTED IN RED</figcaption>
+          </figure>
+
+          <h4>Avoiding the Data Leakage Trap</h4>
+          <p>
+            Geomagnetic indices like ap, AE, and AL are strongly correlated with Kp because they all derive from magnetometer measurements responding to the same underlying phenomena. This creates real risk of leakage if the model accidentally uses concurrent index values to predict Kp. I verified that the indices are 3 hour averaged values (not instantaneous), that the 24 hour lookback window uses strictly historical values to predict future Kp, and that the 1 year temporal gaps between train, validation, and test sets prevent any contamination across the splits. Operational forecasting literature confirms that including these indices is standard practice rather than a methodological shortcut.
+          </p>
+
+          <div class="callout">
+            <h4>Operational Reading</h4>
+            <p style="margin-bottom: 0;">
+              The 1 hour forecast clears a useful operational bar: 45% better RMSE than naive mean prediction, and R&sup2; of 0.690 (the model explains roughly two thirds of variance in storm intensity). For longer horizons, the model degrades but stays informative, which is exactly the property a real operator needs: a single model that gives the immediate alarm and a softer signal further out, instead of four separate models that might silently disagree.
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <!-- ENERGY -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Predictive Modeling &middot; Jan 2025 to May 2025</div>
+          <div class="project-title">Managing July Energy Demand Under a Warming Climate</div>
+          <p class="project-summary">
+            A 5&deg;C heatwave in July would push residential peak hour load 25.4% above current levels in the Carolinas, swamping utility capacity. This project trains a Random Forest model on multi source household, weather, and metadata to forecast that surge, then quantifies the policy lever: raising the cooling setpoint by 1&deg;C during peak hours recovers 9.2% of that demand. Built for eSC (Electric South Carolina) to inform infrastructure planning without spending on new generation.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">Random Forest</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">Linear Regression</span>
+            <span class="tag">Python</span>
+            <span class="tag">Climate Scenarios</span>
+            <span class="tag">Residential Energy</span>
+          </div>
+          <div class="metric">Random Forest R&sup2; = 0.48 &nbsp;|&nbsp; RMSE = 0.500 kWh &nbsp;|&nbsp; +25.4% projected peak hour load at +5&deg;C &nbsp;|&nbsp; 9.2% savings from 1&deg;C setpoint shift</div>
+
+          <h4>Why This Matters</h4>
+          <p>
+            Residential energy is the part of the grid most exposed to climate shocks. When July temperatures rise, air conditioning load swings hard upward, peak hour demand spikes, and grid operators face a choice: build more generation (slow, expensive, capital intensive) or shift demand through pricing and behavioral signals (fast, cheap, but only effective if you know what works). This project gives eSC the second tool. We forecast residential consumption under a sustained warming scenario, then quantify which interventions recover the most demand without infrastructure investment.
+          </p>
+
+          <h4>Stakeholders</h4>
+          <ul>
+            <li><strong>Utility capacity planners</strong> get a defensible peak load estimate under temperature shock, instead of extrapolating last summer.</li>
+            <li><strong>Demand response program managers</strong> get a quantified savings estimate for the simplest possible intervention (a 1&deg;C cooling setpoint shift), useful for justifying smart thermostat rollouts.</li>
+            <li><strong>Regulators and ratepayer advocates</strong> get evidence that behavioral and efficiency programs can substitute meaningfully for new generation capacity.</li>
+          </ul>
+
+          <h4>Data</h4>
+          <p>
+            Three datasets joined on common keys: a household metadata file (square footage, occupants, wall insulation type, cooling setpoint), an hourly energy consumption file linked by <code>bldg_id</code>, and a weather file linked by <code>in.county</code>. A metadata file documented each column's semantics. The combined data was filtered to July only to focus on peak cooling season, then merged into one record per house per hour. A reusable merge function was written so the same pipeline can be applied to other months and seasons.
+          </p>
+
+          <h4>What Drives Residential Consumption</h4>
+          <p>
+            EDA established four primary drivers of July energy usage:
+          </p>
+
+          <div class="figure-row">
+            <figure class="project-figure">
+              <img src="images/energy_12.png" alt="Energy usage vs dry bulb temperature">
+              <figcaption>FIGURE 1. ENERGY USAGE INCREASES WITH OUTDOOR DRY BULB TEMPERATURE</figcaption>
+            </figure>
+            <figure class="project-figure">
+              <img src="images/energy_09.png" alt="Energy usage vs square footage">
+              <figcaption>FIGURE 2. ENERGY USAGE SCALES NEAR LINEARLY WITH HOUSEHOLD SQUARE FOOTAGE</figcaption>
+            </figure>
+          </div>
+
+          <div class="figure-row">
+            <figure class="project-figure">
+              <img src="images/energy_11.png" alt="Energy usage by number of occupants">
+              <figcaption>FIGURE 3. ENERGY USAGE BY NUMBER OF OCCUPANTS</figcaption>
+            </figure>
+            <figure class="project-figure">
+              <img src="images/energy_10.png" alt="Energy usage by wall insulation type">
+              <figcaption>FIGURE 4. ENERGY USAGE BY WALL INSULATION TYPE</figcaption>
+            </figure>
+          </div>
+
+          <p>
+            Outdoor temperature is the dominant driver. Square footage scales linearly with consumption. Occupant count matters but plateaus quickly. Wall insulation shows surprisingly modest variation across the housing stock, suggesting envelope upgrades have lower marginal return than HVAC and setpoint interventions on this dataset.
+          </p>
+
+          <h4>Models Compared</h4>
+          <p>
+            Three models trained on five features (dry bulb temperature, square footage, occupants, cooling setpoint, hour of day):
+          </p>
+
+          <table>
+            <thead>
+              <tr><th>Model</th><th>RMSE (kWh)</th><th>R&sup2;</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Linear Regression</td><td>0.583</td><td>0.29</td><td>Cannot capture non linear temperature response</td></tr>
+              <tr><td>XGBoost</td><td>0.503</td><td>0.47</td><td>Strong on non linear patterns, close second</td></tr>
+              <tr class="winner"><td><strong>Random Forest</strong></td><td><strong>0.500</strong></td><td><strong>0.48</strong></td><td>Selected for forecasting</td></tr>
+            </tbody>
+          </table>
+
+          <h4>The +5&deg;C Stress Test</h4>
+          <p>
+            Sustained warming scenarios were applied directly to the temperature feature and pushed through the trained model:
+          </p>
+          <ul>
+            <li><strong>Average July hour, baseline</strong>: 1.09 kWh predicted.</li>
+            <li><strong>Average July hour, +5&deg;C</strong>: 1.25 kWh predicted (a 14.7% increase).</li>
+            <li><strong>Peak hour (9 PM) baseline</strong>: 81,600 kWh aggregate across the sample.</li>
+            <li><strong>Peak hour (9 PM) at +5&deg;C</strong>: 102,355 kWh aggregate, a 25.4% surge.</li>
+          </ul>
+
+          <div class="callout">
+            <h4>Policy Lever: 1&deg;C Setpoint Adjustment</h4>
+            <p>
+              Layering a 1&deg;C cooling setpoint increase during peak hours (16:00 to 21:00) on top of the +5&deg;C warming scenario produces:
+            </p>
+            <ul>
+              <li>Average usage at +5&deg;C: 1.30 kWh per hour</li>
+              <li>Average usage with +1&deg;C setpoint adjustment: 1.18 kWh per hour</li>
+              <li><strong>Average savings: 0.12 kWh per hour, or 9.2% of peak hour demand</strong></li>
+            </ul>
+            <p style="margin-bottom: 0;">
+              The number is what makes the analysis actionable. A single degree of thermostat tolerance, applied across a customer base, recovers nearly one tenth of warming driven peak load without any infrastructure investment.
+            </p>
+          </div>
+
+          <h4>Recommendations to eSC</h4>
+          <ul>
+            <li><strong>Time of use pricing during peak hours.</strong> Shift discretionary demand off peak through price signals rather than capacity expansion.</li>
+            <li><strong>Smart thermostat rollout.</strong> Enables the 1&deg;C setpoint adjustment to happen automatically across the customer base instead of relying on individual behavior change.</li>
+            <li><strong>Modern HVAC incentives.</strong> Older units carry disproportionate cooling load; replacement programs targeted at the worst performers compound the setpoint benefit.</li>
+            <li><strong>Passive cooling design for new builds.</strong> Long term lever that compounds over the multi decade life of housing stock.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- WEALTH EQUALS HEALTH -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Quantitative Data Storytelling &middot; Jan 2025 to May 2025</div>
+          <div class="project-title">Challenging "Wealth Equals Health": Education as the Hidden Lever</div>
+          <p class="project-summary">
+            Development policy is built on the assumption that richer countries are automatically healthier. This project tests that assumption statistically against 180+ countries of Gapminder data (2000 to 2020) and finds that education explains child mortality just as strongly as income does. Bayes Factor evidence in favor of the combined model exceeds 10^288. The recommendation: rural development funding should prioritize schools and maternal education over chasing GDP growth.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">R</span>
+            <span class="tag">ggplot2</span>
+            <span class="tag">Multiple Regression</span>
+            <span class="tag">ANOVA</span>
+            <span class="tag">Bayesian Inference</span>
+            <span class="tag">Gapminder</span>
+          </div>
+          <div class="metric">180+ countries &nbsp;|&nbsp; Period: 2000 to 2020 &nbsp;|&nbsp; Combined BF = 1.65 &times; 10&#179;&#x2078;&#x2078; &nbsp;|&nbsp; ANOVA F = 426.5 (p &lt; 2e-16)</div>
+
+          <h4>Why This Matters</h4>
+          <p>
+            "Richer countries are healthier" is one of the most common framings in development discourse, and it has a real consequence: development funding tends to flow toward GDP growth as the master strategy, with health and education treated as downstream beneficiaries. This project was designed to be both academically rigorous and practically useful, with the explicit goal of producing evidence a community leader can use to argue for education investment in rural communities. The audience for the final report is intentionally non technical: adults, teenagers, and children who can act on the conclusion.
+          </p>
+
+          <h4>Research Questions</h4>
+          <ol>
+            <li>To what extent does income influence life expectancy across countries?</li>
+            <li>Can education serve as a more effective tool than income in reducing child mortality?</li>
+          </ol>
+
+          <h4>Data</h4>
+          <p>
+            Gapminder global dataset covering 180+ countries between 2000 and 2020. Variables:
+          </p>
+          <ul>
+            <li><strong>GDP per capita</strong> as the measure of national income, log transformed to address right skew from extreme high income outliers.</li>
+            <li><strong>Life expectancy</strong> as the primary health outcome, ranging from approximately 40 to 85 years.</li>
+            <li><strong>Child mortality</strong> as the most policy responsive health metric, ranging from fewer than 5 deaths per 1,000 births in high income countries to over 150 in low income countries.</li>
+            <li><strong>Mean years of schooling</strong> for adults aged 25 to 34, the most reliable cross country proxy for education access, ranging from 2 to 15 years.</li>
+          </ul>
+
+          <h4>Exploratory Visualizations</h4>
+
+          <div class="figure-row">
+            <figure class="project-figure">
+              <img src="images/wealth_02.png" alt="GDP vs Life Expectancy scatter plot with regression line">
+              <figcaption>FIGURE 1. LOG GDP VS LIFE EXPECTANCY, ALL COUNTRIES 2000 TO 2020</figcaption>
+            </figure>
+            <figure class="project-figure">
+              <img src="images/wealth_04.png" alt="GDP vs Child Mortality scatter plot with regression line">
+              <figcaption>FIGURE 2. LOG GDP VS CHILD MORTALITY, ALL COUNTRIES 2000 TO 2020</figcaption>
+            </figure>
+          </div>
+
+          <figure class="project-figure">
+            <img src="images/wealth_03.png" alt="Education vs Child Mortality scatter plot showing strong negative relationship">
+            <figcaption>FIGURE 3. MEAN YEARS OF SCHOOLING VS CHILD MORTALITY, SHOWING A STRONGER, TIGHTER NEGATIVE RELATIONSHIP THAN GDP</figcaption>
+          </figure>
+
+          <h4>Question 1: Does GDP Predict Life Expectancy?</h4>
+          <p>
+            Linear regression of life expectancy on log GDP per capita yielded a coefficient of <strong>17.6</strong> (p &lt; 2e-16), confirming a strong positive relationship. Bayesian regression returned a Bayes Factor of <strong>5.66 &times; 10&#178;&#185;&#x2078;</strong> in favor of GDP as a predictor, which is overwhelming evidence. The answer to the first question is yes, GDP matters.
+          </p>
+
+          <h4>Question 2: Does Education Beat GDP for Child Mortality?</h4>
+          <p>
+            Multiple regression of child mortality on both mean years of schooling and log GDP returned two significant negative coefficients:
+          </p>
+          <ul>
+            <li><strong>Mean years of schooling</strong>: estimate = -0.76, p &lt; 2e-16</li>
+            <li><strong>Log GDP per capita</strong>: estimate = -74.14, p &lt; 2e-16</li>
+          </ul>
+          <p>
+            Bayesian model comparison returned a combined Bayes Factor of <strong>1.65 &times; 10&#178;&#x2078;&#x2078;</strong> in favor of the model that includes both predictors, an extraordinarily large number that translates to overwhelming evidence both predictors carry independent information about child mortality.
+          </p>
+
+          <h4>Confirmatory Tests</h4>
+          <p>
+            Welch's t test compared child mortality between high education and low education country groups:
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/wealth_09.png" alt="Boxplot of child mortality by education group">
+            <figcaption>FIGURE 4. CHILD MORTALITY BY EDUCATION GROUP (WELCH'S T TEST). MEAN DIFFERENCE &#8776; 57 DEATHS PER 1,000 BIRTHS, P &lt; 2.2E-16</figcaption>
+          </figure>
+
+          <p>
+            One way ANOVA on life expectancy by GDP group (Low, Medium, High) returned F = 426.5, p &lt; 2e-16:
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/wealth_10.png" alt="Boxplot of life expectancy by GDP group">
+            <figcaption>FIGURE 5. LIFE EXPECTANCY BY GDP GROUP (ANOVA, F = 426.5, P &lt; 2E-16)</figcaption>
+          </figure>
+
+          <div class="callout">
+            <h4>The Practical Conclusion</h4>
+            <p>
+              Income matters, but it is not the lever development funders should pull first. Education is just as strong a predictor of child mortality as GDP is, and unlike GDP, education is something a rural community can act on directly through school access, teacher training, and maternal literacy programs.
+            </p>
+            <p style="margin-bottom: 0;">
+              Each additional year of schooling is associated with a measurable drop in child deaths, regardless of country wealth. For a community leader, the evidence based call to action is clear: keep children (especially girls) in school through secondary education, combine schooling with practical instruction on hygiene, nutrition, vaccination, and early childhood care, and advocate for school infrastructure investment. The data shows these efforts have life saving consequences in a way that simply waiting for GDP growth does not.
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <!-- TRAVEL ITINERARY -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Database Engineering &middot; Jan 2025 to May 2025</div>
+          <div class="project-title">Travel Itinerary Management System</div>
+          <p class="project-summary">
+            Travel planning apps usually fail in the same way: the database is so badly designed that simple consistency rules (don't let costs go negative, don't let activities last zero minutes) live as fragile validation code in three different layers. This project moves that logic into the database itself through stored procedures, triggers, and a normalized schema with 12 entities, so the data layer enforces what was previously hoped at the application layer.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">SQL</span>
+            <span class="tag">Data Modeling</span>
+            <span class="tag">Stored Procedures</span>
+            <span class="tag">Triggers</span>
+            <span class="tag">User Defined Functions</span>
+            <span class="tag">ERD Design</span>
+            <span class="tag">3NF</span>
+          </div>
+          <div class="metric">12 normalized entities &nbsp;|&nbsp; 3 stored procedures &nbsp;|&nbsp; 2 triggers &nbsp;|&nbsp; 1 user defined function &nbsp;|&nbsp; Single procedure call generates full itinerary</div>
+
+          <h4>Why This Matters</h4>
+          <p>
+            Travel apps rely on enforcing rules consistently across every access path: an activity cannot have negative cost, a hotel must belong to a real destination, an itinerary cost should always equal the sum of its components. The naive approach puts those rules in application code, where each new feature or platform reintroduces them, badly. The mature approach puts the rules in the database itself, so any client (web, mobile, batch import, ad hoc SQL) gets the same guarantees automatically. This project demonstrates the second approach.
+          </p>
+
+          <h4>Stakeholders</h4>
+          <ul>
+            <li><strong>Travelers</strong> creating a trip get a single endpoint to call that returns a complete itinerary, with all the validation already done.</li>
+            <li><strong>Application developers</strong> get to stop writing defensive code in three languages to enforce business rules.</li>
+            <li><strong>Data analysts</strong> querying the database directly get clean, consistent data because the integrity rules apply even to direct SQL access.</li>
+          </ul>
+
+          <h4>Entity Relationship Design</h4>
+          <p>
+            Twelve interconnected entities in third normal form with full referential integrity. The core entity is <code>itinerary</code>, which links to destinations, activities, accommodations, transportation, seasonal information, and tags through explicit foreign keys.
+          </p>
+
+          <figure class="project-figure">
+            <img src="images/travel_03.png" alt="Logical ERD showing all 12 tables with primary keys, foreign keys, and relationships">
+            <figcaption>FIGURE 1. LOGICAL ERD WITH ALL 12 TABLES, PRIMARY KEYS, FOREIGN KEYS, AND CARDINALITY RELATIONSHIPS</figcaption>
+          </figure>
+
+          <h4>Stored Procedures</h4>
+          <p>
+            Three procedures cover the operations a travel app actually performs:
+          </p>
+          <ul>
+            <li><code>sp_add_full_itinerary_single</code>: Inserts a complete itinerary (activity, transport, accommodation, season info, tag) in a single atomic call. Replaces what would otherwise be five separate inserts plus consistency checks at the application layer.</li>
+            <li><code>sp_get_full_itinerary</code>: Retrieves all linked details of an itinerary by ID, with joins handled inside the database.</li>
+            <li><code>sp_get_itineraries_for_destination</code>: Lists all itineraries available under a selected destination, the most common browse query.</li>
+          </ul>
+
+          <h4>Triggers for Data Integrity</h4>
+          <ul>
+            <li><code>trg_check_activity_duration</code>: Rejects any activity insert or update where duration is zero or negative. Protects against a category of UI bugs and data import errors that would otherwise silently corrupt the cost calculations downstream.</li>
+            <li><code>trg_check_activity_cost</code>: Rejects negative cost entries, which usually indicate a typo or unit conversion error rather than a genuine refund.</li>
+          </ul>
+
+          <h4>Function for Reusable Logic</h4>
+          <ul>
+            <li><code>ufn_estimate_total_activity_time</code>: Returns the total time a traveler will spend on all activities in a given itinerary. Used in views, filters, and ranking interfaces so itineraries can be sorted or filtered by total activity duration without recomputing the math each time.</li>
+          </ul>
+
+          <h4>User Story Worked Through End to End</h4>
+          <p>
+            <em>"As a traveler, I want to create a trip by selecting options, so I can generate a full itinerary."</em>
+          </p>
+          <p>
+            Implementation: the client passes destination, activity, transport, accommodation, season, and tag to <code>sp_add_full_itinerary_single</code>. The procedure inserts each child record, links them through the itinerary table, runs the duration and cost triggers, and returns the new <code>itinerary_id</code>. One round trip from the client, full validation, atomic on the database side.
+          </p>
+
+          <div class="callout">
+            <h4>Design Philosophy</h4>
+            <p style="margin-bottom: 0;">
+              Proper database design absorbs complex business rules at the data layer, reducing application complexity and guaranteeing integrity across every read and write path. When the database enforces invariants, you stop writing defensive code in multiple languages to protect them, and you stop debugging the same off by one bug five separate times for five separate clients.
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <!-- UBER PIPELINE -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Data Engineering &middot; Jul 2024 to Dec 2024</div>
+          <div class="project-title">Uber Data Engineering Pipeline</div>
+          <p class="project-summary">
+            End to end cloud pipeline for NYC taxi trip data, from raw ingestion through analytical dashboard. Built on Google Cloud Platform with BigQuery for SQL analytics and Power BI for visualization. The point of the project was to do the full lifecycle in one piece.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">GCP</span>
+            <span class="tag">BigQuery</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Python</span>
+            <span class="tag">ETL</span>
+            <span class="tag">Star Schema</span>
+          </div>
+          <div class="metric">End to end cloud pipeline &nbsp;|&nbsp; Star schema modeling &nbsp;|&nbsp; Cloud Storage + Compute Engine + BigQuery &nbsp;|&nbsp; Interactive BI dashboard</div>
+
+          <h4>Objective</h4>
+          <p>
+            Most data engineering exercises stop at a notebook. I wanted to do the full lifecycle in one project: ingestion, storage, transformation, modeling, querying, and visualization, end to end on a real cloud stack. The deliverable was not just a model or a chart, but the entire path from raw data file to stakeholder ready dashboard.
+          </p>
+
+          <h4>Architecture</h4>
+          <p>
+            Raw NYC taxi trip data was modeled into a star schema with fact and dimension tables in Lucid Charts, with explicit primary and foreign key relationships. Infrastructure was deployed on Google Cloud Platform with three layers:
+          </p>
+          <ul>
+            <li><strong>Storage layer.</strong> Cloud Storage as the data lake, holding raw and intermediate Parquet files.</li>
+            <li><strong>Compute layer.</strong> Compute Engine VMs running Python ETL jobs that read from Cloud Storage, transform with Pandas and NumPy, and write back as cleaned Parquet.</li>
+            <li><strong>Analytics layer.</strong> BigQuery for SQL analytics at scale, with the cleaned data loaded as partitioned tables for efficient time range queries.</li>
+          </ul>
+
+          <h4>Analysis and Presentation</h4>
+          <p>
+            Exploratory analysis in Jupyter surfaced patterns in trip distance distribution, fare structure, revenue concentration, and service utilization across boroughs and times of day. The findings then fed an interactive Power BI dashboard with geographical heat maps, time series views, and slicers for stakeholder driven exploration.
+          </p>
+
+          <h4>Lesson</h4>
+          <p>
+            The real lesson was less about any individual tool and more about what moving from local CSV files to distributed cloud storage and compute fundamentally changes about how you think. When data lives in object storage and compute is elastic, scaling up by an order of magnitude becomes a configuration change rather than a bottleneck. That mindset shift is the actual deliverable.
+          </p>
+        </div>
+      </details>
+
+      <!-- DIGIT RECOGNITION -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">Deep Learning &middot; Jan 2024 to May 2024</div>
+          <div class="project-title">Digit Recognition Neural Network from Scratch</div>
+          <p class="project-summary">
+            Complete feedforward neural network for MNIST handwritten digit recognition, implemented from first principles in NumPy with no TensorFlow, PyTorch, or autograd. Achieved 94% test accuracy through iterative hyperparameter tuning. The point was the learning, not the result.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Neural Networks</span>
+            <span class="tag">Backpropagation</span>
+            <span class="tag">From Scratch</span>
+          </div>
+          <div class="metric">94% test accuracy on MNIST &nbsp;|&nbsp; No ML frameworks &nbsp;|&nbsp; Manual forward and backward passes</div>
+
+          <h4>Why Build from Scratch</h4>
+          <p>
+            Frameworks abstract exactly the parts of a neural network that are most useful to understand: the matrix shapes flowing forward, the gradient math flowing backward, and the way optimization actually changes weights. Building all three by hand once gives you a working mental model for the rest of your career. When a production model later silently fails, you reason about gradient flow rather than swapping layers and hoping.
+          </p>
+
+          <h4>Implementation</h4>
+          <p>
+            Forward propagation was implemented as explicit weighted sums and activation functions: sigmoid for hidden layers in the first iteration, then ReLU once vanishing gradients became visible, with softmax at the output for the ten class classification. Backpropagation was coded as gradient computation via the chain rule, layer by layer, with explicit derivative formulas for each activation function. A mini batch gradient descent optimization loop handled training, with tunable learning rate, batch size, and network depth.
+          </p>
+
+          <h4>Tuning</h4>
+          <p>
+            Hyperparameter tuning was iterative and manual, which is exactly the point of this kind of exercise. Learning rate too high and the loss bounced. Too low and training stalled. Network too shallow and the model could not capture digit structure. Too deep without proper initialization and gradients vanished. Working through these failures by hand is how you learn what each knob actually controls.
+          </p>
+
+          <h4>Result</h4>
+          <p>
+            Final accuracy of 94% on the held out MNIST test set. Not state of the art, but the goal was understanding rather than benchmark chasing. The exercise made it intuitive why deeper networks, non linear activations, and proper initialization matter, which is the kind of grounding that makes debugging production models much easier later.
+          </p>
+        </div>
+      </details>
+
+      <!-- INFLOW BIG DATA -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line"> Research &middot; Jan 2024 to Dec 2024</div>
+          <div class="project-title">Real Time Big Data Inflow: Communication and Computation Delay Analysis</div>
+          <p class="project-summary">
+            Research paper surveying how real time IoT data moves through cloud, fog, edge, and crowd computing tiers, with a focus on where latency actually accumulates and how hybrid architectures can compress it by 40 to 60% for appropriately partitioned workloads.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">IoT</span>
+            <span class="tag">Edge Computing</span>
+            <span class="tag">Fog Computing</span>
+            <span class="tag">Cloud Computing</span>
+            <span class="tag">Stream Architecture</span>
+          </div>
+          <div class="metric">40 to 60% latency reduction potential &nbsp;|&nbsp; 12+ primary sources reviewed &nbsp;|&nbsp; Comparative analysis across six dimensions</div>
+
+          <h4>Argument</h4>
+          <p>
+            The implicit default in most enterprise architectures is to send everything to the cloud. For real time systems, that default is wrong. The interesting design work is deciding which computations belong near the sensor (where latency is cheap but durability is fragile and storage is limited) and which belong in the data center (where storage is durable and compute is elastic but round trips cost real time).
+          </p>
+
+          <h4>Approach</h4>
+          <p>
+            The paper reviews twelve primary sources on stream processing, edge deployment patterns, and latency optimization in distributed systems. Each source is summarized for its proposed architecture and headline findings. From the literature, I propose a tiered hybrid architecture that pushes time critical computation toward the edge while retaining cloud tiers for durability, batch analytics, and global state.
+          </p>
+
+          <h4>Comparative Analysis</h4>
+          <p>
+            Cloud only and tiered architectures are compared across six dimensions: scalability, reliability, bandwidth usage, privacy and security, cost effectiveness, and end to end latency. The tiered architecture wins on latency (40 to 60% reduction for appropriately partitioned workloads), bandwidth (less raw data crosses the WAN), and privacy (sensitive data can be processed locally), while paying a small price in operational complexity and consistency guarantees.
+          </p>
+        </div>
+      </details>
+
+      <!-- ============ EXPERIENCE ============ -->
+      <h2 id="experience">Experience</h2>
+
+      <div class="exp-card">
+        <div class="exp-card-head">
+          <h3 class="exp-card-title">Cybersecurity Teaching Assistant</h3>
+          <div class="exp-card-org">Syracuse University</div>
+        </div>
+        <div class="exp-card-meta">Summer 2025 &middot; Syracuse, NY</div>
+
+        <ul class="exp-highlights">
+          <li><strong>Labs Delivered</strong>15+ hands on labs</li>
+          <li><strong>Toolchain</strong>Wireshark, Kali, Nmap, OpenSSL, Metasploit</li>
+          <li><strong>VM Stack</strong>Kali, Win 10/Server, CentOS, Metasploitable</li>
+          <li><strong>Domains</strong>Crypto, Network, Pentest, Forensics</li>
+        </ul>
+
+        <div class="exp-card-body">
+          <p>
+            Developed and delivered hands on cybersecurity labs covering cryptography, network security, penetration testing, and digital forensics. Labs walk students through the full attacker workflow, from OSINT reconnaissance and port scanning to exploitation and post compromise enumeration, then flip the perspective to defensive analysis: packet inspection, log correlation, and incident reporting.
+          </p>
+          <p>
+            Built and maintained multi VM lab environments combining Kali Linux as the attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Graded security labs and incident analysis reports, reinforcing packet analysis, OSINT reconnaissance, ethical hacking, and hashing (SHA 256, SHA 512), with detailed feedback on student methodology rather than just answers.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-card-head">
+          <h3 class="exp-card-title">Research Assistant, Gravity Spy 2.0</h3>
+          <div class="exp-card-org">Syracuse iSchool</div>
+        </div>
+        <div class="exp-card-meta">2025 to Present &middot; PI: Prof. Kevin Crowston &middot; NSF funded</div>
+
+        <ul class="exp-highlights">
+          <li><strong>Classifications</strong>88,925 processed</li>
+          <li><strong>Volunteers</strong>269 contributors</li>
+          <li><strong>Subjects</strong>25,104 unique</li>
+          <li><strong>Channels Mapped</strong>455 LIGO subsystems</li>
+        </ul>
+
+        <div class="exp-card-body">
+          <p>
+            Research assistant on an NSF funded citizen science project supporting LIGO (the Laser Interferometer Gravitational Wave Observatory). The scientific goal is causal inference on detector noise: figuring out which auxiliary subsystems are responsible for the transient glitches that contaminate gravitational wave strain data, so detector commissioners can fix the right hardware rather than chasing symptoms.
+          </p>
+          <p>
+            Built the end to end data processing pipeline in Python (Jupyter) that turns raw Zooniverse classification exports into analysis ready datasets, spanning 23 months of LIGO observations (May 2023 to April 2025). Engineering challenges include handling five different subject metadata schemas across project iterations, filtering out roughly 38 science team and developer accounts, and reconciling differences in field naming between schemas (for example, <code>#gps</code> versus <code>#gps_time</code>).
+          </p>
+          <p>
+            The pipeline produces three core outputs: a subject level flat file with aggregated volunteer labels (Yes, No, Not Sure counts, total classifications, majority vote), a separate file for subjects missing GPS metadata, and a GPS time by auxiliary channel pivot matrix covering 455 LIGO subsystems including PEM, SUS, LSC, ISI, ASC, and CAL.
+          </p>
+          <p>
+            Conducted the full descriptive analysis: volunteer effort distribution (heavily right tailed, top ten volunteers account for 50% of classifications), subject level inter volunteer agreement (52% perfect consensus on multi classified subjects), and response distribution across workflow versions. Code is committed to the <a href="https://github.com/Syracuse-CCDS/GravitySpy_Classifier" target="_blank" rel="noopener noreferrer">Syracuse CCDS GravitySpy Classifier</a> repository. Next phase scopes a CNN or vision transformer model to predict volunteer similarity labels directly from LIGO spectrogram image pairs.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-card-head">
+          <h3 class="exp-card-title">Data and Product Analyst Intern</h3>
+          <div class="exp-card-org">ProProfs</div>
+        </div>
+        <div class="exp-card-meta">Jul 2023 to Aug 2023 &middot; Noida, India</div>
+
+        <ul class="exp-highlights">
+          <li><strong>SaaS Users</strong>5,000+ analyzed</li>
+          <li><strong>Customer Records</strong>2,000 clients</li>
+          <li><strong>Churn Reduction</strong>5 percent</li>
+          <li><strong>Rating Lift</strong>4.2 to 4.6</li>
+        </ul>
+
+        <div class="exp-card-body">
+          <p>
+            Performed product and customer analytics in Python across SaaS products serving 5,000+ users. Delivered SWOT analyses, competitive feature benchmarking against Zoho and Salesforce (100 to 150 features compared), and Ideal Customer Profile (ICP) analyses to inform product strategy and prioritization meetings.
+          </p>
+          <p>
+            Analyzed customer datasets covering 2,000 clients using Python and Excel pivot tables to surface behavior patterns, pain points, and conversion drivers. Findings enabled the product team to prioritize two high impact features for the next release that materially lifted trial to paid conversion. Built interactive Tableau dashboards sourced from SQL and Excel, identifying under used features and reducing customer churn by 5 percent. Contributed to feature launches including live chat support and dashboard summaries, with average product ratings improving from 4.2 to 4.6.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- ============ SKILLS ============ -->
+      <h2 id="skills">Technical Skills</h2>
+
+      <div class="skill-group">
+        <div class="skill-label">Languages</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">R</span>
+          <span class="skill-chip">C++</span>
+          <span class="skill-chip">Java</span>
+          <span class="skill-chip">JavaScript</span>
+          <span class="skill-chip">HTML5</span>
+          <span class="skill-chip">CSS3</span>
+          <span class="skill-chip">LaTeX</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">ML and Data Science Libraries</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Pandas</span>
+          <span class="skill-chip">NumPy</span>
+          <span class="skill-chip">Scikit learn</span>
+          <span class="skill-chip">TensorFlow</span>
+          <span class="skill-chip">Keras</span>
+          <span class="skill-chip">XGBoost</span>
+          <span class="skill-chip">CatBoost</span>
+          <span class="skill-chip">SHAP</span>
+          <span class="skill-chip">Matplotlib</span>
+          <span class="skill-chip">Seaborn</span>
+          <span class="skill-chip">Spark</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Web and Application Frameworks</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Streamlit</span>
+          <span class="skill-chip">Shiny</span>
+          <span class="skill-chip">React</span>
+          <span class="skill-chip">Bootstrap</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Machine Learning Methods</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Random Forest</span>
+          <span class="skill-chip">Gradient Boosting</span>
+          <span class="skill-chip">Decision Trees</span>
+          <span class="skill-chip">Extra Trees</span>
+          <span class="skill-chip">SVM</span>
+          <span class="skill-chip">KNN</span>
+          <span class="skill-chip">Linear Regression</span>
+          <span class="skill-chip">Logistic Regression</span>
+          <span class="skill-chip">Ridge</span>
+          <span class="skill-chip">Lasso</span>
+          <span class="skill-chip">K Means</span>
+          <span class="skill-chip">DBSCAN</span>
+          <span class="skill-chip">PCA</span>
+          <span class="skill-chip">Ensemble Methods</span>
+          <span class="skill-chip">Cross Validation</span>
+          <span class="skill-chip">Bayesian Optimization</span>
+          <span class="skill-chip">Regularization</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Deep Learning and AI</div>
+        <div class="skill-chips">
+          <span class="skill-chip">LSTM</span>
+          <span class="skill-chip">RNN</span>
+          <span class="skill-chip">CNN</span>
+          <span class="skill-chip">NLP</span>
+          <span class="skill-chip">Computer Vision</span>
+          <span class="skill-chip">Predictive Modeling</span>
+          <span class="skill-chip">Feature Engineering</span>
+          <span class="skill-chip">Data Imputation</span>
+          <span class="skill-chip">Model Deployment</span>
+          <span class="skill-chip">SHAP Interpretability</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Analytics and BI</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Tableau</span>
+          <span class="skill-chip">Power BI</span>
+          <span class="skill-chip">DAX</span>
+          <span class="skill-chip">Power Query</span>
+          <span class="skill-chip">Looker</span>
+          <span class="skill-chip">Excel</span>
+          <span class="skill-chip">Pivot Tables</span>
+          <span class="skill-chip">XLOOKUP</span>
+          <span class="skill-chip">Power Pivot</span>
+          <span class="skill-chip">Macros</span>
+          <span class="skill-chip">PowerPoint</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Statistics and Methods</div>
+        <div class="skill-chips">
+          <span class="skill-chip">EDA</span>
+          <span class="skill-chip">Statistical Analysis</span>
+          <span class="skill-chip">Hypothesis Testing</span>
+          <span class="skill-chip">A/B Testing</span>
+          <span class="skill-chip">Cohort Analysis</span>
+          <span class="skill-chip">Funnel Analysis</span>
+          <span class="skill-chip">Customer Segmentation</span>
+          <span class="skill-chip">Time Series Forecasting</span>
+          <span class="skill-chip">Anomaly Detection</span>
+          <span class="skill-chip">Data Storytelling</span>
+          <span class="skill-chip">Geospatial Visualization</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Databases and Data Engineering</div>
+        <div class="skill-chips">
+          <span class="skill-chip">MySQL</span>
+          <span class="skill-chip">BigQuery</span>
+          <span class="skill-chip">Hadoop</span>
+          <span class="skill-chip">Apache</span>
+          <span class="skill-chip">ETL Pipelines</span>
+          <span class="skill-chip">Star Schema</span>
+          <span class="skill-chip">Dimensional Modeling</span>
+          <span class="skill-chip">Triggers</span>
+          <span class="skill-chip">ERD Design</span>
+          <span class="skill-chip">Parquet Processing</span>
+          <span class="skill-chip">Large Scale Data Merging</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Cloud and DevOps</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Google Cloud Platform</span>
+          <span class="skill-chip">Azure</span>
+          <span class="skill-chip">Git</span>
+          <span class="skill-chip">GitHub</span>
+          <span class="skill-chip">Jupyter Notebook</span>
+          <span class="skill-chip">RStudio</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Cybersecurity</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Wireshark</span>
+          <span class="skill-chip">Nmap</span>
+          <span class="skill-chip">Kali Linux</span>
+          <span class="skill-chip">Metasploit</span>
+          <span class="skill-chip">OpenSSL</span>
+          <span class="skill-chip">Incident Response</span>
+          <span class="skill-chip">Vulnerability Detection</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">Process Improvement and Business</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Lean Six Sigma</span>
+          <span class="skill-chip">DMAIC</span>
+          <span class="skill-chip">SIPOC</span>
+          <span class="skill-chip">CTQC Tree</span>
+          <span class="skill-chip">Process Mapping</span>
+          <span class="skill-chip">KPI Design</span>
+          <span class="skill-chip">Fishbone Analysis</span>
+          <span class="skill-chip">Pugh Matrix</span>
+          <span class="skill-chip">FMEA</span>
+          <span class="skill-chip">Control Plans</span>
+          <span class="skill-chip">Stakeholder Management</span>
+          <span class="skill-chip">Project Charter</span>
+          <span class="skill-chip">Pareto Analysis</span>
+          <span class="skill-chip">Minitab</span>
+        </div>
+      </div>
+
+
+      <!-- ============ CERTIFICATIONS ============ -->
+      <h2 id="certifications">Certifications</h2>
+
+      <div class="edu-card">
+        <div class="edu-card-head">
+          <h3 class="edu-card-degree">Lean Six Sigma Green Belt</h3>
+          <div class="edu-card-org">Syracuse University, Whitman School of Management</div>
+        </div>
+        <div class="edu-card-meta">SCM 755 &middot; Spring 2026</div>
+        <div class="edu-card-body">
+          Full DMAIC project at JMA Wireless (US 5G infrastructure manufacturer), sponsored by SVP Global Operations. Delivered standardized KPI framework, Python ETL pipeline, and Power BI dashboard with quantified annualized impact of approximately $355,000 in recovered throughput and analyst time. See the JMA Wireless project above for full detail.
+        </div>
+      </div>
+
+
+      <!-- ============ EDUCATION ============ -->
+      <h2 id="education">Education</h2>
+
+      <div class="edu-card">
+        <div class="edu-card-head">
+          <h3 class="edu-card-degree">Master of Science, Applied Data Science</h3>
+          <div class="edu-card-org">Syracuse University</div>
+        </div>
+        <div class="edu-card-meta">Jan 2025 to Dec 2026 &middot; Syracuse, NY</div>
+        <div class="edu-card-body">
+          Graduate coursework spans deep learning (CNNs, LSTMs, RNNs, word embeddings, reinforcement learning), machine learning (ensemble methods, SVMs, clustering with HDBSCAN, DBSCAN, GMM, hyperparameter optimization), data engineering (Apache Spark, Kafka, ksqlDB, Hive, HDFS, MapReduce), advanced databases (Neo4j with Cypher, Redis, Cassandra, Apache Drill), statistical analysis, and applied research methods.
+        </div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-card-head">
+          <h3 class="edu-card-degree">Bachelor of Technology, Computer Science and Engineering</h3>
+          <div class="edu-card-org">JSSATE Noida</div>
+        </div>
+        <div class="edu-card-meta">Dec 2020 to May 2024 &middot; Noida, India</div>
+        <div class="edu-card-body">
+          Undergraduate training in computer science fundamentals: data structures and algorithms, operating systems, computer networks, database management systems, software engineering, and discrete mathematics. Capstone work in machine learning and distributed systems.
+        </div>
+      </div>
+
+
+      <!-- ============ CONTACT ============ -->
+      <h2 id="contact">Let's Connect</h2>
+
+      <p>
+        I am open to Data Science, Machine Learning, and Data Engineering roles starting Spring 2027. Happy to chat about research, open source work, or anything at the intersection of ML systems and real world scientific data.
+      </p>
+
+      <p>
+        Reach me at <a href="mailto:tanayp1769@gmail.com" target="_blank" rel="noopener noreferrer">tanayp1769@gmail.com</a> or +1 (315) 418 2156. You can also find me on <a href="https://linkedin.com/in/TanayPratapSingh" target="_blank" rel="noopener noreferrer">LinkedIn</a> and <a href="https://github.com/TanayPratapSingh" target="_blank" rel="noopener noreferrer">GitHub</a>, or visit <a href="https://tanaypratapsingh.com" target="_blank" rel="noopener noreferrer">tanaypratapsingh.com</a>. Based in Syracuse, New York.
+      </p>
+
+      <p style="color: var(--text-muted); font-size: 13px; margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center;">
+        &copy; 2026 Tanay Pratap Singh. All rights reserved.
+      </p>
+
+    </main>
+  </div>
+
+  <script>
+    /* Theme toggle */
+    (function () {
+      const toggle = document.getElementById('themeToggle');
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      const root = document.documentElement;
+
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        if (theme === 'light') {
+          icon.innerHTML = '&#9790;';
+          label.textContent = 'Dark Mode';
+        } else {
+          icon.innerHTML = '&#9788;';
+          label.textContent = 'Light Mode';
+        }
+        localStorage.setItem('tps-theme', theme);
+      }
+
+      const saved = localStorage.getItem('tps-theme') || 'dark';
+      setTheme(saved);
+
+      toggle.addEventListener('click', function () {
+        const current = root.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+
+    /* Active nav link tracking on scroll */
+    (function () {
+      const links = document.querySelectorAll('#navList a');
+      const sections = Array.from(links).map(function (a) {
+        return document.querySelector(a.getAttribute('href'));
+      }).filter(Boolean);
+
+      function onScroll() {
+        let current = sections[0];
+        const scrollY = window.scrollY + 120;
+        for (const section of sections) {
+          if (section.offsetTop <= scrollY) current = section;
+        }
+        if (!current) return;
+        links.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + current.id);
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    /* Mobile sidebar */
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.getElementById('mobileToggle');
+      const scrim = document.getElementById('scrim');
+      if (!toggle) return;
+
+      function open() {
+        sidebar.classList.add('open');
+        scrim.classList.add('visible');
+      }
+      function close() {
+        sidebar.classList.remove('open');
+        scrim.classList.remove('visible');
+      }
+      toggle.addEventListener('click', open);
+      scrim.addEventListener('click', close);
+      sidebar.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          if (window.innerWidth <= 880) close();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
