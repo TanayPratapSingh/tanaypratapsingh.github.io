@@ -705,7 +705,75 @@
       <h1 id="projects">Projects</h1>
       <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 28px; text-align: left;">
       </p>
+      
+  <!-- SHOPFLOOR AI -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">MLOps &middot; Predictive Maintenance &middot; Jul 2026</div>
+          <div class="project-title">ShopFloor AI: Predictive Maintenance and RAG for the Factory Floor</div>
+          <p class="project-summary">
+            Unplanned equipment failure is the expensive kind: a line goes down with no warning, and the people who could fix it are buried in PDFs looking for the right procedure. ShopFloor AI is an end to end system that predicts machine failure before it happens (Gradient Boosting, 0.85 F1, 0.96 AUC-ROC) and pairs it with a retrieval assistant that answers maintenance questions in plain language, all shipped as a seven service containerized stack that retrains itself daily.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Scikit learn</span>
+            <span class="tag">Gradient Boosting</span>
+            <span class="tag">MLflow</span>
+            <span class="tag">Apache Kafka</span>
+            <span class="tag">Apache Airflow</span>
+            <span class="tag">Docker Compose</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">LangChain</span>
+            <span class="tag">ChromaDB</span>
+            <span class="tag">RAG</span>
+          </div>
+          <div class="metric">Gradient Boosting F1 = 0.85 &nbsp;|&nbsp; AUC-ROC = 0.96 &nbsp;|&nbsp; 10,000 sensor records, 5 failure modes &nbsp;|&nbsp; 16 engineered features &nbsp;|&nbsp; 7 service Docker Compose stack</div>
 
+          <h4>Why This Matters</h4>
+          <p>
+            Most predictive maintenance projects stop at a notebook with a good ROC curve, which is the part that matters least on a real shop floor. The value shows up only when the prediction reaches an operator in time, updates as new sensor data streams in, and sits next to the documentation someone needs to actually act on the alert. This project was built to cover that full loop: a trained classifier, a live data stream, an automated retraining schedule, and a documentation assistant, wired together as running services rather than scripts.
+          </p>
+
+          <h4>The Failure Prediction Model</h4>
+          <p>
+            Trained on 10,000 manufacturing sensor records spanning five distinct failure modes. Sixteen features were engineered from the raw signals, including power output, thermal differential (the gap between process and ambient temperature), and mechanical overstrain metrics, since the physics of failure lives in these derived quantities more than in any single raw reading. Several classifiers were compared; Gradient Boosting was selected on a held out set with an F1 score of 0.85 and AUC-ROC of 0.96, balancing precision against recall so the system flags real failures without drowning operators in false alarms.
+          </p>
+
+          <h4>Streaming and Anomaly Detection</h4>
+          <p>
+            Sensor readings flow through an Apache Kafka pipeline that simulates a live plant feed. On top of the stream, the system computes rolling KPIs and runs programmatic anomaly detection, so a machine drifting toward one of the five failure modes surfaces as it happens rather than in a next day report. This is the piece that turns a static model into an operational early warning system.
+          </p>
+
+          <h4>Documentation Assistant (RAG)</h4>
+          <p>
+            The second half of the system is a retrieval augmented generation assistant built with LangChain, ChromaDB as the vector store, and the OpenAI API for generation. Maintenance manuals and procedure documents are embedded and indexed, so an operator can ask a natural language question ("what is the shutdown procedure for a thermal fault on line 2?") and get a grounded answer pulled from the actual documentation instead of hunting through PDFs. The retrieval step keeps answers anchored to the source material rather than to the model's open ended guesses.
+          </p>
+
+          <h4>Deployment Architecture</h4>
+          <p>
+            The whole system runs as a seven service application orchestrated with Docker Compose, so it stands up with a single command and each piece scales independently:
+          </p>
+          <ul>
+            <li><strong>FastAPI</strong> serves the prediction and retrieval endpoints over REST.</li>
+            <li><strong>Streamlit</strong> provides the interactive dashboard where operators see predictions, KPIs, and the assistant.</li>
+            <li><strong>Apache Kafka</strong> carries the streaming sensor data.</li>
+            <li><strong>Apache Airflow</strong> runs automated daily retraining, with data quality gates that block a bad batch from ever reaching the model.</li>
+            <li><strong>MLflow</strong> tracks experiments and handles model registry promotion, so a newly trained model is only promoted to production if it clears the bar.</li>
+            <li><strong>ChromaDB</strong> holds the document embeddings for the RAG assistant.</li>
+          </ul>
+
+          <div class="callout">
+            <h4>What This Project Demonstrates</h4>
+            <p style="margin-bottom: 0;">
+              The interesting engineering here is not the model, it is everything around it: a retraining schedule that runs without a human, quality gates that refuse to promote a model trained on bad data, a registry that separates "trained" from "deployed," and a streaming layer that keeps predictions current. That is the difference between a model that scores well once and a system a plant could actually depend on.
+            </p>
+          </div>
+        </div>
+      </details>
+      
       <!-- JMA WIRELESS LSS DASHBOARD -->
       <details class="project" open>
         <summary class="project-header">
@@ -805,74 +873,6 @@
           <p>
             DMAIC framework throughout. Project Charter, SIPOC, CTQC tree, Communication Plan, and Stakeholder Analysis in Define. Data Collection Plan, Data Map, and operational definitions in Measure. Fishbone (Ishikawa) and Pareto in Analyze. Pugh Matrix and Benefit Effort prioritization in Improve. FMEA, Control Plan, and Escalation Framework in Control. Python (Pandas, openpyxl), Excel, Power BI, DAX, and Minitab for the supporting analysis.
           </p>
-        </div>
-      </details>
-
-      <!-- SHOPFLOOR AI -->
-      <details class="project">
-        <summary class="project-header">
-          <div class="meta-line">MLOps &middot; Predictive Maintenance &middot; Jul 2026</div>
-          <div class="project-title">ShopFloor AI: Predictive Maintenance and RAG for the Factory Floor</div>
-          <p class="project-summary">
-            Unplanned equipment failure is the expensive kind: a line goes down with no warning, and the people who could fix it are buried in PDFs looking for the right procedure. ShopFloor AI is an end to end system that predicts machine failure before it happens (Gradient Boosting, 0.85 F1, 0.96 AUC-ROC) and pairs it with a retrieval assistant that answers maintenance questions in plain language, all shipped as a seven service containerized stack that retrains itself daily.
-          </p>
-        </summary>
-        <div class="project-body">
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">Scikit learn</span>
-            <span class="tag">Gradient Boosting</span>
-            <span class="tag">MLflow</span>
-            <span class="tag">Apache Kafka</span>
-            <span class="tag">Apache Airflow</span>
-            <span class="tag">Docker Compose</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">Streamlit</span>
-            <span class="tag">LangChain</span>
-            <span class="tag">ChromaDB</span>
-            <span class="tag">RAG</span>
-          </div>
-          <div class="metric">Gradient Boosting F1 = 0.85 &nbsp;|&nbsp; AUC-ROC = 0.96 &nbsp;|&nbsp; 10,000 sensor records, 5 failure modes &nbsp;|&nbsp; 16 engineered features &nbsp;|&nbsp; 7 service Docker Compose stack</div>
-
-          <h4>Why This Matters</h4>
-          <p>
-            Most predictive maintenance projects stop at a notebook with a good ROC curve, which is the part that matters least on a real shop floor. The value shows up only when the prediction reaches an operator in time, updates as new sensor data streams in, and sits next to the documentation someone needs to actually act on the alert. This project was built to cover that full loop: a trained classifier, a live data stream, an automated retraining schedule, and a documentation assistant, wired together as running services rather than scripts.
-          </p>
-
-          <h4>The Failure Prediction Model</h4>
-          <p>
-            Trained on 10,000 manufacturing sensor records spanning five distinct failure modes. Sixteen features were engineered from the raw signals, including power output, thermal differential (the gap between process and ambient temperature), and mechanical overstrain metrics, since the physics of failure lives in these derived quantities more than in any single raw reading. Several classifiers were compared; Gradient Boosting was selected on a held out set with an F1 score of 0.85 and AUC-ROC of 0.96, balancing precision against recall so the system flags real failures without drowning operators in false alarms.
-          </p>
-
-          <h4>Streaming and Anomaly Detection</h4>
-          <p>
-            Sensor readings flow through an Apache Kafka pipeline that simulates a live plant feed. On top of the stream, the system computes rolling KPIs and runs programmatic anomaly detection, so a machine drifting toward one of the five failure modes surfaces as it happens rather than in a next day report. This is the piece that turns a static model into an operational early warning system.
-          </p>
-
-          <h4>Documentation Assistant (RAG)</h4>
-          <p>
-            The second half of the system is a retrieval augmented generation assistant built with LangChain, ChromaDB as the vector store, and the OpenAI API for generation. Maintenance manuals and procedure documents are embedded and indexed, so an operator can ask a natural language question ("what is the shutdown procedure for a thermal fault on line 2?") and get a grounded answer pulled from the actual documentation instead of hunting through PDFs. The retrieval step keeps answers anchored to the source material rather than to the model's open ended guesses.
-          </p>
-
-          <h4>Deployment Architecture</h4>
-          <p>
-            The whole system runs as a seven service application orchestrated with Docker Compose, so it stands up with a single command and each piece scales independently:
-          </p>
-          <ul>
-            <li><strong>FastAPI</strong> serves the prediction and retrieval endpoints over REST.</li>
-            <li><strong>Streamlit</strong> provides the interactive dashboard where operators see predictions, KPIs, and the assistant.</li>
-            <li><strong>Apache Kafka</strong> carries the streaming sensor data.</li>
-            <li><strong>Apache Airflow</strong> runs automated daily retraining, with data quality gates that block a bad batch from ever reaching the model.</li>
-            <li><strong>MLflow</strong> tracks experiments and handles model registry promotion, so a newly trained model is only promoted to production if it clears the bar.</li>
-            <li><strong>ChromaDB</strong> holds the document embeddings for the RAG assistant.</li>
-          </ul>
-
-          <div class="callout">
-            <h4>What This Project Demonstrates</h4>
-            <p style="margin-bottom: 0;">
-              The interesting engineering here is not the model, it is everything around it: a retraining schedule that runs without a human, quality gates that refuse to promote a model trained on bad data, a registry that separates "trained" from "deployed," and a streaming layer that keeps predictions current. That is the difference between a model that scores well once and a system a plant could actually depend on.
-            </p>
-          </div>
         </div>
       </details>
 
@@ -1541,31 +1541,7 @@
       <!-- ============ EXPERIENCE ============ -->
       <h2 id="experience">Experience</h2>
 
-      <div class="exp-card">
-        <div class="exp-card-head">
-          <h3 class="exp-card-title">Cybersecurity Teaching Assistant</h3>
-          <div class="exp-card-org">Syracuse University</div>
-        </div>
-        <div class="exp-card-meta">Summer 2025 &middot; Syracuse, NY</div>
-
-        <ul class="exp-highlights">
-          <li><strong>Labs Delivered</strong>15+ hands on labs</li>
-          <li><strong>Toolchain</strong>Wireshark, Kali, Nmap, OpenSSL, Metasploit</li>
-          <li><strong>VM Stack</strong>Kali, Win 10/Server, CentOS, Metasploitable</li>
-          <li><strong>Domains</strong>Crypto, Network, Pentest, Forensics</li>
-        </ul>
-
-        <div class="exp-card-body">
-          <p>
-            Developed and delivered hands on cybersecurity labs covering cryptography, network security, penetration testing, and digital forensics. Labs walk students through the full attacker workflow, from OSINT reconnaissance and port scanning to exploitation and post compromise enumeration, then flip the perspective to defensive analysis: packet inspection, log correlation, and incident reporting.
-          </p>
-          <p>
-            Built and maintained multi VM lab environments combining Kali Linux as the attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Graded security labs and incident analysis reports, reinforcing packet analysis, OSINT reconnaissance, ethical hacking, and hashing (SHA 256, SHA 512), with detailed feedback on student methodology rather than just answers.
-          </p>
-        </div>
-      </div>
-
-      <div class="exp-card">
+   <div class="exp-card">
         <div class="exp-card-head">
           <h3 class="exp-card-title">Research Assistant, Gravity Spy 2.0</h3>
           <div class="exp-card-org">Syracuse iSchool</div>
@@ -1591,6 +1567,30 @@
           </p>
           <p>
             Conducted the full descriptive analysis: volunteer effort distribution (heavily right tailed, top ten volunteers account for 50% of classifications), subject level inter volunteer agreement (52% perfect consensus on multi classified subjects), and response distribution across workflow versions. Code is committed to the <a href="https://github.com/Syracuse-CCDS/GravitySpy_Classifier" target="_blank" rel="noopener noreferrer">Syracuse CCDS GravitySpy Classifier</a> repository. Next phase scopes a CNN or vision transformer model to predict volunteer similarity labels directly from LIGO spectrogram image pairs.
+          </p>
+        </div>
+      </div>
+      
+      <div class="exp-card">
+        <div class="exp-card-head">
+          <h3 class="exp-card-title">Cybersecurity Teaching Assistant</h3>
+          <div class="exp-card-org">Syracuse University</div>
+        </div>
+        <div class="exp-card-meta">Summer 2025 &middot; Syracuse, NY</div>
+
+        <ul class="exp-highlights">
+          <li><strong>Labs Delivered</strong>15+ hands on labs</li>
+          <li><strong>Toolchain</strong>Wireshark, Kali, Nmap, OpenSSL, Metasploit</li>
+          <li><strong>VM Stack</strong>Kali, Win 10/Server, CentOS, Metasploitable</li>
+          <li><strong>Domains</strong>Crypto, Network, Pentest, Forensics</li>
+        </ul>
+
+        <div class="exp-card-body">
+          <p>
+            Developed and delivered hands on cybersecurity labs covering cryptography, network security, penetration testing, and digital forensics. Labs walk students through the full attacker workflow, from OSINT reconnaissance and port scanning to exploitation and post compromise enumeration, then flip the perspective to defensive analysis: packet inspection, log correlation, and incident reporting.
+          </p>
+          <p>
+            Built and maintained multi VM lab environments combining Kali Linux as the attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Graded security labs and incident analysis reports, reinforcing packet analysis, OSINT reconnaissance, ethical hacking, and hashing (SHA 256, SHA 512), with detailed feedback on student methodology rather than just answers.
           </p>
         </div>
       </div>
@@ -1850,7 +1850,7 @@
       </p>
 
       <p>
-        Reach me at <a href="mailto:tanayp1769@gmail.com" target="_blank" rel="noopener noreferrer">tanayp1769@gmail.com</a> or +1 (315) 418 2156. You can also find me on <a href="https://linkedin.com/in/TanayPratapSingh" target="_blank" rel="noopener noreferrer">LinkedIn</a> and <a href="https://github.com/TanayPratapSingh" target="_blank" rel="noopener noreferrer">GitHub</a>, or visit <a href="https://tanaypratapsingh.com" target="_blank" rel="noopener noreferrer">tanaypratapsingh.com</a>. Based in Syracuse, New York.
+        Reach me at <a href="mailto:tanayp1769@gmail.com" target="_blank" rel="noopener noreferrer">tanayp1769@gmail.com</a> or +1 (315) 418 2156. You can also find me on <a href="https://linkedin.com/in/TanayPratapSingh" target="_blank" rel="noopener noreferrer">LinkedIn</a> and <a href="https://github.com/TanayPratapSingh" target="_blank" rel="noopener noreferrer">GitHub</a>. Based in Syracuse, New York.
       </p>
 
       <p style="color: var(--text-muted); font-size: 13px; margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center;">
