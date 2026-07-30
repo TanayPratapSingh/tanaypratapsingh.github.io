@@ -877,6 +877,76 @@
         </div>
       </details>
 
+      <!-- PROJECT MARK -->
+      <details class="project">
+        <summary class="project-header">
+          <div class="meta-line">AI Evaluation &middot; Analytics Red Teaming &middot; Jul 2026</div>
+          <div class="project-title">Project Mark: Designing Deterministic Analytics Traps to Stress Test Frontier Models</div>
+          <p class="project-summary">
+            A contributor engagement building product analytics problems whose only purpose was to make frontier language models fail. Each task had to pair an ambiguous business question with messy, multi file, real world data that concealed exactly one defensible answer, reachable only through careful cleaning and statistical reasoning. I designed and reproducibly verified four families of trap on real datasets. The honest headline is that the strongest models solved the cleanest traps anyway, and that result is the most interesting thing the project produced: a concrete, first hand read on where current frontier reasoning is genuinely hard to beat.
+          </p>
+        </summary>
+        <div class="project-body">
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">SciPy</span>
+            <span class="tag">Statistical Inference</span>
+            <span class="tag">Causal Reasoning</span>
+            <span class="tag">Experiment Design</span>
+            <span class="tag">LLM Evaluation</span>
+            <span class="tag">Data Cleaning</span>
+            <span class="tag">Reproducibility</span>
+          </div>
+          <div class="metric">5 datasets profiled &nbsp;|&nbsp; 4 trap families built and verified &nbsp;|&nbsp; deterministic golden solutions reproduced to the digit &nbsp;|&nbsp; CC licensed multi file corpora &nbsp;|&nbsp; frontier models solved the clean traps</div>
+
+          <h4>What The Project Was</h4>
+          <p>
+            The brief was unusually specific. Every submission had to be a product analytics question of the kind a technology company actually faces, analyzing how users behave inside a digital product to drive a product, growth, or monetization decision. Each had to resolve to a single deterministic recommendation that ten domain experts would independently agree on, be reconstructible entirely from the shipped files, and be hard enough that a panel of frontier models would fail it. The bar for a valid stump was concrete: across eight model responses, at least two of the first four and one of the second four had to land on a meaningfully different answer. Difficulty had to come from methodology and reasoning, never from vague wording or a trick definition.
+          </p>
+
+          <h4>The Real Constraint: Fairness Plus Difficulty At The Same Time</h4>
+          <p>
+            The interesting tension is that a good task has to be simultaneously fair and hard. Fair means the correcting fact lives somewhere in the corpus, every file opens with standard tooling, and all defensible cleanings converge on the same answer. Hard means a strong analyst, or a strong model, still gets it wrong on the first pass. On top of that, the input files had to be real and appropriately licensed (public domain or Creative Commons only, verified per dataset), never model generated, six or more files across a variety of formats with several of them load bearing. Satisfying every one of those at once, on real data, is most of the work.
+          </p>
+
+          <h4>Traps I Built And Verified</h4>
+          <p>
+            Every trap below was implemented against real data and checked with code so the intended answer reproduced exactly before anything shipped. The pattern in each case is a headline number that is real and easy to compute but misleading, and a correcting analysis that a rushed solver skips.
+          </p>
+          <ul>
+            <li><strong>Composition shift (Simpson's paradox).</strong> A blended retention or conversion metric that declines quarter over quarter while every underlying segment is flat or improving, because the mix of segments moved. The naive read (the product is getting worse) is refuted by a segmentation the solver has to discover and join across files on a mismatched key.</li>
+            <li><strong>Outlier artifact in an A/B revenue test.</strong> On a real experiment dataset, one arm's revenue looked competitive, but 123 users (0.06 percent of the group) each paid a near identical anomalous amount and accounted for 89.4 percent of that arm's revenue, while the other arm had none. The correct call requires recognizing the cluster as non genuine, handling the zero inflated heavy tailed distribution properly (decompose conversion times value, use robust tests), and flipping the decision the raw averages imply.</li>
+            <li><strong>Confounded and circular metrics.</strong> A composite health score presented as independent corroboration that actually embeds the very metric under investigation, so citing it double counts one signal, plus correlation dressed up as causation on observational data.</li>
+            <li><strong>Mismatched population merges.</strong> A distractor file with similar looking columns that covers a different population entirely (different platform, window, or cohort), tempting a solver to merge it in and report a figure that does not apply to the group in question.</li>
+          </ul>
+
+          <h4>The Final Task: An Engagement Feature Decision On Real Learning Platform Data</h4>
+          <p>
+            The most fully developed task used the Open University Learning Analytics Dataset (real virtual learning environment click logs, registrations, and outcomes for tens of thousands of students, released under CC BY). The business question: fund exactly one engagement initiative to raise course pass rates, either a richer per session experience or a nudge to return on more days. A shipped internal pre read recommended the per session option, backed by a real and reproducible correlation (total clicks versus passing at r = 0.56, with pass rate climbing from 0.3 percent to 91.9 percent across activity quintiles).
+          </p>
+          <p>
+            That correlation is the trap. Total activity confounds two distinct levers: how many days a student returns, and how much they do per session. Decomposing clicks into active days times clicks per active day and regressing both against passing shows the entire association lives in return frequency (standardized effect around 0.24, and about 0.34 with all students included) while per session intensity collapses to essentially zero once days present is controlled. The result held within every module and whether or not withdrawn students were included, so the deterministic answer is to fund return frequency, not intensity. I built two corroborating decoy artifacts pointing at the wrong lever, verified every figure reproduced from the raw files, and the task cleared the program's automated construction and determinism checks.
+          </p>
+
+          <h4>Why This Is A Happy Failure</h4>
+          <p>
+            It did not stump the models. In repeated live rollouts, strong frontier models independently rebuilt the analysis from the raw files, ran the frequency versus intensity decomposition, ignored the decoy pre reads, and reached the correct answer, often quoting the exact adjusted numbers. Hardening the framing and adding more authoritative decoys did not change the outcome. The reason is structural and worth stating plainly: the move that cracks the task, decompose a composite metric and test the parts, is a reflexive step for a capable analyst, so a frontier model does it whether or not the prompt signposts it.
+          </p>
+          <p>
+            That is a genuinely useful finding, not a wasted effort. Stumping a frontier model on a clean, fair analytics problem requires a trap that sits outside a strong reasoner's default repertoire, which is a far higher bar than "a smart person would need to be careful here." Watching capable models refuse a plausible but confounded headline artifact and reconstruct the correct causal story from first principles is a concrete, calibrated data point about where these systems are now strong, and it reshaped how I think about designing evaluations for them.
+          </p>
+
+          <div class="callout">
+            <h4>What This Project Demonstrates</h4>
+            <p style="margin-bottom: 0;">
+              Statistical rigor under adversarial conditions: constructing and reproducibly verifying deterministic traps (Simpson's paradox, outlier and confounding artifacts, correlation versus causation, population mismatches) on real, licensed, multi file data. It also shows the parts that are easy to undervalue, disciplined data provenance and licensing, golden solutions checked to the digit before shipping, and the willingness to report an honest negative result. The takeaway I care about most is the calibrated read on frontier model capability that only came from trying, and failing, to beat it fairly.
+            </p>
+          </div>
+        </div>
+      </details>
+
       <!-- F1 PIT STOP -->
       <details class="project">
         <summary class="project-header">
