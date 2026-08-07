@@ -15,12 +15,6 @@ An applied data science portfolio covering projects, experience, skills and educ
 | Education | MS in Applied Data Science and BTech in Computer Science and Engineering |
 | Let's Connect | Contact links |
 
-## Implementation
-
-A single `index.html` of about 3,150 lines. Everything is inline: markup, styles and behaviour, with
-no build step, no framework and no dependencies. It deploys straight from this repository through
-GitHub Pages, so a push to `main` is a deploy.
-
 ## Repository layout
 
 ```
