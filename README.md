@@ -28,11 +28,3 @@ index.html          The entire site
 images/             Project imagery
 Resume *.pdf        Dated resume versions (April, May and July 2026)
 ```
-
-## Note on duplicated images
-
-All 16 images currently exist twice, once at the repository root and once inside `images/`. For
-example `aurora_-000.jpg` and `images/aurora_-000.jpg` are the same file.
-
-`index.html` references the `images/` copies exclusively, so the root level duplicates are unused
-and safe to delete.
