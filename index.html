@@ -652,13 +652,13 @@
       <div class="grid-pc">
       <button class="pc" onclick="openProject(12)">
         <span class="pc-meta">Applied NLP &middot; Human in the Loop &middot; Aug 2026</span>
-        <span class="pc-title">Media-pulse</span>
+        <span class="pc-title">media-pulse: Communications Measurement</span>
         <span class="pc-badge-wrap"><span class="pc-badge">topic acc 0.88 &rarr; 0.96 with review &middot; sentiment 0.50 &rarr; 0.85 &middot; ECE 0.156</span></span>
         <span class="pc-tags"><span class="ptag">Python</span><span class="ptag">Scikit learn</span><span class="ptag">VADER</span><span class="ptag">Streamlit</span><span class="ptag">Calibration (ECE)</span><span class="ptag">Human in the Loop</span></span>
       </button>
       <button class="pc" onclick="openProject(13)">
         <span class="pc-meta">Agent Orchestration &middot; LLM Systems &middot; Aug 2026</span>
-        <span class="pc-title">Comms-agent</span>
+        <span class="pc-title">comms-agent: Orchestrated Monitoring Agent</span>
         <span class="pc-badge-wrap"><span class="pc-badge">stateful graph &middot; tool calling &middot; 9 of 24 flagged, 7 corrected via HITL gate</span></span>
         <span class="pc-tags"><span class="ptag">Python</span><span class="ptag">Agent Orchestration</span><span class="ptag">State Graph</span><span class="ptag">Tool Calling</span><span class="ptag">LLM</span><span class="ptag">Human in the Loop</span></span>
       </button>
@@ -743,7 +743,7 @@
    <div class="exp-card">
         <div class="exp-card-head">
           <h3 class="exp-card-title">Research Assistant, Gravity Spy 2.0</h3>
-          <div class="exp-card-org">Syracuse University</div>
+          <div class="exp-card-org">Syracuse iSchool</div>
         </div>
         <div class="exp-card-meta">Feb. 2026 to Present &middot; PI: Prof. Kevin Crowston &middot; NSF funded</div>
         <ul class="exp-highlights">
@@ -776,10 +776,37 @@
 
       <div class="exp-card">
         <div class="exp-card-head">
+          <h3 class="exp-card-title">Process Improvement Analyst, Lean Six Sigma Capstone</h3>
+          <div class="exp-card-org">JMA Wireless</div>
+        </div>
+        <div class="exp-card-meta">Spring 2026 &middot; Syracuse SCM 755 &middot; Sponsor: Ted Ens, SVP Global Operations &middot; Liverpool, NY</div>
+        <ul class="exp-highlights">
+          <li><strong>Annualized Impact</strong>~$355K recovered</li>
+          <li><strong>Data Pipeline</strong>31 GB JSON &rarr; 5 MB Excel</li>
+          <li><strong>KPIs</strong>4 standardized across 2 lines</li>
+          <li><strong>Team</strong>5 analysts &middot; 15 weeks</li>
+        </ul>
+        <div class="exp-card-body">
+          <p>
+            Client sponsored Lean Six Sigma capstone (SCM 755, Syracuse Whitman School of Management) with JMA Wireless, a US manufacturer of 5G cell tower transmitters and active wireless infrastructure. Delivered a full DMAIC engagement for the Jumper Department with weekly on site stakeholder access, sponsored by the SVP of Global Operations.
+          </p>
+          <p>
+            Ran the complete DMAIC cycle: authored the project charter, SIPOC, and CTQC tree in Define; agreed sponsor approved definitions for four KPIs (Parts per Labor Hour, Uptime, First Time Throughput, Schedule Attainment) across a manual and an automated assembly line in Measure; used Pareto and fishbone analysis to isolate material flow, not equipment availability, as the root cause of the automated line's schedule gap in Analyze; scored interventions with a Pugh matrix in Improve; and wrote the FMEA and Control Plan in Control.
+          </p>
+          <p>
+            Built the end to end data pipeline that made the work possible. The automated cell emitted deeply nested JSON, two datasets totaling 31 GB that would not open in Power BI. Using Pandas <code>json_normalize</code> with explicit record paths and openpyxl, I flattened it to a wide format Excel file under 5 MB that loads instantly, casting types, computing cycle time, and running the full week in under 30 seconds on a standard laptop. The cleaned feed drove a Power BI dashboard with a DAX measure library and conditional formatting against targets.
+          </p>
+          <p>
+            Quantified impact: closing the automated line's schedule attainment gap recovers roughly 27,000 cables per year at no added labor (about $324,000 at a $12 per cable margin), and the dashboard removes approximately 48 analyst hours per week of manual reporting (about $31,200), for a combined recurring value of roughly $355,000 per year from a single department pilot.
+          </p>
+        </div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-card-head">
           <h3 class="exp-card-title">Cybersecurity Teaching Assistant</h3>
           <div class="exp-card-org">Syracuse University</div>
         </div>
-        <div class="exp-card-meta">Summer 2025 &middot; Syracuse, NY</div>
+        <div class="exp-card-meta">Summer 2025 &middot; Syracuse iSchool &middot; Supervisor: Prof. Bahram Attaie</div>
         <ul class="exp-highlights">
           <li><strong>Labs Delivered</strong>15+ hands on labs</li>
           <li><strong>Toolchain</strong>Wireshark, Kali, Nmap, OpenSSL, Metasploit</li>
@@ -788,10 +815,16 @@
         </ul>
         <div class="exp-card-body">
           <p>
-            Developed and delivered hands on cybersecurity labs covering cryptography, network security, penetration testing, and digital forensics. Labs walk students through the full attacker workflow, from OSINT reconnaissance and port scanning to exploitation and post compromise enumeration, then flip the perspective to defensive analysis: packet inspection, log correlation, and incident reporting.
+            Graduate teaching assistant for the iSchool's cybersecurity course, working directly with the instructor to develop and deliver hands on labs across four domains: cryptography, network security, penetration testing, and digital forensics. Each lab walks students through the full attacker workflow, from OSINT reconnaissance and port scanning to exploitation and post compromise enumeration, then flips the perspective to defensive analysis: packet inspection, log correlation, and incident reporting.
           </p>
           <p>
-            Built and maintained multi VM lab environments combining Kali Linux as the attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Graded security labs and incident analysis reports, reinforcing packet analysis, OSINT reconnaissance, ethical hacking, and hashing (SHA 256, SHA 512), with detailed feedback on student methodology rather than just answers.
+            Built and maintained the multi VM lab environments the course runs on, using Kali Linux as the attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Kept the images, network configuration, and tooling reproducible so a full section of students could work through the same exercises without environment drift derailing the lesson.
+          </p>
+          <p>
+            The technical coverage spans symmetric and asymmetric cryptography and hashing with OpenSSL (SHA 256, SHA 512), network scanning and enumeration with Nmap, traffic capture and protocol analysis with Wireshark, and exploitation with Metasploit against intentionally vulnerable targets. On the forensics side, students practice evidence handling, file and metadata analysis, and writing up findings as an incident report.
+          </p>
+          <p>
+            Held office hours and guided students through debugging their own attack chains, and graded labs and incident analysis reports with detailed feedback on methodology rather than only the final answer, since in security the reasoning and the chain of evidence matter as much as the result. Reinforced ethical hacking practice throughout: scope, authorization, and responsible handling of tools and findings.
           </p>
         </div>
       </div>
