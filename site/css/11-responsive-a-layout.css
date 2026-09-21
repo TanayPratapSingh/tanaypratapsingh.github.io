@@ -1,0 +1,13 @@
+@media (max-width:900px){
+  .rail{position:static;width:auto;flex-direction:column;border-right:0;
+    border-bottom:1px solid var(--rule-2);padding:18px 16px}
+  .rail nav{flex-direction:row;flex-wrap:wrap;gap:4px 14px;margin-top:16px}
+  .rail nav a{margin-left:0;padding:3px 0}
+  .rail__spacer{display:none}
+  .rail__c{margin-top:16px}
+  .rail__c a,.rail__c span{display:inline-block;margin-right:18px}
+  .main{margin-left:0;padding:20px 16px 0}
+  .job__w{margin-left:0;width:100%}
+  .grid{grid-template-columns:1fr}
+  .sheet{width:100%;max-height:100vh;border:0}
+}

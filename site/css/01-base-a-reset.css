@@ -1,0 +1,9 @@
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:16.5px;line-height:1.5;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.15;letter-spacing:-0.013em}
+p{margin:0}
+a{color:inherit}

@@ -1,0 +1,14 @@
+/* ---------- roles ---------- */
+.job{background:var(--surface);border:1px solid var(--rule-2);padding:20px 22px;margin-bottom:18px}
+.job__t{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 14px}
+.job h3{font-size:20px}
+.job__o{color:var(--ink-2);font-size:14.5px}
+.job__w{margin-left:auto;font-family:var(--mono);font-size:12.2px;color:var(--ink-3)}
+.job__s{margin:13px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.job__s div{background:var(--paper);padding:9px 12px}
+.job__s dt{font-size:12px;color:var(--ink-3)}
+.job__s dd{margin:2px 0 0;font-family:var(--mono);font-size:14.5px;color:var(--met);line-height:1.4}
+.job__b{margin-top:14px}
+.job__b p{margin:0 0 10px;font-size:15.2px;color:var(--ink-2);max-width:96ch}
+.job__b p:last-child{margin-bottom:0}
