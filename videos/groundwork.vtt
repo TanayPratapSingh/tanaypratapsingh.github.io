@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:02.300
+A live shell in the Groundwork repo
+
+00:00:02.600 --> 00:00:04.800
+Repo layout: src, scripts, data, deploy, docs, tests
+
+00:00:05.000 --> 00:00:07.900
+A RAG system built around the parts that usually get skipped
+
+00:00:08.100 --> 00:00:10.100
+Five real public datasets, each pinned by SHA-256
+
+00:00:10.300 --> 00:00:11.500
+Hybrid BM25 and dense index over 1,204 SQuAD passages
+
+00:00:11.700 --> 00:00:13.300
+Full evaluation. No API key, deterministic offline reader
+
+00:00:13.500 --> 00:00:15.000
+Guardrails trained on 546 injection and 1,044 jailbreak examples
+
+00:00:15.200 --> 00:00:17.500
+Release gate: recall@5 0.908, MRR 0.825, ECE 0.044
+
+00:00:17.700 --> 00:00:20.000
+Gate FAILED on abstention recall, 0.868 against a 0.900 floor
