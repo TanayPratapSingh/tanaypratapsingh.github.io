@@ -1,0 +1,43 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:02.400
+A live shell in the media-pulse repo
+
+00:00:02.700 --> 00:00:04.300
+Pipeline modules: ingest, classify, review, metrics
+
+00:00:04.600 --> 00:00:07.300
+Human review is the core idea, not the model
+
+00:00:07.600 --> 00:00:08.700
+Running the demo over 120 bundled mentions
+
+00:00:08.900 --> 00:00:10.900
+Share of voice, sentiment mix, message pull-through
+
+00:00:11.100 --> 00:00:13.100
+Human review lifts sentiment accuracy from 0.417 to 0.854
+
+00:00:13.600 --> 00:00:16.400
+The Streamlit dashboard over that same run
+
+00:00:16.600 --> 00:00:18.600
+120 mentions, 91 percent share of voice
+
+00:00:19.100 --> 00:00:21.500
+Coverage tab: mentions over time by ISO week
+
+00:00:21.700 --> 00:00:24.100
+Coverage broken out by topic
+
+00:00:24.600 --> 00:00:27.200
+Review queue: 43 flagged, 25 corrected, 58 percent correction rate
+
+00:00:27.400 --> 00:00:29.600
+Every human decision lands in an immutable audit log
+
+00:00:30.100 --> 00:00:32.600
+Model QA: topic accuracy 97.9 percent, sentiment 85.4 percent
+
+00:00:32.800 --> 00:00:35.200
+The 120 mentions are a bundled sample of a fictional brand
