@@ -1,0 +1,49 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:02.700
+A live shell in the ztf-transient-pipeline repo
+
+00:00:02.900 --> 00:00:04.400
+Repo layout: ingestion, model, scoring, dbt, orchestration
+
+00:00:04.600 --> 00:00:06.800
+The README: a streaming ML pipeline plus a tested warehouse
+
+00:00:07.000 --> 00:00:08.400
+Generating the sample dataset: 40 alerts, 114 history rows
+
+00:00:08.600 --> 00:00:10.400
+dbt build runs staging, intermediate, and marts
+
+00:00:10.600 --> 00:00:13.200
+8 models and 21 data tests finish in 0.34 seconds
+
+00:00:13.400 --> 00:00:16.800
+Done. PASS=32, WARN=0, ERROR=0
+
+00:00:17.300 --> 00:00:20.400
+The Streamlit dashboard reads the marts dbt just built
+
+00:00:20.700 --> 00:00:23.400
+40 alerts across 24 nights, five predicted classes
+
+00:00:23.700 --> 00:00:27.000
+Classification mix by predicted class
+
+00:00:27.300 --> 00:00:30.200
+Nightly alert volume, split by filter band
+
+00:00:30.500 --> 00:00:33.400
+Selecting a real object from the classified transients
+
+00:00:33.700 --> 00:00:36.400
+ZTF25adnlvyn, the object with the widest magnitude range
+
+00:00:36.700 --> 00:00:40.400
+Its lightcurve, where lower magnitude means brighter
+
+00:00:40.700 --> 00:00:44.000
+The mart row behind it, classified as variable_star
+
+00:00:44.300 --> 00:00:47.600
+All figures come from the CI fixture, not live ZTF data
