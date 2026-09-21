@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tanay Pratap Singh</title>
+<meta name="description" content="Applied data scientist. Data systems, evaluation harnesses, and the numbers that show where they fail.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFCFD; --ink:#14161A; --ink-2:#5A6068; --rule:#DDE1E6;
+  --met:#1B4D8F; --missed:#B3261E; --field:#F3F4F6;
+  --serif:'Newsreader',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --gut:clamp(20px,5vw,64px);
+  --measure:66ch;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#0F1114;--ink:#E9EBEE;--ink-2:#9AA1A9;--rule:#262A2F;
+        --met:#7FA9E0;--missed:#E98179;--field:#171A1E;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:17px;line-height:1.55;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.15;letter-spacing:-0.012em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--met);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:1140px;margin:0 auto;padding:0 var(--gut)}
+
+/* ---------- masthead ---------- */
+.top{border-bottom:1px solid var(--rule)}
+.top__in{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:22px 0}
+.wordmark{font-size:19px;font-weight:500;letter-spacing:-0.01em;text-decoration:none}
+.nav{display:flex;gap:26px;font-size:15px}
+.nav a{color:var(--ink-2);text-decoration:none}
+.nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- opening statement ---------- */
+.lede{padding:clamp(56px,10vw,104px) 0 clamp(44px,7vw,72px)}
+.lede h1{
+  font-size:clamp(32px,5.4vw,58px);font-weight:300;line-height:1.1;
+  max-width:19ch;letter-spacing:-0.022em;
+}
+.lede h1 em{font-style:italic;font-weight:300}
+.lede p{margin-top:26px;max-width:54ch;color:var(--ink-2);font-size:19px}
+.lede .avail{margin-top:20px;font-family:var(--mono);font-size:13px;color:var(--ink)}
+.lede .avail span{color:var(--met)}
+
+/* ---------- section heads ---------- */
+.sec{padding:clamp(40px,6vw,64px) 0;border-top:1px solid var(--rule)}
+.sec > h2{font-size:15px;font-weight:500;color:var(--ink-2);margin-bottom:34px}
+
+/* ---------- flagship ---------- */
+.flag{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(24px,4vw,56px);
+      padding:clamp(34px,5vw,52px) 0;border-top:1px solid var(--rule)}
+.sec .flag:first-of-type{border-top:0;padding-top:0}
+.flag__name{font-size:clamp(27px,3.1vw,37px);margin:0 0 10px;letter-spacing:-0.02em}
+.flag__desc{color:var(--ink-2);max-width:46ch;margin-bottom:26px}
+
+.read{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:baseline;
+      padding:14px 0;border-top:1px solid var(--rule)}
+.read__val{font-family:var(--mono);font-size:clamp(30px,3.6vw,42px);font-weight:500;line-height:1}
+.read--met .read__val{color:var(--met)}
+.read--missed .read__val{color:var(--missed)}
+.read__name{font-size:16px}
+.read__ref{font-size:14px;color:var(--ink-2);margin-top:3px}
+.read--missed .read__ref{color:var(--missed)}
+.note{margin-top:14px;font-size:15.5px;font-style:italic;color:var(--ink-2);max-width:44ch}
+.flag__links{margin-top:24px;display:flex;gap:20px;font-size:15px}
+.flag__links a{color:var(--met);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+.flag__links a:hover{color:var(--ink)}
+
+.media{align-self:start}
+.media video{width:100%;display:block;background:#000;border:1px solid var(--rule)}
+.media figcaption{margin-top:9px;font-size:13px;color:var(--ink-2)}
+
+/* ---------- tier two ---------- */
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);
+     border:1px solid var(--rule)}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.two__it{background:var(--paper);padding:24px 22px}
+.two__val{font-family:var(--mono);font-size:24px;font-weight:500;color:var(--met);line-height:1}
+.two__unit{font-size:14px;color:var(--ink-2);margin-top:5px}
+.two__name{font-size:20px;margin:16px 0 6px;letter-spacing:-0.012em}
+.two__desc{font-size:15px;color:var(--ink-2);max-width:38ch}
+.two__more{margin-top:14px;font-size:14px;display:inline-block;color:var(--met);text-decoration:none;
+           border-bottom:1px solid currentColor}
+
+/* ---------- table ---------- */
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+caption{text-align:left;color:var(--ink-2);font-size:15px;padding-bottom:16px}
+th{text-align:left;font-weight:500;font-size:13.5px;color:var(--ink-2);
+   padding:0 14px 9px 0;border-bottom:1px solid var(--ink)}
+td{padding:13px 14px 13px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+td.num,th.num{font-family:var(--mono);font-size:14px;text-align:right;padding-right:0;white-space:nowrap}
+tbody tr:hover td{background:var(--field)}
+.t-name{font-size:16.5px}
+.t-yr{color:var(--ink-2);font-family:var(--mono);font-size:13.5px;text-align:right;padding-right:0}
+
+/* ---------- experience ---------- */
+.job{padding:26px 0;border-top:1px solid var(--rule);display:grid;
+     grid-template-columns:minmax(0,1fr) auto;gap:8px 28px}
+.job h3{font-size:21px;letter-spacing:-0.012em}
+.job .org{color:var(--ink-2);font-size:15px}
+.job .when{font-family:var(--mono);font-size:13px;color:var(--ink-2);white-space:nowrap}
+.job dl{grid-column:1/-1;margin:14px 0 0;display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px 28px}
+.job dt{font-size:13.5px;color:var(--ink-2)}
+.job dd{margin:3px 0 0;font-family:var(--mono);font-size:19px;color:var(--met)}
+
+/* ---------- close ---------- */
+.close{padding:clamp(48px,7vw,86px) 0 96px;border-top:1px solid var(--ink)}
+.close h2{font-size:clamp(24px,3.2vw,34px);font-weight:300;max-width:22ch;letter-spacing:-0.018em}
+.close p{margin-top:18px;color:var(--ink-2);max-width:var(--measure)}
+.close ul{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:12px 28px;font-size:16px}
+.close a{color:var(--met);text-decoration:none;border-bottom:1px solid currentColor}
+.close a:hover{color:var(--ink)}
+
+@media (max-width:640px){
+  /* A 4 column table does not survive 375px. Each row becomes a block:
+     name and year on one line, result and field beneath. */
+  table{display:block}
+  caption{display:block;width:100%}
+  thead{display:none}
+  tbody{display:block}
+  tr{display:grid;grid-template-columns:1fr auto;gap:2px 14px;
+     padding:16px 0;border-bottom:1px solid var(--rule)}
+  td{display:block;border:0;padding:0}
+  td.t-name{grid-column:1;font-size:18px}
+  td.t-yr{grid-column:2;grid-row:1;text-align:right}
+  td:nth-child(2){grid-column:1/-1;color:var(--ink-2);font-size:15px;margin-top:3px}
+  td:nth-child(3){grid-column:1/-1;font-size:13.5px;color:var(--ink-2);margin-top:5px}
+  tbody tr:hover td{background:transparent}
+}
+@media (max-width:640px){
+  .top__in{flex-direction:column;align-items:flex-start;gap:11px}
+  .wordmark{font-size:17px}
+  .nav{gap:16px;font-size:14px;flex-wrap:wrap}
+}
+@media (max-width:860px){
+  .flag{grid-template-columns:1fr}
+  .media{order:-1}
+  .job{grid-template-columns:1fr}
+  .job .when{grid-row:2}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="wordmark" href="#">Tanay Pratap Singh</a>
+    <nav class="nav">
+      <a href="#work">Work</a><a href="#other">Everything else</a>
+      <a href="#exp">Experience</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="lede">
+    <h1>I build data systems and publish the numbers that show <em>where they fail</em>.</h1>
+    <p>Applied data science at Syracuse. I work on retrieval, evaluation harnesses,
+       and the warehouse layer underneath them, and I keep the measurements that
+       did not go my way.</p>
+    <p class="avail"><span>Open to</span> machine learning, data, and analytics engineering roles</p>
+  </section>
+
+  <section class="sec" id="work">
+    <h2>Three projects, with the misses included</h2>
+
+    <article class="flag">
+      <div>
+        <h3 class="flag__name">Groundwork</h3>
+        <p class="flag__desc">Retrieval augmented question answering with the parts that usually
+           get skipped: an evaluation harness that can fail a build, guardrails with published
+           false positive rates, and a gateway that meters every model call. Five public datasets,
+           each pinned by checksum.</p>
+        <div class="read read--met">
+          <div class="read__val">0.921</div>
+          <div><div class="read__name">recall@5</div>
+               <div class="read__ref">met the 0.900 floor</div></div>
+        </div>
+        <div class="read read--missed">
+          <div class="read__val">0.868</div>
+          <div><div class="read__name">abstention recall</div>
+               <div class="read__ref">below the 0.900 floor, so the release gate exits non zero</div></div>
+        </div>
+        <p class="note">Shipped failing. A gate that cannot fail is not measuring anything.</p>
+        <p class="flag__links"><a href="https://github.com/TanayPratapSingh/Groundwork">Code</a></p>
+      </div>
+      <figure class="media">
+        <video src="videos/groundwork.mp4" poster="videos/groundwork.jpg" controls preload="none" playsinline></video>
+        <figcaption>The evaluation running, ending on the gate that fails.</figcaption>
+      </figure>
+    </article>
+
+    <article class="flag">
+      <div>
+        <h3 class="flag__name">media-pulse</h3>
+        <p class="flag__desc">Communications measurement that routes its own uncertain predictions
+           to a person. Anything below the confidence threshold goes to a review queue instead of
+           into the report, and every correction lands in an audit log.</p>
+        <div class="read read--met">
+          <div class="read__val">0.85</div>
+          <div><div class="read__name">sentiment accuracy after review</div>
+               <div class="read__ref">up from 0.50 unaided, on a held out set</div></div>
+        </div>
+        <div class="read read--missed">
+          <div class="read__val">0.156</div>
+          <div><div class="read__name">expected calibration error</div>
+               <div class="read__ref">the classifier is confident in the wrong places, and the dashboard says so</div></div>
+        </div>
+        <p class="note">The uplift is real because a human produced it, not the model.</p>
+        <p class="flag__links"><a href="https://github.com/TanayPratapSingh/media-pulse">Code</a></p>
+      </div>
+      <figure class="media">
+        <video src="videos/media-pulse.mp4" poster="videos/media-pulse.jpg" controls preload="none" playsinline></video>
+        <figcaption>The review queue and the model quality tab.</figcaption>
+      </figure>
+    </article>
+
+    <article class="flag">
+      <div>
+        <h3 class="flag__name">ZTF Transient Pipeline</h3>
+        <p class="flag__desc">A streaming classifier over real astronomical alerts, paired with a
+           warehouse layer that turns them into tested tables. Two planes meeting at the warehouse:
+           the model scores alerts, dbt models and tests everything downstream.</p>
+        <div class="read read--met">
+          <div class="read__val">21</div>
+          <div><div class="read__name">data tests across 8 dbt models</div>
+               <div class="read__ref">32 of 32 checks pass on every build</div></div>
+        </div>
+        <div class="read read--missed">
+          <div class="read__val">coarse</div>
+          <div><div class="read__name">class labels</div>
+               <div class="read__ref">this demonstrates the pipeline, not a publishable classifier</div></div>
+        </div>
+        <p class="note">Named in the README under scope and limitations, not buried.</p>
+        <p class="flag__links"><a href="https://github.com/TanayPratapSingh/ztf-transient-pipeline">Code</a></p>
+      </div>
+      <figure class="media">
+        <video src="videos/ztf-transient-pipeline.mp4" poster="videos/ztf-transient-pipeline.jpg" controls preload="none" playsinline></video>
+        <figcaption>A build from scratch, then the dashboard reading the marts.</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <section class="sec">
+    <h2>Also built and running</h2>
+    <div class="two">
+      <div class="two__it">
+        <div class="two__val">2.78</div><div class="two__unit">lap mean absolute error</div>
+        <h3 class="two__name">The Perfect Lap</h3>
+        <p class="two__desc">Predicting the exact lap to pit in a Formula 1 race, over 250,000 historical records.</p>
+        <a class="two__more" href="https://github.com/TanayPratapSingh/the-perfect-lap">Code</a>
+      </div>
+      <div class="two__it">
+        <div class="two__val">9 of 24</div><div class="two__unit">routed to a human, 7 corrected</div>
+        <h3 class="two__name">comms-agent</h3>
+        <p class="two__desc">A state graph agent whose conditional gate sends its own low confidence output to review.</p>
+        <a class="two__more" href="https://github.com/TanayPratapSingh/comms-agent">Code</a>
+      </div>
+      <div class="two__it">
+        <div class="two__val">0.96</div><div class="two__unit">AUC across 5 failure modes</div>
+        <h3 class="two__name">ShopFloor AI</h3>
+        <p class="two__desc">Predictive maintenance on the AI4I 2020 sensor dataset, with a seven service deployed stack.</p>
+        <a class="two__more" href="https://github.com/TanayPratapSingh/shopfloor-ai">Code</a>
+      </div>
+      <div class="two__it">
+        <div class="two__val">+25.4%</div><div class="two__unit">peak load at +5&deg;C</div>
+        <h3 class="two__name">July Energy Demand</h3>
+        <p class="two__desc">Forecasting residential peak demand under warming scenarios, with 9.2% savings modeled.</p>
+        <a class="two__more" href="https://github.com/TanayPratapSingh/energy-usage-prediction">Code</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="other">
+    <h2>Everything else</h2>
+    <table>
+      <caption>Earlier and smaller work, with the result that came out of each.</caption>
+      <thead>
+        <tr><th scope="col">Project</th><th scope="col">Result</th><th scope="col">Field</th><th scope="col" class="num">Year</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="t-name">Multi horizon Kp index prediction</td><td>45% better than baseline over 96,000 hourly observations</td><td>Deep learning</td><td class="t-yr">2026</td></tr>
+        <tr><td class="t-name">JMA Wireless DMAIC dashboard</td><td>$355K per year recovered, 31 GB reduced to a 5 MB pipeline</td><td>Process improvement</td><td class="t-yr">2026</td></tr>
+        <tr><td class="t-name">Project Mark</td><td>4 verified statistical traps for frontier model evaluation</td><td>AI evaluation</td><td class="t-yr">2026</td></tr>
+        <tr><td class="t-name">Wealth, health, and education</td><td>ANOVA F = 426.5 (p &lt; 2e-16) across 180+ countries</td><td>Data storytelling</td><td class="t-yr">2025</td></tr>
+        <tr><td class="t-name">Travel itinerary system</td><td>12 entity normalized schema, full itinerary in one call</td><td>Databases</td><td class="t-yr">2025</td></tr>
+        <tr><td class="t-name">Uber data engineering pipeline</td><td>End to end GCP pipeline into a BigQuery star schema</td><td>Data engineering</td><td class="t-yr">2024</td></tr>
+        <tr><td class="t-name">Digit recognition from scratch</td><td>94% MNIST accuracy with no frameworks</td><td>Deep learning</td><td class="t-yr">2024</td></tr>
+        <tr><td class="t-name">Real time big data inflow</td><td>40 to 60% latency reduction across a 6 dimension comparison</td><td>Research</td><td class="t-yr">2024</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sec" id="exp">
+    <h2>Experience</h2>
+    <article class="job">
+      <div><h3>Research Assistant, Gravity Spy 2.0</h3><div class="org">Syracuse University, NSF funded</div></div>
+      <div class="when">Feb 2026 to present</div>
+      <dl>
+        <div><dt>Classifications parsed</dt><dd>276,000+</dd></div>
+        <div><dt>Glitch subjects</dt><dd>25,104</dd></div>
+        <div><dt>Auxiliary channels mapped</dt><dd>8,293</dd></div>
+        <div><dt>Validation AUC</dt><dd>0.89</dd></div>
+      </dl>
+    </article>
+  </section>
+
+  <section class="close" id="contact">
+    <h2>If you are hiring for measurement, not just modelling, get in touch.</h2>
+    <p>I am most useful where someone needs to know whether a system is actually working:
+       evaluation harnesses, retrieval quality, calibration, and the data layer that makes
+       those numbers trustworthy.</p>
+    <ul>
+      <li><a href="mailto:tanayyps@gmail.com">tanayyps@gmail.com</a></li>
+      <li><a href="https://github.com/TanayPratapSingh">GitHub</a></li>
+      <li><a href="Tanay_Pratap_Singh_Resume_MLE.pdf">Resume</a></li>
+    </ul>
+  </section>
+
+</main>
+</body>
+</html>
