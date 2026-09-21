@@ -1,7 +1,3 @@
-const PROJECTS=__PROJECTS__;
-const REPOS=__REPOS__;
-const VIDEOS=__VIDEOS__;
-
 const grid=document.getElementById('grid');
 PROJECTS.forEach(function(p,i){
   const b=document.createElement('button');
