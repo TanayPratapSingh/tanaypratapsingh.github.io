@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:02.500
+comms-agent: automating the communications monitoring loop
+
+00:00:02.800 --> 00:00:04.500
+Five modules: graph, orchestrator, tools, llm
+
+00:00:04.800 --> 00:00:06.600
+Zero third party dependencies, Python standard library only
+
+00:00:06.900 --> 00:00:09.700
+The state graph, with a conditional review gate
+
+00:00:10.000 --> 00:00:11.300
+Running the agent end to end
+
+00:00:11.500 --> 00:00:12.900
+Planner, tools, then the gate routes to human review
+
+00:00:13.100 --> 00:00:14.800
+9 of 24 flagged, 7 corrected. The LLM here is a deterministic mock
