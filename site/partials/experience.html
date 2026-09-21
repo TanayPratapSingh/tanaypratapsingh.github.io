@@ -1,0 +1,127 @@
+  <section class="sec" id="exp">
+    <h2>Experience</h2>
+
+    <article class="job">
+      <div class="job__t"><h3>Research Assistant, Gravity Spy 2.0</h3>
+        <span class="job__o">Syracuse University &middot; NSF funded</span>
+        <span class="job__w">Feb 2026 to present</span></div>
+      <dl class="job__s">
+        <div><dt>Classifications parsed</dt><dd>276,000+</dd></div>
+        <div><dt>Glitch subjects</dt><dd>25,104</dd></div>
+        <div><dt>Auxiliary channels</dt><dd>8,293</dd></div>
+        <div><dt>Spectrograms retrieved</dt><dd>49,000</dd></div>
+        <div><dt>Validation AUC</dt><dd>0.89</dd></div>
+        <div><dt>Calibration error</dt><dd>0.10 to 0.05</dd></div>
+      </dl>
+      <div class="job__b">
+        <p>NSF funded citizen science supporting LIGO. The scientific goal is causal inference on
+          detector noise: identifying which auxiliary subsystems produce the transient glitches that
+          contaminate gravitational wave strain data, so detector commissioners fix the responsible
+          hardware instead of chasing symptoms.</p>
+        <p>Built the ingestion pipeline in Python with pandas and the Zooniverse Panoptes API, parsing
+          276,000+ volunteer classifications across 23 months of observations. The engineering work was
+          reconciling five undocumented subject metadata schemas across project iterations, spanning
+          25,104 glitch subjects and 8,293 auxiliary detector channels, and filtering roughly 38 science
+          team accounts out of the volunteer population.</p>
+        <p>Engineered an OpenCV workflow that retrieved 49,000 spectrograms through batch API calls,
+          transforming 1200x1200 mosaics into paired 224x224 channel heatmaps suitable for deep learning
+          input. The pipeline emits three outputs: a subject level flat file with aggregated volunteer
+          labels, a separate file for subjects missing GPS metadata, and a GPS time by auxiliary channel
+          pivot matrix covering 455 LIGO subsystems including PEM, SUS, LSC, ISI, ASC, and CAL.</p>
+        <p>Trained a two input CNN with a shared MobileNetV2 backbone in TensorFlow and Keras to predict
+          volunteer similarity labels directly from paired spectrograms, reaching 0.89 validation AUC on a
+          held out 2,000 subject set. The result that matters more is calibration: label smoothing, AdamW,
+          and AUC based early stopping brought Expected Calibration Error from 0.10 down to 0.05.</p>
+        <p>Alongside the modeling, ran the descriptive analysis: volunteer effort is heavily right tailed,
+          with the top ten volunteers accounting for 50% of all classifications, and inter volunteer
+          agreement reaches 52% perfect consensus on multi classified subjects. Code is committed to the
+          Syracuse CCDS GravitySpy Classifier repository.</p>
+      </div>
+    </article>
+
+    <article class="job">
+      <div class="job__t"><h3>Process Improvement Analyst</h3>
+        <span class="job__o">JMA Wireless &middot; Liverpool, NY</span>
+        <span class="job__w">Jan 2026 to May 2026</span></div>
+      <dl class="job__s">
+        <div><dt>Annualized impact</dt><dd>~$355K recovered</dd></div>
+        <div><dt>Data pipeline</dt><dd>31 GB JSON to 5 MB</dd></div>
+        <div><dt>KPIs standardized</dt><dd>4 across 2 lines</dd></div>
+        <div><dt>Team and duration</dt><dd>5 analysts, 15 weeks</dd></div>
+      </dl>
+      <div class="job__b">
+        <p>Client sponsored Lean Six Sigma capstone with a US manufacturer of 5G cell tower transmitters
+          and active wireless infrastructure. Full DMAIC engagement for the Jumper Department with weekly
+          on site stakeholder access, sponsored by the SVP of Global Operations.</p>
+        <p>Ran the complete cycle: authored the project charter, SIPOC, and CTQC tree in Define; agreed
+          sponsor approved definitions for four KPIs (Parts per Labor Hour, Uptime, First Time Throughput,
+          Schedule Attainment) across one manual and one automated assembly line in Measure; then used
+          Pareto and fishbone analysis to isolate material flow, not equipment availability, as the root
+          cause of the automated line's shortfall.</p>
+        <p>Built the data pipeline that made the analysis possible. The automated cell emitted deeply
+          nested JSON, two datasets totalling 31 GB that would not open in Power BI. Using pandas
+          <code>json_normalize</code> with explicit record paths and openpyxl, I flattened it to a wide
+          format Excel file under 5 MB that loads instantly, casting types, computing cycle time, and
+          processing a full week in under 30 seconds.</p>
+        <p>Quantified impact: closing the automated line's schedule attainment gap recovers roughly 27,000
+          cables per year at no added labor, about $324,000 at a $12 per cable margin, and the dashboard
+          removes approximately 48 analyst hours per week of manual reporting, about $31,200. Combined
+          recurring value is roughly $355,000 per year from a single department pilot.</p>
+      </div>
+    </article>
+
+    <article class="job">
+      <div class="job__t"><h3>Cybersecurity Teaching Assistant</h3>
+        <span class="job__o">Syracuse University iSchool</span>
+        <span class="job__w">Summer 2025</span></div>
+      <dl class="job__s">
+        <div><dt>Labs delivered</dt><dd>15+ hands on</dd></div>
+        <div><dt>Domains</dt><dd>Crypto, network, pentest, forensics</dd></div>
+        <div><dt>Toolchain</dt><dd>Wireshark, Kali, Nmap, OpenSSL, Metasploit</dd></div>
+        <div><dt>VM stack</dt><dd>Kali, Win 10/Server, CentOS, Metasploitable</dd></div>
+      </dl>
+      <div class="job__b">
+        <p>Graduate teaching assistant for the cybersecurity course, developing and delivering hands on
+          labs across four domains: cryptography, network security, penetration testing, and digital
+          forensics. Each lab walks students through the full attacker workflow, from OSINT reconnaissance
+          and port scanning to exploitation and post compromise enumeration, then flips to the defensive
+          reading of the same evidence.</p>
+        <p>Built and maintained the multi VM lab environments the course runs on, using Kali Linux as the
+          attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Kept
+          images, network configuration, and tooling reproducible so a full section could work through the
+          same exercises without environment drift derailing the lesson.</p>
+        <p>Technical coverage spans symmetric and asymmetric cryptography and hashing with OpenSSL
+          (SHA 256, SHA 512), scanning and enumeration with Nmap, traffic capture and protocol analysis
+          with Wireshark, and exploitation with Metasploit against intentionally vulnerable targets. On the
+          forensics side, students practice evidence handling, file and metadata analysis, and writing
+          findings up as a report.</p>
+        <p>Held office hours debugging students' own attack chains, and graded labs and incident analysis
+          reports with feedback on methodology rather than only the final answer, since in security the
+          reasoning and the chain of evidence matter as much as the result. Reinforced scope,
+          authorization, and responsible handling of tools throughout.</p>
+      </div>
+    </article>
+
+    <article class="job">
+      <div class="job__t"><h3>Data and Product Analyst Intern</h3>
+        <span class="job__o">ProProfs &middot; Noida, India</span>
+        <span class="job__w">Jul 2023 to Aug 2023</span></div>
+      <dl class="job__s">
+        <div><dt>SaaS users analyzed</dt><dd>5,000+</dd></div>
+        <div><dt>Customer records</dt><dd>2,000 clients</dd></div>
+        <div><dt>Features benchmarked</dt><dd>100 to 150</dd></div>
+        <div><dt>Churn reduction</dt><dd>5%</dd></div>
+        <div><dt>Rating lift</dt><dd>4.2 to 4.6</dd></div>
+      </dl>
+      <div class="job__b">
+        <p>Product and customer analytics in Python across SaaS products serving 5,000+ users. Delivered
+          SWOT analyses, competitive feature benchmarking against Zoho and Salesforce comparing 100 to 150
+          features, and Ideal Customer Profile analyses to inform product strategy and prioritization.</p>
+        <p>Analyzed customer datasets covering 2,000 clients using Python and Excel pivot tables to surface
+          behavior patterns, pain points, and conversion drivers. Findings let the product team prioritize
+          two high impact features for the next release that measurably lifted trial to paid conversion.
+          Built interactive Tableau dashboards sourced from SQL and Excel, identifying under used features
+          and reducing churn by 5 percent.</p>
+      </div>
+    </article>
+  </section>

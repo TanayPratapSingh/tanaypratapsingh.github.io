@@ -1,0 +1,4 @@
+.body table{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 16px}
+.body th{text-align:left;font-weight:500;font-size:12.6px;color:var(--ink-3);
+  padding:0 12px 7px 0;border-bottom:1px solid var(--ink)}
+.body td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top}

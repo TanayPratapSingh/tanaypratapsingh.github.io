@@ -1,0 +1,9 @@
+.body .metric{font-family:var(--mono);font-size:13px;background:var(--sunk);
+  padding:10px 12px;line-height:1.7;margin:0 0 14px;color:var(--ink)}
+.body .callout{border-left:2px solid var(--rule-2);padding:2px 0 2px 14px;margin:0 0 14px;
+  font-style:italic;color:var(--ink-2)}
+.body .winner{border-left-color:var(--met)}
+.body figure{margin:0 0 16px}
+.body .project-figure img{width:100%;display:block;border:1px solid var(--rule)}
+.body figcaption{font-size:12.8px;color:var(--ink-3);margin-top:6px}
+.body .figure-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
