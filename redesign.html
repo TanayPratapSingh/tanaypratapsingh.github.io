@@ -3,202 +3,184 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
 <title>Tanay Pratap Singh</title>
-<meta name="description" content="Applied data scientist. Data systems, evaluation harnesses, and the numbers that show where they fail.">
+<meta name="description" content="Applied data scientist. Retrieval, evaluation harnesses, and the warehouse layer underneath them.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#FCFCFD; --ink:#14161A; --ink-2:#5A6068; --rule:#DDE1E6;
-  --met:#1B4D8F; --missed:#B3261E; --field:#F3F4F6;
-  --serif:'Newsreader',Georgia,serif;
-  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-  --gut:clamp(20px,5vw,64px);
-  --measure:66ch;
-}
-@media (prefers-color-scheme:dark){
-  :root{--paper:#0F1114;--ink:#E9EBEE;--ink-2:#9AA1A9;--rule:#262A2F;
-        --met:#7FA9E0;--missed:#E98179;--field:#171A1E;}
+  --paper:#F7F6F2; --surface:#FCFBF9; --ink:#15171B; --ink-2:#565B62; --ink-3:#868C94;
+  --rule:#DEDBD4; --rule-2:#C9C5BC; --met:#1B4D8F; --missed:#B3261E;
+  --serif:'Newsreader',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --gut:clamp(18px,4vw,52px);
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--serif);font-size:17px;line-height:1.55;
-  font-variant-numeric:tabular-nums;
-  -webkit-font-smoothing:antialiased;
-}
-h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.15;letter-spacing:-0.012em}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:16.5px;line-height:1.5;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.14;letter-spacing:-0.013em}
 p{margin:0}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--met);outline-offset:3px;border-radius:2px}
+:focus-visible{outline:2px solid var(--met);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gut)}
 
-.wrap{max-width:1140px;margin:0 auto;padding:0 var(--gut)}
-
-/* ---------- masthead ---------- */
-.top{border-bottom:1px solid var(--rule)}
-.top__in{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:22px 0}
-.wordmark{font-size:19px;font-weight:500;letter-spacing:-0.01em;text-decoration:none}
-.nav{display:flex;gap:26px;font-size:15px}
+/* masthead */
+.top{position:sticky;top:0;z-index:20;background:rgba(247,246,242,.94);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--rule-2)}
+.top__in{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:13px 0}
+.wordmark{font-size:18px;font-weight:500;text-decoration:none;letter-spacing:-0.01em}
+.nav{display:flex;gap:22px;font-size:14.5px}
 .nav a{color:var(--ink-2);text-decoration:none}
-.nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.nav a:hover{color:var(--ink)}
 
-/* ---------- opening statement ---------- */
-.lede{padding:clamp(56px,10vw,104px) 0 clamp(44px,7vw,72px)}
-.lede h1{
-  font-size:clamp(32px,5.4vw,58px);font-weight:300;line-height:1.1;
-  max-width:19ch;letter-spacing:-0.022em;
-}
-.lede h1 em{font-style:italic;font-weight:300}
-.lede p{margin-top:26px;max-width:54ch;color:var(--ink-2);font-size:19px}
-.lede .avail{margin-top:20px;font-family:var(--mono);font-size:13px;color:var(--ink)}
-.lede .avail span{color:var(--met)}
+/* lede */
+.lede{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+  gap:clamp(20px,4vw,60px);padding:clamp(34px,5vw,58px) 0 clamp(26px,3vw,36px);align-items:end}
+.lede h1{font-size:clamp(28px,3.9vw,44px);font-weight:300;line-height:1.08;
+  max-width:20ch;letter-spacing:-0.022em}
+.lede h1 em{font-style:italic}
+.lede p{color:var(--ink-2);max-width:52ch;font-size:17px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule)}
+.facts div{background:var(--surface);padding:11px 13px}
+.facts dt{font-size:12.5px;color:var(--ink-3)}
+.facts dd{margin:2px 0 0;font-family:var(--mono);font-size:16px;color:var(--met)}
 
-/* ---------- section heads ---------- */
-.sec{padding:clamp(40px,6vw,64px) 0;border-top:1px solid var(--rule)}
-.sec > h2{font-size:15px;font-weight:500;color:var(--ink-2);margin-bottom:34px}
+/* sections */
+.sec{padding:clamp(28px,3.4vw,42px) 0;border-top:1px solid var(--rule-2)}
+.sec__h{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.sec__h h2{font-size:21px;letter-spacing:-0.015em}
+.sec__h span{font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
 
-/* ---------- flagship ---------- */
-.flag{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(24px,4vw,56px);
-      padding:clamp(34px,5vw,52px) 0;border-top:1px solid var(--rule)}
+/* flagship */
+.flag{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);
+  gap:clamp(18px,2.6vw,38px);padding:26px 0;border-top:1px solid var(--rule)}
 .sec .flag:first-of-type{border-top:0;padding-top:0}
-.flag__name{font-size:clamp(27px,3.1vw,37px);margin:0 0 10px;letter-spacing:-0.02em}
-.flag__desc{color:var(--ink-2);max-width:46ch;margin-bottom:26px}
+.flag h3{font-size:26px;margin-bottom:7px}
+.flag__d{color:var(--ink-2);font-size:16px;max-width:52ch}
+.reads{margin-top:15px;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.read{background:var(--surface);display:grid;grid-template-columns:auto 1fr;
+  gap:13px;align-items:baseline;padding:11px 14px}
+.read b{font-family:var(--mono);font-size:27px;font-weight:500;line-height:1}
+.read--met b{color:var(--met)} .read--missed b{color:var(--missed)}
+.read i{font-style:normal;font-size:15px}
+.read small{display:block;font-size:13.5px;color:var(--ink-2);margin-top:2px}
+.read--missed small{color:var(--missed)}
+.note{margin-top:11px;font-size:15px;font-style:italic;color:var(--ink-2);max-width:48ch}
+.stack{margin-top:11px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);line-height:1.65}
+.links{margin-top:11px;font-size:14.5px;display:flex;gap:18px}
+.links a{color:var(--met);text-decoration:none;border-bottom:1px solid currentColor}
+.media video{width:100%;display:block;background:#000;border:1px solid var(--rule-2)}
+.media figcaption{margin-top:7px;font-size:12.5px;color:var(--ink-3)}
 
-.read{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:baseline;
-      padding:14px 0;border-top:1px solid var(--rule)}
-.read__val{font-family:var(--mono);font-size:clamp(30px,3.6vw,42px);font-weight:500;line-height:1}
-.read--met .read__val{color:var(--met)}
-.read--missed .read__val{color:var(--missed)}
-.read__name{font-size:16px}
-.read__ref{font-size:14px;color:var(--ink-2);margin-top:3px}
-.read--missed .read__ref{color:var(--missed)}
-.note{margin-top:14px;font-size:15.5px;font-style:italic;color:var(--ink-2);max-width:44ch}
-.flag__links{margin-top:24px;display:flex;gap:20px;font-size:15px}
-.flag__links a{color:var(--met);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
-.flag__links a:hover{color:var(--ink)}
+/* dense project grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.it{background:var(--surface);padding:17px 18px;display:flex;flex-direction:column}
+.it__m{font-family:var(--mono);font-size:21px;font-weight:500;color:var(--met);line-height:1}
+.it__u{font-size:13px;color:var(--ink-2);margin-top:4px}
+.it h3{font-size:18.5px;margin:12px 0 5px}
+.it__d{font-size:14.8px;color:var(--ink-2);flex:1}
+.it__meta{margin-top:11px;font-family:var(--mono);font-size:11.8px;color:var(--ink-3);line-height:1.6}
+.it__l{margin-top:9px;font-size:13.5px}
+.it__l a{color:var(--met);text-decoration:none;border-bottom:1px solid currentColor}
 
-.media{align-self:start}
-.media video{width:100%;display:block;background:#000;border:1px solid var(--rule)}
-.media figcaption{margin-top:9px;font-size:13px;color:var(--ink-2)}
+/* experience */
+.job{padding:18px 0;border-top:1px solid var(--rule)}
+.sec .job:first-of-type{border-top:0;padding-top:0}
+.job__t{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.job h3{font-size:19.5px}
+.job__o{color:var(--ink-2);font-size:14.5px}
+.job__w{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
+.job__s{margin:11px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.job__s div{background:var(--surface);padding:9px 12px}
+.job__s dt{font-size:12.3px;color:var(--ink-3)}
+.job__s dd{margin:2px 0 0;font-family:var(--mono);font-size:15.5px;color:var(--met)}
+.job p{margin-top:10px;font-size:15.2px;color:var(--ink-2);max-width:88ch}
 
-/* ---------- tier two ---------- */
-.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);
-     border:1px solid var(--rule)}
-@media (max-width:640px){.two{grid-template-columns:1fr}}
-.two__it{background:var(--paper);padding:24px 22px}
-.two__val{font-family:var(--mono);font-size:24px;font-weight:500;color:var(--met);line-height:1}
-.two__unit{font-size:14px;color:var(--ink-2);margin-top:5px}
-.two__name{font-size:20px;margin:16px 0 6px;letter-spacing:-0.012em}
-.two__desc{font-size:15px;color:var(--ink-2);max-width:38ch}
-.two__more{margin-top:14px;font-size:14px;display:inline-block;color:var(--met);text-decoration:none;
-           border-bottom:1px solid currentColor}
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px 26px}
+.skills h3{font-size:14px;color:var(--ink);margin-bottom:5px}
+.skills p{font-family:var(--mono);font-size:12.3px;color:var(--ink-2);line-height:1.75}
 
-/* ---------- table ---------- */
-table{width:100%;border-collapse:collapse;font-size:15.5px}
-caption{text-align:left;color:var(--ink-2);font-size:15px;padding-bottom:16px}
-th{text-align:left;font-weight:500;font-size:13.5px;color:var(--ink-2);
-   padding:0 14px 9px 0;border-bottom:1px solid var(--ink)}
-td{padding:13px 14px 13px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
-td.num,th.num{font-family:var(--mono);font-size:14px;text-align:right;padding-right:0;white-space:nowrap}
-tbody tr:hover td{background:var(--field)}
-.t-name{font-size:16.5px}
-.t-yr{color:var(--ink-2);font-family:var(--mono);font-size:13.5px;text-align:right;padding-right:0}
+/* two up */
+.twoup{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px}
+.ent{border-top:1px solid var(--rule);padding-top:12px}
+.ent h3{font-size:17.5px}
+.ent__o{color:var(--ink-2);font-size:14.3px;margin-top:2px}
+.ent__w{font-family:var(--mono);font-size:12.3px;color:var(--ink-3);margin-top:3px}
+.ent p{margin-top:8px;font-size:14.8px;color:var(--ink-2)}
 
-/* ---------- experience ---------- */
-.job{padding:26px 0;border-top:1px solid var(--rule);display:grid;
-     grid-template-columns:minmax(0,1fr) auto;gap:8px 28px}
-.job h3{font-size:21px;letter-spacing:-0.012em}
-.job .org{color:var(--ink-2);font-size:15px}
-.job .when{font-family:var(--mono);font-size:13px;color:var(--ink-2);white-space:nowrap}
-.job dl{grid-column:1/-1;margin:14px 0 0;display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px 28px}
-.job dt{font-size:13.5px;color:var(--ink-2)}
-.job dd{margin:3px 0 0;font-family:var(--mono);font-size:19px;color:var(--met)}
-
-/* ---------- close ---------- */
-.close{padding:clamp(48px,7vw,86px) 0 96px;border-top:1px solid var(--ink)}
-.close h2{font-size:clamp(24px,3.2vw,34px);font-weight:300;max-width:22ch;letter-spacing:-0.018em}
-.close p{margin-top:18px;color:var(--ink-2);max-width:var(--measure)}
-.close ul{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:12px 28px;font-size:16px}
+/* close */
+.close{padding:clamp(32px,4vw,52px) 0 70px;border-top:1px solid var(--rule-2)}
+.close h2{font-size:clamp(21px,2.5vw,28px);font-weight:300;max-width:26ch}
+.close p{margin-top:13px;color:var(--ink-2);max-width:70ch}
+.close ul{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px 26px;font-size:15.5px}
 .close a{color:var(--met);text-decoration:none;border-bottom:1px solid currentColor}
-.close a:hover{color:var(--ink)}
 
-@media (max-width:640px){
-  /* A 4 column table does not survive 375px. Each row becomes a block:
-     name and year on one line, result and field beneath. */
-  table{display:block}
-  caption{display:block;width:100%}
-  thead{display:none}
-  tbody{display:block}
-  tr{display:grid;grid-template-columns:1fr auto;gap:2px 14px;
-     padding:16px 0;border-bottom:1px solid var(--rule)}
-  td{display:block;border:0;padding:0}
-  td.t-name{grid-column:1;font-size:18px}
-  td.t-yr{grid-column:2;grid-row:1;text-align:right}
-  td:nth-child(2){grid-column:1/-1;color:var(--ink-2);font-size:15px;margin-top:3px}
-  td:nth-child(3){grid-column:1/-1;font-size:13.5px;color:var(--ink-2);margin-top:5px}
-  tbody tr:hover td{background:transparent}
-}
-@media (max-width:640px){
-  .top__in{flex-direction:column;align-items:flex-start;gap:11px}
-  .wordmark{font-size:17px}
-  .nav{gap:16px;font-size:14px;flex-wrap:wrap}
-}
-@media (max-width:860px){
+@media (max-width:900px){
+  .lede{grid-template-columns:1fr;align-items:start}
   .flag{grid-template-columns:1fr}
   .media{order:-1}
-  .job{grid-template-columns:1fr}
-  .job .when{grid-row:2}
+  .job__w{margin-left:0;width:100%}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:620px){
+  .top__in{flex-direction:column;align-items:flex-start;gap:9px}
+  .nav{flex-wrap:wrap;gap:14px;font-size:13.5px}
+  .sec__h{flex-direction:column;align-items:flex-start;gap:3px}
+  .grid{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap top__in">
-    <a class="wordmark" href="#">Tanay Pratap Singh</a>
-    <nav class="nav">
-      <a href="#work">Work</a><a href="#other">Everything else</a>
-      <a href="#exp">Experience</a><a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
+<header class="top"><div class="wrap top__in">
+  <a class="wordmark" href="#">Tanay Pratap Singh</a>
+  <nav class="nav">
+    <a href="#work">Work</a><a href="#more">All projects</a><a href="#exp">Experience</a>
+    <a href="#skills">Skills</a><a href="#edu">Education</a><a href="#contact">Contact</a>
+  </nav>
+</div></header>
 
 <main class="wrap">
 
   <section class="lede">
-    <h1>I build data systems and publish the numbers that show <em>where they fail</em>.</h1>
-    <p>Applied data science at Syracuse. I work on retrieval, evaluation harnesses,
-       and the warehouse layer underneath them, and I keep the measurements that
-       did not go my way.</p>
-    <p class="avail"><span>Open to</span> machine learning, data, and analytics engineering roles</p>
+    <div>
+      <h1>I build data systems and publish the numbers that show <em>where they fail</em>.</h1>
+      <p style="margin-top:16px">Applied data science at Syracuse. Retrieval, evaluation harnesses,
+        guardrails, and the warehouse layer underneath them. Open to machine learning, data,
+        and analytics engineering roles.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Projects shipped</dt><dd>15</dd></div>
+      <div><dt>Walkthroughs recorded</dt><dd>5</dd></div>
+      <div><dt>LIGO classifications parsed</dt><dd>276,000+</dd></div>
+      <div><dt>Annualized impact at JMA</dt><dd>~$355K</dd></div>
+    </dl>
   </section>
 
   <section class="sec" id="work">
-    <h2>Three projects, with the misses included</h2>
+    <div class="sec__h"><h2>Three systems, with the misses included</h2><span>recorded end to end</span></div>
 
     <article class="flag">
       <div>
-        <h3 class="flag__name">Groundwork</h3>
-        <p class="flag__desc">Retrieval augmented question answering with the parts that usually
-           get skipped: an evaluation harness that can fail a build, guardrails with published
-           false positive rates, and a gateway that meters every model call. Five public datasets,
-           each pinned by checksum.</p>
-        <div class="read read--met">
-          <div class="read__val">0.921</div>
-          <div><div class="read__name">recall@5</div>
-               <div class="read__ref">met the 0.900 floor</div></div>
-        </div>
-        <div class="read read--missed">
-          <div class="read__val">0.868</div>
-          <div><div class="read__name">abstention recall</div>
-               <div class="read__ref">below the 0.900 floor, so the release gate exits non zero</div></div>
+        <h3>Groundwork</h3>
+        <p class="flag__d">The hard part of shipping an LLM feature is not getting a good answer once.
+          It is knowing whether the answer is good, knowing when the system should refuse, and proving
+          the guardrails do not reject legitimate traffic. Five public datasets, each pinned by checksum.</p>
+        <div class="reads">
+          <div class="read read--met"><b>0.921</b><div><i>recall@5</i><small>met the 0.900 floor</small></div></div>
+          <div class="read read--missed"><b>0.868</b><div><i>abstention recall</i><small>below the 0.900 floor, so the release gate exits non zero</small></div></div>
         </div>
         <p class="note">Shipped failing. A gate that cannot fail is not measuring anything.</p>
-        <p class="flag__links"><a href="https://github.com/TanayPratapSingh/Groundwork">Code</a></p>
+        <p class="stack">Python · RAG · LLM gateway · guardrails · calibration (ECE) · prompt injection</p>
+        <p class="links"><a href="https://github.com/TanayPratapSingh/Groundwork">Code</a></p>
       </div>
       <figure class="media">
         <video src="videos/groundwork.mp4" poster="videos/groundwork.jpg" controls preload="none" playsinline></video>
@@ -208,22 +190,17 @@ tbody tr:hover td{background:var(--field)}
 
     <article class="flag">
       <div>
-        <h3 class="flag__name">media-pulse</h3>
-        <p class="flag__desc">Communications measurement that routes its own uncertain predictions
-           to a person. Anything below the confidence threshold goes to a review queue instead of
-           into the report, and every correction lands in an audit log.</p>
-        <div class="read read--met">
-          <div class="read__val">0.85</div>
-          <div><div class="read__name">sentiment accuracy after review</div>
-               <div class="read__ref">up from 0.50 unaided, on a held out set</div></div>
+        <h3>media-pulse</h3>
+        <p class="flag__d">Classifies brand mentions for sentiment and topic, routes anything below the
+          confidence threshold to a person instead of into the report, and writes every correction to an
+          immutable audit log. The numbers a comms team sees are the human verified ones.</p>
+        <div class="reads">
+          <div class="read read--met"><b>0.85</b><div><i>sentiment accuracy after review</i><small>up from 0.50 unaided, on a held out set</small></div></div>
+          <div class="read read--missed"><b>0.156</b><div><i>expected calibration error</i><small>confident in the wrong places, and the dashboard says so</small></div></div>
         </div>
-        <div class="read read--missed">
-          <div class="read__val">0.156</div>
-          <div><div class="read__name">expected calibration error</div>
-               <div class="read__ref">the classifier is confident in the wrong places, and the dashboard says so</div></div>
-        </div>
-        <p class="note">The uplift is real because a human produced it, not the model.</p>
-        <p class="flag__links"><a href="https://github.com/TanayPratapSingh/media-pulse">Code</a></p>
+        <p class="note">The uplift is real because a person produced it, not the model.</p>
+        <p class="stack">Python · scikit-learn · VADER · Streamlit · human in the loop · calibration</p>
+        <p class="links"><a href="https://github.com/TanayPratapSingh/media-pulse">Code</a></p>
       </div>
       <figure class="media">
         <video src="videos/media-pulse.mp4" poster="videos/media-pulse.jpg" controls preload="none" playsinline></video>
@@ -233,22 +210,17 @@ tbody tr:hover td{background:var(--field)}
 
     <article class="flag">
       <div>
-        <h3 class="flag__name">ZTF Transient Pipeline</h3>
-        <p class="flag__desc">A streaming classifier over real astronomical alerts, paired with a
-           warehouse layer that turns them into tested tables. Two planes meeting at the warehouse:
-           the model scores alerts, dbt models and tests everything downstream.</p>
-        <div class="read read--met">
-          <div class="read__val">21</div>
-          <div><div class="read__name">data tests across 8 dbt models</div>
-               <div class="read__ref">32 of 32 checks pass on every build</div></div>
-        </div>
-        <div class="read read--missed">
-          <div class="read__val">coarse</div>
-          <div><div class="read__name">class labels</div>
-               <div class="read__ref">this demonstrates the pipeline, not a publishable classifier</div></div>
+        <h3>ZTF Transient Pipeline</h3>
+        <p class="flag__d">The telescope produces far more data than any human can look at and almost all
+          of it is noise. A multimodal model scores real Avro alerts while dbt models and tests everything
+          downstream, so the nightly numbers behind a candidate can be trusted as well as produced.</p>
+        <div class="reads">
+          <div class="read read--met"><b>21</b><div><i>data tests across 8 dbt models</i><small>32 of 32 checks pass on every build</small></div></div>
+          <div class="read read--missed"><b>coarse</b><div><i>class labels</i><small>demonstrates the pipeline, not a publishable classifier</small></div></div>
         </div>
         <p class="note">Named in the README under scope and limitations, not buried.</p>
-        <p class="flag__links"><a href="https://github.com/TanayPratapSingh/ztf-transient-pipeline">Code</a></p>
+        <p class="stack">Python · Apache Kafka · Avro · TensorFlow · multimodal CNN · dbt · DuckDB · Airflow</p>
+        <p class="links"><a href="https://github.com/TanayPratapSingh/ztf-transient-pipeline">Code</a></p>
       </div>
       <figure class="media">
         <video src="videos/ztf-transient-pipeline.mp4" poster="videos/ztf-transient-pipeline.jpg" controls preload="none" playsinline></video>
@@ -257,75 +229,188 @@ tbody tr:hover td{background:var(--field)}
     </article>
   </section>
 
-  <section class="sec">
-    <h2>Also built and running</h2>
-    <div class="two">
-      <div class="two__it">
-        <div class="two__val">2.78</div><div class="two__unit">lap mean absolute error</div>
-        <h3 class="two__name">The Perfect Lap</h3>
-        <p class="two__desc">Predicting the exact lap to pit in a Formula 1 race, over 250,000 historical records.</p>
-        <a class="two__more" href="https://github.com/TanayPratapSingh/the-perfect-lap">Code</a>
-      </div>
-      <div class="two__it">
-        <div class="two__val">9 of 24</div><div class="two__unit">routed to a human, 7 corrected</div>
-        <h3 class="two__name">comms-agent</h3>
-        <p class="two__desc">A state graph agent whose conditional gate sends its own low confidence output to review.</p>
-        <a class="two__more" href="https://github.com/TanayPratapSingh/comms-agent">Code</a>
-      </div>
-      <div class="two__it">
-        <div class="two__val">0.96</div><div class="two__unit">AUC across 5 failure modes</div>
-        <h3 class="two__name">ShopFloor AI</h3>
-        <p class="two__desc">Predictive maintenance on the AI4I 2020 sensor dataset, with a seven service deployed stack.</p>
-        <a class="two__more" href="https://github.com/TanayPratapSingh/shopfloor-ai">Code</a>
-      </div>
-      <div class="two__it">
-        <div class="two__val">+25.4%</div><div class="two__unit">peak load at +5&deg;C</div>
-        <h3 class="two__name">July Energy Demand</h3>
-        <p class="two__desc">Forecasting residential peak demand under warming scenarios, with 9.2% savings modeled.</p>
-        <a class="two__more" href="https://github.com/TanayPratapSingh/energy-usage-prediction">Code</a>
-      </div>
+  <section class="sec" id="more">
+    <div class="sec__h"><h2>Everything else</h2><span>12 projects</span></div>
+    <div class="grid">
+
+      <div class="it"><div class="it__m">2.78</div><div class="it__u">lap mean absolute error</div>
+        <h3>The Perfect Lap</h3>
+        <p class="it__d">A miscall on pit lap can cost a team two to five constructor positions over a season. Predicts the exact lap to stop rather than a yes or no call, over 250,000 historical records.</p>
+        <p class="it__meta">Python · scikit-learn · CatBoost · Streamlit · 250K+ records</p>
+        <p class="it__l"><a href="https://github.com/TanayPratapSingh/the-perfect-lap">Code</a> &nbsp; <a href="videos/the-perfect-lap.mp4">Walkthrough</a></p></div>
+
+      <div class="it"><div class="it__m">9 of 24</div><div class="it__u">routed to a human, 7 corrected</div>
+        <h3>comms-agent</h3>
+        <p class="it__d">The automation layer above media-pulse. A state graph plans, ingests, classifies, then routes its own low confidence output through a conditional review gate before drafting the weekly brief.</p>
+        <p class="it__meta">Python stdlib only · state graph · tool calling · conditional edges · audit trail</p>
+        <p class="it__l"><a href="https://github.com/TanayPratapSingh/comms-agent">Code</a> &nbsp; <a href="videos/comms-agent.mp4">Walkthrough</a></p></div>
+
+      <div class="it"><div class="it__m">0.96</div><div class="it__u">AUC across 5 failure modes</div>
+        <h3>ShopFloor AI</h3>
+        <p class="it__d">Predicts machine failures from sensor data, streams production KPIs through Kafka, and answers maintenance questions from indexed standard operating procedures. Seven service deployed stack.</p>
+        <p class="it__meta">Python · scikit-learn · gradient boosting · MLflow · Kafka · ChromaDB · Docker</p>
+        <p class="it__l"><a href="https://github.com/TanayPratapSingh/shopfloor-ai">Code</a></p></div>
+
+      <div class="it"><div class="it__m">~$355K</div><div class="it__u">annualized impact recovered</div>
+        <h3>JMA Wireless DMAIC dashboard</h3>
+        <p class="it__d">Lean Six Sigma capstone sponsored by the SVP of Global Operations at a US 5G infrastructure manufacturer. Standardized four KPIs and replaced a 31 GB JSON export with a 5 MB pipeline.</p>
+        <p class="it__meta">DMAIC · Power BI · Python ETL · pandas · 31 GB to 5 MB</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Sponsored work, code not public</span></p></div>
+
+      <div class="it"><div class="it__m">45%</div><div class="it__u">better than baseline</div>
+        <h3>Multi horizon Kp index prediction</h3>
+        <p class="it__d">Geomagnetic storms are not abstract: the 1989 Quebec blackout cut power to six million people for nine hours. LSTMs forecast the Kp index across multiple horizons over 96,000 hourly observations.</p>
+        <p class="it__meta">Python · TensorFlow · LSTM · RNN · 96K+ hourly observations</p>
+        <p class="it__l"><a href="https://github.com/TanayPratapSingh/multi-horizon-aurora-kp-prediction">Code</a></p></div>
+
+      <div class="it"><div class="it__m">+25.4%</div><div class="it__u">peak load at +5&deg;C</div>
+        <h3>July energy demand under warming</h3>
+        <p class="it__d">Residential load is the part of the grid most exposed to climate shocks. Models July peak hour demand under warming scenarios, with 9.2 percent savings modeled from demand side response.</p>
+        <p class="it__meta">R · regression · scenario modeling · Shiny</p>
+        <p class="it__l"><a href="https://github.com/TanayPratapSingh/energy-usage-prediction">Code</a></p></div>
+
+      <div class="it"><div class="it__m">4</div><div class="it__u">verified statistical traps</div>
+        <h3>Project Mark</h3>
+        <p class="it__d">Deterministic analytics traps built to stress test frontier models on the product analytics questions a technology company actually faces, where the correct answer is known in advance.</p>
+        <p class="it__meta">AI evaluation · analytics red teaming · Simpson's paradox · survivorship bias</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Write up available on request</span></p></div>
+
+      <div class="it"><div class="it__m">F = 426.5</div><div class="it__u">ANOVA, p &lt; 2e-16</div>
+        <h3>Wealth, health, and education</h3>
+        <p class="it__d">"Richer countries are healthier" steers development funding toward GDP growth as the master lever. Tests that framing across 180+ countries and finds education carries more of the signal.</p>
+        <p class="it__meta">R · ANOVA · 180+ countries · data storytelling</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Write up available on request</span></p></div>
+
+      <div class="it"><div class="it__m">12</div><div class="it__u">entity normalized schema</div>
+        <h3>Travel itinerary system</h3>
+        <p class="it__d">Enforcing rules consistently across every access path: an activity cannot cost less than nothing, a hotel must belong to a real destination, and an itinerary total must always reconcile.</p>
+        <p class="it__meta">MySQL · stored procedures · triggers · normalization · referential integrity</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Coursework, code not public</span></p></div>
+
+      <div class="it"><div class="it__m">star schema</div><div class="it__u">end to end on GCP</div>
+        <h3>Uber data engineering pipeline</h3>
+        <p class="it__d">Most data engineering exercises stop at a notebook. This one runs the full lifecycle: ingestion, storage, transformation, dimensional modeling, querying, and a dashboard on top.</p>
+        <p class="it__meta">GCP · BigQuery · Power BI · SQL · Python · dimensional modeling</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Coursework, code not public</span></p></div>
+
+      <div class="it"><div class="it__m">94%</div><div class="it__u">MNIST accuracy, no frameworks</div>
+        <h3>Digit recognition from scratch</h3>
+        <p class="it__d">Frameworks abstract exactly the parts worth understanding: the matrix shapes flowing forward, the gradient math flowing backward, and how optimization actually moves the weights.</p>
+        <p class="it__meta">Python · NumPy · backpropagation · no frameworks</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Coursework, code not public</span></p></div>
+
+      <div class="it"><div class="it__m">40 to 60%</div><div class="it__u">latency reduction</div>
+        <h3>Real time big data inflow</h3>
+        <p class="it__d">The default in most enterprise architectures is to send everything to the cloud, and for real time systems that default is wrong. Compares where computation should sit across six dimensions.</p>
+        <p class="it__meta">IoT · edge computing · fog computing · cloud · stream architecture</p>
+        <p class="it__l"><span style="color:var(--ink-3)">Research, write up on request</span></p></div>
+
     </div>
   </section>
 
-  <section class="sec" id="other">
-    <h2>Everything else</h2>
-    <table>
-      <caption>Earlier and smaller work, with the result that came out of each.</caption>
-      <thead>
-        <tr><th scope="col">Project</th><th scope="col">Result</th><th scope="col">Field</th><th scope="col" class="num">Year</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="t-name">Multi horizon Kp index prediction</td><td>45% better than baseline over 96,000 hourly observations</td><td>Deep learning</td><td class="t-yr">2026</td></tr>
-        <tr><td class="t-name">JMA Wireless DMAIC dashboard</td><td>$355K per year recovered, 31 GB reduced to a 5 MB pipeline</td><td>Process improvement</td><td class="t-yr">2026</td></tr>
-        <tr><td class="t-name">Project Mark</td><td>4 verified statistical traps for frontier model evaluation</td><td>AI evaluation</td><td class="t-yr">2026</td></tr>
-        <tr><td class="t-name">Wealth, health, and education</td><td>ANOVA F = 426.5 (p &lt; 2e-16) across 180+ countries</td><td>Data storytelling</td><td class="t-yr">2025</td></tr>
-        <tr><td class="t-name">Travel itinerary system</td><td>12 entity normalized schema, full itinerary in one call</td><td>Databases</td><td class="t-yr">2025</td></tr>
-        <tr><td class="t-name">Uber data engineering pipeline</td><td>End to end GCP pipeline into a BigQuery star schema</td><td>Data engineering</td><td class="t-yr">2024</td></tr>
-        <tr><td class="t-name">Digit recognition from scratch</td><td>94% MNIST accuracy with no frameworks</td><td>Deep learning</td><td class="t-yr">2024</td></tr>
-        <tr><td class="t-name">Real time big data inflow</td><td>40 to 60% latency reduction across a 6 dimension comparison</td><td>Research</td><td class="t-yr">2024</td></tr>
-      </tbody>
-    </table>
-  </section>
-
   <section class="sec" id="exp">
-    <h2>Experience</h2>
+    <div class="sec__h"><h2>Experience</h2><span>4 roles</span></div>
+
     <article class="job">
-      <div><h3>Research Assistant, Gravity Spy 2.0</h3><div class="org">Syracuse University, NSF funded</div></div>
-      <div class="when">Feb 2026 to present</div>
-      <dl>
+      <div class="job__t"><h3>Research Assistant, Gravity Spy 2.0</h3>
+        <span class="job__o">Syracuse University, NSF funded</span>
+        <span class="job__w">Feb 2026 to present</span></div>
+      <dl class="job__s">
         <div><dt>Classifications parsed</dt><dd>276,000+</dd></div>
         <div><dt>Glitch subjects</dt><dd>25,104</dd></div>
-        <div><dt>Auxiliary channels mapped</dt><dd>8,293</dd></div>
+        <div><dt>Auxiliary channels</dt><dd>8,293</dd></div>
         <div><dt>Validation AUC</dt><dd>0.89</dd></div>
+        <div><dt>Calibration error</dt><dd>0.10 to 0.05</dd></div>
       </dl>
+      <p>Citizen science supporting LIGO. The scientific goal is causal inference on detector noise:
+        working out which auxiliary subsystems cause the transient glitches contaminating strain data,
+        so commissioners fix the right hardware instead of chasing symptoms. Built the ingestion pipeline
+        against the Zooniverse Panoptes API, reconciling five undocumented subject metadata schemas
+        across 23 months of observations.</p>
     </article>
+
+    <article class="job">
+      <div class="job__t"><h3>Process Improvement Analyst</h3>
+        <span class="job__o">JMA Wireless, Liverpool NY</span>
+        <span class="job__w">Jan 2026 to May 2026</span></div>
+      <dl class="job__s">
+        <div><dt>Annualized impact</dt><dd>~$355K</dd></div>
+        <div><dt>Data pipeline</dt><dd>31 GB to 5 MB</dd></div>
+        <div><dt>KPIs standardized</dt><dd>4</dd></div>
+      </dl>
+      <p>Full DMAIC engagement at a US 5G infrastructure manufacturer, sponsored by the SVP of Global
+        Operations. Delivered a standardized KPI framework, a Python ETL pipeline, and a Power BI
+        dashboard, quantified as roughly $355,000 a year in recovered throughput and analyst time.</p>
+    </article>
+
+    <article class="job">
+      <div class="job__t"><h3>Cybersecurity Teaching Assistant</h3>
+        <span class="job__o">Syracuse University Labs</span>
+        <span class="job__w">Summer 2025</span></div>
+      <dl class="job__s">
+        <div><dt>Hands on labs delivered</dt><dd>15+</dd></div>
+      </dl>
+      <p>Ran lab sessions across Wireshark, Kali, Nmap, OpenSSL, and Metasploit, maintaining the
+        virtual machine stack students worked in.</p>
+    </article>
+
+    <article class="job">
+      <div class="job__t"><h3>Data and Product Analyst Intern</h3>
+        <span class="job__o">ProProfs, Noida India</span>
+        <span class="job__w">Jul 2023 to Aug 2023</span></div>
+      <dl class="job__s">
+        <div><dt>SaaS users analyzed</dt><dd>5,000+</dd></div>
+        <div><dt>Customer records</dt><dd>2,000</dd></div>
+        <div><dt>Churn reduction</dt><dd>5%</dd></div>
+        <div><dt>Rating lift</dt><dd>4.2 to 4.5</dd></div>
+      </dl>
+      <p>Product analytics across a SaaS user base, focused on churn drivers and the review pipeline
+        feeding the public product rating.</p>
+    </article>
+  </section>
+
+  <section class="sec" id="skills">
+    <div class="sec__h"><h2>Technical skills</h2><span>by where they get used</span></div>
+    <div class="skills">
+      <div><h3>Languages</h3><p>Python · SQL · R · C++ · Java · JavaScript · HTML5 · CSS3 · LaTeX</p></div>
+      <div><h3>LLM and generative AI</h3><p>RAG · LangChain · OpenAI API · ChromaDB · vector databases · BM25 · agent orchestration · tool calling · state graphs · LLM gateway · guardrails · prompt injection defense · jailbreak detection · LLM evaluation · calibration (ECE) · human in the loop · PII redaction · responsible AI · VADER · TF-IDF</p></div>
+      <div><h3>MLOps and deployment</h3><p>MLflow · Apache Airflow · Docker · Docker Compose · Kubernetes · GitHub Actions · CI/CD · model registry · REST APIs</p></div>
+      <div><h3>Deep learning</h3><p>LSTM · RNN · CNN · multimodal CNN · NLP · computer vision · transfer learning · MobileNetV2 · backpropagation · predictive modeling · feature engineering · data imputation · SHAP interpretability</p></div>
+      <div><h3>ML and data science libraries</h3><p>pandas · NumPy · scikit-learn · TensorFlow · Keras · XGBoost · CatBoost · SHAP · SciPy · OpenCV · Astropy · openpyxl · Matplotlib · Seaborn · Plotly · Spark</p></div>
+      <div><h3>Databases and data engineering</h3><p>MySQL · BigQuery · DuckDB · Apache Kafka · Avro · dbt · Hadoop · Hive · HDFS · ksqlDB · MapReduce · ETL pipelines · star schema · dimensional modeling · stored procedures</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="edu">
+    <div class="sec__h"><h2>Education and certification</h2></div>
+    <div class="twoup">
+      <div class="ent"><h3>Master of Science, Applied Data Science</h3>
+        <div class="ent__o">Syracuse University</div>
+        <div class="ent__w">Jan 2025 to Dec 2026 · Syracuse, NY</div>
+        <p>Deep learning (CNNs, LSTMs, RNNs, word embeddings, reinforcement learning), machine learning
+          (ensemble methods, SVMs, HDBSCAN, DBSCAN, GMM, hyperparameter optimization), data engineering
+          (Spark, Kafka, ksqlDB, Hive, HDFS, MapReduce), advanced databases (Neo4j with Cypher, Redis,
+          Cassandra, Apache Drill), statistical analysis, and applied research methods.</p></div>
+      <div class="ent"><h3>Bachelor of Technology, Computer Science</h3>
+        <div class="ent__o">JSSATE Noida</div>
+        <div class="ent__w">Dec 2020 to May 2024 · Noida, India</div>
+        <p>Data structures and algorithms, operating systems, computer networks, database management
+          systems, software engineering, and discrete mathematics. Capstone in machine learning and
+          distributed systems.</p></div>
+      <div class="ent"><h3>Lean Six Sigma Green Belt</h3>
+        <div class="ent__o">Syracuse University, Whitman School of Management</div>
+        <div class="ent__w">SCM 755 · Spring 2026</div>
+        <p>Full DMAIC project at JMA Wireless sponsored by the SVP of Global Operations, delivering a
+          standardized KPI framework, Python ETL pipeline, and Power BI dashboard with roughly $355,000
+          in quantified annualized impact.</p></div>
+    </div>
   </section>
 
   <section class="close" id="contact">
     <h2>If you are hiring for measurement, not just modelling, get in touch.</h2>
-    <p>I am most useful where someone needs to know whether a system is actually working:
-       evaluation harnesses, retrieval quality, calibration, and the data layer that makes
-       those numbers trustworthy.</p>
+    <p>I am most useful where someone needs to know whether a system is actually working: evaluation
+      harnesses, retrieval quality, calibration, guardrails, and the data layer that makes those
+      numbers trustworthy.</p>
     <ul>
       <li><a href="mailto:tanayyps@gmail.com">tanayyps@gmail.com</a></li>
       <li><a href="https://github.com/TanayPratapSingh">GitHub</a></li>
