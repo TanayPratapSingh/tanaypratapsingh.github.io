@@ -1,0 +1,16 @@
+/* ---------- tiles: separated objects, clear division ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(322px,1fr));gap:18px}
+.tile{background:var(--surface);border:1px solid var(--rule-2);
+  padding:16px 17px 15px;display:flex;flex-direction:column;
+  text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.tile:hover{border-color:var(--met)}
+.tile:hover h3{color:var(--met)}
+.tile__meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);line-height:1.55}
+.tile h3{font-size:18px;margin:8px 0 10px;letter-spacing:-0.012em}
+.tile__badge{font-family:var(--mono);font-size:12.3px;color:var(--ink);background:var(--sunk);
+  padding:9px 11px;line-height:1.65}
+.tile__tags{margin-top:11px;font-family:var(--mono);font-size:11.3px;color:var(--ink-3);
+  line-height:1.7;flex:1}
+.tile__foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:4px 12px;font-family:var(--mono);font-size:11.4px;color:var(--met)}
+.tile__foot .rec{color:var(--ink-3)}
