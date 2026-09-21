@@ -27,7 +27,6 @@ h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.15;letter-spacing:-0.013em}
 p{margin:0}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--met);outline-offset:3px}
-
 /* ---------- left rail ---------- */
 .rail{position:fixed;top:0;left:0;bottom:0;width:var(--side);z-index:30;
   background:var(--surface);border-right:1px solid var(--rule-2);
@@ -46,13 +45,11 @@ a{color:inherit}
 .rail__c a{color:var(--met)}
 .rail__c a:hover{text-decoration:underline;text-underline-offset:2px}
 .rail__c span{color:var(--ink-3);font-family:var(--mono);font-size:12.2px;margin-top:7px}
-
 /* ---------- main ---------- */
 .main{margin-left:var(--side);padding:26px clamp(16px,2.6vw,38px) 0}
 .sec{padding:30px 0;border-top:1px solid var(--rule-2)}
 .sec:first-child{padding-top:0;border-top:0}
 .sec > h2{font-size:20px;margin-bottom:18px}
-
 /* ---------- tiles: separated objects, clear division ---------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(322px,1fr));gap:18px}
 .tile{background:var(--surface);border:1px solid var(--rule-2);
@@ -69,7 +66,6 @@ a{color:inherit}
 .tile__foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
   display:flex;flex-wrap:wrap;gap:4px 12px;font-family:var(--mono);font-size:11.4px;color:var(--met)}
 .tile__foot .rec{color:var(--ink-3)}
-
 /* ---------- overlay ---------- */
 .ov{position:fixed;inset:0;z-index:40;display:none;background:rgba(21,23,27,.45)}
 .ov.on{display:block}
@@ -88,7 +84,6 @@ a{color:inherit}
   text-decoration:none;border:1px solid var(--met);padding:6px 13px;margin-bottom:18px}
 .sheet__code:hover{background:var(--met);color:var(--paper)}
 .sheet video{width:100%;display:block;background:#000;border:1px solid var(--rule-2);margin-bottom:20px}
-
 .body h4{font-size:17px;margin:22px 0 7px;letter-spacing:-0.01em}
 .body p{margin:0 0 11px;max-width:80ch;color:var(--ink-2)}
 .body strong{color:var(--ink);font-weight:600}
@@ -110,7 +105,6 @@ a{color:inherit}
 .body .project-figure img{width:100%;display:block;border:1px solid var(--rule)}
 .body figcaption{font-size:12.8px;color:var(--ink-3);margin-top:6px}
 .body .figure-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-
 /* ---------- roles ---------- */
 .job{background:var(--surface);border:1px solid var(--rule-2);padding:20px 22px;margin-bottom:18px}
 .job__t{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 14px}
@@ -125,21 +119,17 @@ a{color:inherit}
 .job__b{margin-top:14px}
 .job__b p{margin:0 0 10px;font-size:15.2px;color:var(--ink-2);max-width:96ch}
 .job__b p:last-child{margin-bottom:0}
-
 .skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px 26px}
 .skills h3{font-size:13.6px;margin-bottom:4px}
 .skills p{font-family:var(--mono);font-size:12.1px;color:var(--ink-2);line-height:1.75}
-
 .twoup{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px}
 .ent{background:var(--surface);border:1px solid var(--rule-2);padding:17px 19px}
 .ent h3{font-size:17.5px}
 .ent__o{color:var(--ink-2);font-size:14.2px;margin-top:3px}
 .ent__w{font-family:var(--mono);font-size:12.1px;color:var(--ink-3);margin-top:3px}
 .ent p{margin-top:9px;font-size:14.8px;color:var(--ink-2)}
-
 .tail{padding:26px 0 60px;border-top:1px solid var(--rule-2);
   font-family:var(--mono);font-size:12.2px;color:var(--ink-3)}
-
 @media (max-width:900px){
   .rail{position:static;width:auto;flex-direction:column;border-right:0;
     border-bottom:1px solid var(--rule-2);padding:18px 16px}
@@ -377,7 +367,6 @@ PROJECTS.forEach(function(p,i){
   b.addEventListener('click',function(){openSheet(i);});
   grid.appendChild(b);
 });
-
 const ov=document.getElementById('ov'), sheet=document.getElementById('sheet');
 let last=null;
 function openSheet(i){
