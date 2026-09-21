@@ -1,13 +1,13 @@
-"""Assemble redesign.html from the modules in site/.
+"""Assemble index.html from the modules in site/.
 
-Content is single sourced: the project write-ups come straight out of
-index.html, and the page shell is composed from site/css, site/partials, and
-site/js so no file has to hold the whole site at once.
+Project write-ups live in site/data/projects.js; the page shell is composed
+from site/css, site/partials, and site/js so no file holds the whole site.
 """
-import io, re, pathlib
+import io, pathlib
 
 ROOT = pathlib.Path(__file__).parent
 SITE = ROOT / "site"
+OUT  = ROOT / "index.html"
 
 def read(p):
     return io.open(p, encoding="utf-8").read()
@@ -15,11 +15,6 @@ def read(p):
 def concat(folder, suffix):
     parts = sorted(p for p in (SITE / folder).iterdir() if p.suffix == suffix)
     return "\n".join(read(p).rstrip() for p in parts)
-
-def project_data():
-    src = read(ROOT / "index.html")
-    grab = lambda n: re.search(r"const %s=(\[.*?\]);" % n, src, re.S).group(1)
-    return grab("PROJECTS"), grab("REPOS"), grab("VIDEOS")
 
 def build():
     p = SITE / "partials"
@@ -46,18 +41,15 @@ def build():
         read(p / "overlay.html").rstrip(),
         "",
         "<script>",
+        read(SITE / "data" / "projects.js").rstrip(),
         concat("js", ".js"),
         "</script>",
         "</body>",
         "</html>",
         "",
     ])
-    projects, repos, videos = project_data()
-    page = (page.replace("__PROJECTS__", projects)
-                .replace("__REPOS__", repos)
-                .replace("__VIDEOS__", videos))
-    io.open(ROOT / "redesign.html", "w", encoding="utf-8").write(page)
+    io.open(OUT, "w", encoding="utf-8").write(page)
     return len(page)
 
 if __name__ == "__main__":
-    print("wrote redesign.html:", build(), "bytes")
+    print("wrote index.html:", build(), "bytes")
