@@ -1,0 +1,18 @@
+/* ---------- left rail ---------- */
+.rail{position:fixed;top:0;left:0;bottom:0;width:var(--side);z-index:30;
+  background:var(--surface);border-right:1px solid var(--rule-2);
+  display:flex;flex-direction:column;padding:26px 22px 22px;overflow-y:auto}
+.rail__name{font-size:22px;font-weight:500;letter-spacing:-0.018em;text-decoration:none;line-height:1.2}
+.rail__sum{margin-top:7px;font-family:var(--mono);font-size:11.8px;color:var(--ink-3);line-height:1.55}
+.rail__role{margin-top:11px;font-size:15px;color:var(--ink);line-height:1.4;letter-spacing:-0.008em}
+.rail nav{margin-top:26px;display:flex;flex-direction:column;gap:1px}
+.rail nav a{font-size:15.5px;color:var(--ink-2);text-decoration:none;padding:6px 9px;margin-left:-9px}
+.rail nav a:hover{color:var(--ink);background:var(--sunk)}
+.rail__spacer{flex:1;min-height:26px}
+.rail__c{border-top:1px solid var(--rule);padding-top:14px}
+.rail__c h2{font-size:12.2px;color:var(--ink-3);font-family:var(--mono);margin-bottom:8px}
+.rail__c a,.rail__c span{display:block;font-size:13.6px;line-height:1.75;
+  color:var(--ink-2);text-decoration:none;word-break:break-word}
+.rail__c a{color:var(--met)}
+.rail__c a:hover{text-decoration:underline;text-underline-offset:2px}
+.rail__c span{color:var(--ink-3);font-family:var(--mono);font-size:12.2px;margin-top:7px}
