@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:02.500
+The Perfect Lap: predicting the optimal F1 pit stop lap
+
+00:00:02.800 --> 00:00:04.900
+The Ergast historical F1 dump, 15 CSVs of real race data
+
+00:00:05.100 --> 00:00:06.900
+627,214 rows across lap times, results, and pit stops
+
+00:00:07.100 --> 00:00:08.300
+Loading the committed model
+
+00:00:08.500 --> 00:00:10.600
+scikit-learn warns: pickled at 1.7.2, loaded here at 1.9.1
+
+00:00:10.800 --> 00:00:12.800
+A 100 tree random forest over 12 features
+
+00:00:13.400 --> 00:00:16.800
+The Streamlit predictor: driver, circuit, grid position
+
+00:00:17.100 --> 00:00:19.800
+Typing a real circuit into the search
+
+00:00:20.100 --> 00:00:23.000
+Optimal pit stop: lap 22 of 52
+
+00:00:23.300 --> 00:00:26.200
+Predicted finish: P3 from a grid slot of 5
+
+00:00:26.500 --> 00:00:29.500
+Pit window lap 20 to 24, a two position gain
+
+00:00:29.800 --> 00:00:33.500
+Strategic analysis behind the recommendation
+
+00:00:33.800 --> 00:00:38.500
+The exact feature vector the model scored
+
+00:00:38.800 --> 00:00:43.000
+Driver, constructor, circuit, track length, tyre degradation
+
+00:00:43.300 --> 00:00:46.800
+Model and feature list are committed, so this run reproduces
