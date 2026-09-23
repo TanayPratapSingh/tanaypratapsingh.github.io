@@ -40,33 +40,52 @@
     </article>
 
     <article class="job">
-      <div class="job__t"><h3>Process Improvement Analyst</h3>
+      <div class="job__t"><h3>Lean Six Sigma Project Lead</h3>
         <span class="job__o">JMA Wireless &middot; Liverpool, NY</span>
         <span class="job__w">Jan 2026 to May 2026</span></div>
       <dl class="job__s">
-        <div><dt>Annualized impact</dt><dd>~$355K recovered</dd></div>
-        <div><dt>Data pipeline</dt><dd>31 GB JSON to 5 MB</dd></div>
-        <div><dt>KPIs standardized</dt><dd>4 across 2 lines</dd></div>
-        <div><dt>Team and duration</dt><dd>5 analysts, 15 weeks</dd></div>
+        <div><dt>Role</dt><dd>Project lead, 4 person team</dd></div>
+        <div><dt>KPIs standardized</dt><dd>5 across 2 lines</dd></div>
+        <div><dt>Data pipeline</dt><dd>31 GB JSON to under 5 MB</dd></div>
+        <div><dt>Projected annual opportunity</dt><dd>~$355K</dd></div>
+        <div><dt>Pilot: red to first action</dt><dd>4 h to 25 min</dd></div>
+        <div><dt>Duration</dt><dd>15 weeks, on site weekly</dd></div>
       </dl>
       <div class="job__b">
-        <p>Client sponsored Lean Six Sigma capstone with a US manufacturer of 5G cell tower transmitters
-          and active wireless infrastructure. Full DMAIC engagement for the Jumper Department with weekly
-          on site stakeholder access, sponsored by the SVP of Global Operations.</p>
-        <p>Ran the complete cycle: authored the project charter, SIPOC, and CTQC tree in Define; agreed
-          sponsor approved definitions for four KPIs (Parts per Labor Hour, Uptime, First Time Throughput,
-          Schedule Attainment) across one manual and one automated assembly line in Measure; then used
-          Pareto and fishbone analysis to isolate material flow, not equipment availability, as the root
-          cause of the automated line's shortfall.</p>
-        <p>Built the data pipeline that made the analysis possible. The automated cell emitted deeply
-          nested JSON, two datasets totalling 31 GB that would not open in Power BI. Using pandas
-          <code>json_normalize</code> with explicit record paths and openpyxl, I flattened it to a wide
-          format Excel file under 5 MB that loads instantly, casting types, computing cycle time, and
-          processing a full week in under 30 seconds.</p>
-        <p>Quantified impact: closing the automated line's schedule attainment gap recovers roughly 27,000
-          cables per year at no added labor, about $324,000 at a $12 per cable margin, and the dashboard
-          removes approximately 48 analyst hours per week of manual reporting, about $31,200. Combined
-          recurring value is roughly $355,000 per year from a single department pilot.</p>
+        <p>Client sponsored Lean Six Sigma engagement with a US manufacturer of cell tower transmitters
+          and active 5G infrastructure, sponsored by the SVP of Global Operations with a named project
+          champion. I led a four person team through a full DMAIC cycle in the Jumper Department, which
+          runs one manual assembly line and one fully automated cell side by side.</p>
+        <p>The Define problem was that nobody could compare the two lines, because Uptime and Schedule
+          Attainment meant different things to different functions. I ran the definition interviews across
+          manufacturing, quality, and production supervision and produced a sponsor approved document
+          fixing one formula and one target for five KPIs: Parts per Labor Hour, Uptime, First Time
+          Throughput, Schedule Attainment, and a Culture and Engagement index built from a pulse survey
+          and dashboard usage.</p>
+        <p>Built the pipeline that made the automated line measurable at all. The cell emits one deeply
+          nested JSON record per test event, and two raw datasets expanded past 31 GB when loaded directly
+          into Power BI, which no machine under 64 GB of RAM could even open. Using pandas
+          <code>json_normalize</code> with explicit record paths and openpyxl, I flattened it to one row
+          per test event, cast types so Power Query never coerces anything, derived cycle time, and got
+          the output under 5 MB with instant refresh.</p>
+        <p>The finding that mattered came from the definitions rather than the code. Once both lines were
+          measured the same way, the automated cell showed 97.3% uptime against 46.3% of its weekly
+          target, and those two numbers cannot both describe a machine problem. A cell running almost all
+          the time and still missing plan by half is input limited, so the constraint was kitting and
+          material flow upstream, not the equipment everyone suspected. The manual line was absorbing the
+          shortfall at 139.7% of its own target, which masked the demand signal going back to planning.</p>
+        <p>Recommended three fixes, chosen against six candidates with a Pugh matrix: a daily standup at a
+          dashboard wall screen, a two bin continuous kitting feed so the cell is never starved, and a
+          reset of a commissioning era weekly target to demonstrated capability with a documented ramp. I
+          piloted the standup for two weeks and measured it: median time from a KPI turning red to a named
+          owner acting fell from about 4 hours to about 25 minutes, and operator familiarity with the five
+          KPIs rose from 2.4 to 4.1 on a five point scale.</p>
+        <p>Projected recurring value is roughly $355,000 a year: about 27,000 additional cables from the
+          automated line at no added labor, plus about 48 analyst hours a week returned from manual
+          reporting. Both rest on conservative rate assumptions the team stated explicitly pending JMA
+          Finance confirmation, so they are a sized opportunity rather than a realized saving. Handover
+          was governed by a Control Plan with a named refresh owner, a dashboard FMEA, and tiered
+          escalation on red status.</p>
       </div>
     </article>
 
