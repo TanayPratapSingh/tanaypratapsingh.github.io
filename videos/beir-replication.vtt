@@ -1,0 +1,49 @@
+WEBVTT
+
+1
+00:00:00.533 --> 00:00:05.633
+A live shell in the beir-replication repo
+
+2
+00:00:06.233 --> 00:00:08.733
+Source, the paper's published numbers, and committed run artifacts
+
+3
+00:00:09.333 --> 00:00:13.633
+The claim: can a 2021 retrieval benchmark be reproduced on a laptop?
+
+4
+00:00:14.233 --> 00:00:15.933
+Running BM25 on SciFact for real
+
+5
+00:00:16.333 --> 00:00:20.533
+0.677 against a published 0.665, over 5,183 documents
+
+6
+00:00:21.233 --> 00:00:25.533
+The first full sweep. TAS-B lands exactly. DPR misses by 0.058
+
+7
+00:00:26.233 --> 00:00:29.633
+The clue: searching title_only scores 0.261
+
+8
+00:00:30.033 --> 00:00:33.533
+Title plus the full text scores 0.260. The body is being discarded
+
+9
+00:00:34.233 --> 00:00:38.533
+The cause: the context encoder truncates every document at 100 tokens
+
+10
+00:00:39.233 --> 00:00:43.533
+Raise the limit and it climbs to 0.318 at 512 tokens
+
+11
+00:00:44.233 --> 00:00:47.033
+Every published cell reproduced. DPR now exact at 0.318
+
+12
+00:00:47.433 --> 00:00:50.133
+Both tables are committed artifacts of a 12 minute run. The BM25 figure above ran live
