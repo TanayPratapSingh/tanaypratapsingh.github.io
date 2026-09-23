@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.234 --> 00:00:03.634
+A speedup you cannot verify is not a result.
+
+00:00:03.934 --> 00:00:06.034
+Two ranks must equal one process.
+
+00:00:06.234 --> 00:00:09.334
+Every number traces to a run artifact.
+
+00:00:09.834 --> 00:00:12.434
+2x Tesla T4 on Kaggle. Every row measured.
+
+00:00:14.984 --> 00:00:17.634
+fp32 scales at 98%. amp drops to 57%.
+
+00:00:17.884 --> 00:00:20.284
+Remove the dataloader: back to 96%.
+
+00:00:21.434 --> 00:00:23.434
+It was never the GPUs.
