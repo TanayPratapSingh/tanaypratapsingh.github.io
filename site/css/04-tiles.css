@@ -3,7 +3,7 @@
    instead of more small ones; 226px is the floor on laptops. */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(max(226px,14vw),100%),1fr));gap:8px}
 .tile{background:var(--surface);border:1px solid var(--rule-2);
-  padding:16px 17px 15px;display:flex;flex-direction:column;
+  padding:11px 12px 10px;display:flex;flex-direction:column;
   text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
 .tile:hover{border-color:var(--met)}
 .tile:hover h3{color:var(--met)}
