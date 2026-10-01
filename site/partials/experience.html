@@ -52,39 +52,39 @@
         <div><dt>Duration</dt><dd>15 weeks, on site weekly</dd></div>
       </dl>
       <div class="job__b">
-        <p>Client sponsored Lean Six Sigma engagement with a US manufacturer of cell tower transmitters
-          and active 5G infrastructure, sponsored by the SVP of Global Operations with a named project
-          champion. I led a four person team through a full DMAIC cycle in the Jumper Department, which
-          runs one manual assembly line and one fully automated cell side by side.</p>
-        <p>The Define problem was that nobody could compare the two lines, because Uptime and Schedule
+        <p>JMA Wireless is a US manufacturer of cell tower transmitters and active 5G infrastructure. This
+          was a client engagement sponsored by the SVP of Global Operations, with a named project champion.
+          I led a four person team through a full DMAIC cycle in the Jumper Department, which runs one
+          manual assembly line and one fully automated cell side by side.</p>
+        <p>In Define, the problem was that nobody could compare the two lines, because Uptime and Schedule
           Attainment meant different things to different functions. I ran the definition interviews across
-          manufacturing, quality, and production supervision and produced a sponsor approved document
-          fixing one formula and one target for five KPIs: Parts per Labor Hour, Uptime, First Time
+          manufacturing, quality, and production supervision and wrote a sponsor approved document that
+          fixes one formula and one target for five KPIs: Parts per Labor Hour, Uptime, First Time
           Throughput, Schedule Attainment, and a Culture and Engagement index built from a pulse survey
           and dashboard usage.</p>
-        <p>Built the pipeline that made the automated line measurable at all. The cell emits one deeply
+        <p>I built the pipeline that made the automated line measurable at all. The cell emits one deeply
           nested JSON record per test event, and two raw datasets expanded past 31 GB when loaded directly
           into Power BI, which no machine under 64 GB of RAM could even open. Using pandas
           <code>json_normalize</code> with explicit record paths and openpyxl, I flattened it to one row
           per test event, cast types so Power Query never coerces anything, derived cycle time, and got
           the output under 5 MB with instant refresh.</p>
-        <p>The finding that mattered came from the definitions rather than the code. Once both lines were
-          measured the same way, the automated cell showed 97.3% uptime against 46.3% of its weekly
-          target, and those two numbers cannot both describe a machine problem. A cell running almost all
-          the time and still missing plan by half is input limited, so the constraint was kitting and
-          material flow upstream, not the equipment everyone suspected. The manual line was absorbing the
-          shortfall at 139.7% of its own target, which masked the demand signal going back to planning.</p>
-        <p>Recommended three fixes, chosen against six candidates with a Pugh matrix: a daily standup at a
+        <p>The main finding came out of the definitions rather than the code. Once both lines were measured
+          the same way, the automated cell showed 97.3% uptime against 46.3% of its weekly target, and
+          those two numbers cannot both describe a machine problem. A cell that runs almost all the time
+          and still misses plan by half is input limited, so the constraint was kitting and material flow
+          upstream, not the equipment everyone suspected. The manual line was absorbing the shortfall at
+          139.7% of its own target, which hid the demand signal going back to planning.</p>
+        <p>We recommended three fixes, picked from six candidates with a Pugh matrix: a daily standup at a
           dashboard wall screen, a two bin continuous kitting feed so the cell is never starved, and a
           reset of a commissioning era weekly target to demonstrated capability with a documented ramp. I
-          piloted the standup for two weeks and measured it: median time from a KPI turning red to a named
+          piloted the standup for two weeks and measured it. Median time from a KPI turning red to a named
           owner acting fell from about 4 hours to about 25 minutes, and operator familiarity with the five
           KPIs rose from 2.4 to 4.1 on a five point scale.</p>
         <p>Projected recurring value is roughly $355,000 a year: about 27,000 additional cables from the
           automated line at no added labor, plus about 48 analyst hours a week returned from manual
-          reporting. Both rest on conservative rate assumptions the team stated explicitly pending JMA
-          Finance confirmation, so they are a sized opportunity rather than a realized saving. Handover
-          was governed by a Control Plan with a named refresh owner, a dashboard FMEA, and tiered
+          reporting. Both figures rest on conservative rate assumptions that the team wrote down and that
+          still need JMA Finance to confirm, so they are a sized opportunity rather than a realized saving.
+          We handed over with a Control Plan that names a refresh owner, a dashboard FMEA, and tiered
           escalation on red status.</p>
       </div>
     </article>
