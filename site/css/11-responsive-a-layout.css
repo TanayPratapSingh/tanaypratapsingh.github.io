@@ -8,6 +8,5 @@
   .rail__c a,.rail__c span{display:inline-block;margin-right:18px}
   .main{margin-left:0;padding:20px 16px 0}
   .job__w{margin-left:0;width:100%}
-  .grid{grid-template-columns:1fr}
   .sheet{width:100%;max-height:100vh;border:0}
 }
