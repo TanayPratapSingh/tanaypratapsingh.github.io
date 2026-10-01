@@ -14,28 +14,28 @@
         <div><dt>Calibration error</dt><dd>0.10 to 0.05</dd></div>
       </dl>
       <div class="job__b">
-        <p>NSF funded citizen science supporting LIGO. The scientific goal is causal inference on
-          detector noise: identifying which auxiliary subsystems produce the transient glitches that
-          contaminate gravitational wave strain data, so detector commissioners fix the responsible
-          hardware instead of chasing symptoms.</p>
-        <p>Built the ingestion pipeline in Python with pandas and the Zooniverse Panoptes API, parsing
-          276,000+ volunteer classifications across 23 months of observations. The engineering work was
-          reconciling five undocumented subject metadata schemas across project iterations, spanning
-          25,104 glitch subjects and 8,293 auxiliary detector channels, and filtering roughly 38 science
-          team accounts out of the volunteer population.</p>
-        <p>Engineered an OpenCV workflow that retrieved 49,000 spectrograms through batch API calls,
-          transforming 1200x1200 mosaics into paired 224x224 channel heatmaps suitable for deep learning
-          input. The pipeline emits three outputs: a subject level flat file with aggregated volunteer
-          labels, a separate file for subjects missing GPS metadata, and a GPS time by auxiliary channel
-          pivot matrix covering 455 LIGO subsystems including PEM, SUS, LSC, ISI, ASC, and CAL.</p>
-        <p>Trained a two input CNN with a shared MobileNetV2 backbone in TensorFlow and Keras to predict
-          volunteer similarity labels directly from paired spectrograms, reaching 0.89 validation AUC on a
-          held out 2,000 subject set. The result that matters more is calibration: label smoothing, AdamW,
-          and AUC based early stopping brought Expected Calibration Error from 0.10 down to 0.05.</p>
-        <p>Alongside the modeling, ran the descriptive analysis: volunteer effort is heavily right tailed,
-          with the top ten volunteers accounting for 50% of all classifications, and inter volunteer
-          agreement reaches 52% perfect consensus on multi classified subjects. Code is committed to the
-          Syracuse CCDS GravitySpy Classifier repository.</p>
+        <p>Gravity Spy is NSF funded citizen science that supports LIGO. The science goal is causal
+          inference on detector noise: finding which auxiliary subsystems produce the transient glitches
+          that contaminate gravitational wave strain data, so detector commissioners can fix the
+          responsible hardware instead of chasing symptoms.</p>
+        <p>I built the ingestion pipeline in Python with pandas and the Zooniverse Panoptes API. It parses
+          276,000+ volunteer classifications from 23 months of observations. The engineering work was
+          reconciling five undocumented subject metadata schemas from different project iterations,
+          covering 25,104 glitch subjects and 8,293 auxiliary detector channels, and filtering roughly 38
+          science team accounts out of the volunteer population.</p>
+        <p>I wrote an OpenCV workflow that pulled 49,000 spectrograms through batch API calls and converted
+          each 1200x1200 mosaic into paired 224x224 channel heatmaps sized for model input. The pipeline
+          writes three outputs: a subject level flat file with aggregated volunteer labels, a separate file
+          for subjects missing GPS metadata, and a pivot matrix of GPS time by auxiliary channel covering
+          455 LIGO subsystems, including PEM, SUS, LSC, ISI, ASC, and CAL.</p>
+        <p>I trained a two input CNN with a shared MobileNetV2 backbone in TensorFlow and Keras to predict
+          volunteer similarity labels straight from paired spectrograms. It reaches 0.89 validation AUC on
+          a held out 2,000 subject set. Calibration matters more than the AUC here, and label smoothing,
+          AdamW, and AUC based early stopping brought Expected Calibration Error from 0.10 down to 0.05.</p>
+        <p>I also ran the descriptive analysis. Volunteer effort is heavily right tailed: the top ten
+          volunteers account for 50% of all classifications. On subjects classified by more than one
+          volunteer, 52% reach perfect consensus. The code is committed to the Syracuse CCDS GravitySpy
+          Classifier repository.</p>
       </div>
     </article>
 
