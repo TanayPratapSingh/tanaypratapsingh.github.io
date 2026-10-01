@@ -51,20 +51,23 @@ a{color:inherit}
 .sec:first-child{padding-top:0;border-top:0}
 .sec > h2{font-size:20px;margin-bottom:18px}
 /* ---------- tiles: separated objects, clear division ---------- */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(322px,1fr));gap:18px}
+/* Minimum width tracks the viewport (14vw) so wide monitors get fewer, larger tiles
+   instead of more small ones; 226px is the floor on laptops. */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(max(226px,14vw),100%),1fr));gap:8px}
 .tile{background:var(--surface);border:1px solid var(--rule-2);
-  padding:16px 17px 15px;display:flex;flex-direction:column;
+  padding:11px 12px 10px;display:flex;flex-direction:column;
   text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
 .tile:hover{border-color:var(--met)}
 .tile:hover h3{color:var(--met)}
-.tile__meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);line-height:1.55}
-.tile h3{font-size:18px;margin:8px 0 10px;letter-spacing:-0.012em}
-.tile__badge{font-family:var(--mono);font-size:12.3px;color:var(--ink);background:var(--sunk);
-  padding:9px 11px;line-height:1.65}
-.tile__tags{margin-top:11px;font-family:var(--mono);font-size:11.3px;color:var(--ink-3);
-  line-height:1.7;flex:1}
-.tile__foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
-  display:flex;flex-wrap:wrap;gap:4px 12px;font-family:var(--mono);font-size:11.4px;color:var(--met)}
+.tile__meta{font-family:var(--mono);font-size:10.6px;color:var(--ink-3);line-height:1.45}
+.tile h3{font-size:16px;line-height:1.24;margin:5px 0 7px;letter-spacing:-0.008em}
+.tile__badge{font-family:var(--mono);font-size:11px;color:var(--ink);background:var(--sunk);
+  padding:6px 8px;line-height:1.5}
+.tile__tags{margin-top:7px;font-family:var(--mono);font-size:10.6px;color:var(--ink-3);
+  line-height:1.5;flex:1}
+.tile__tags .more{color:var(--ink-2)}
+.tile__foot{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:2px 9px;font-family:var(--mono);font-size:10.6px;color:var(--met)}
 .tile__foot .rec{color:var(--ink-3)}
 /* ---------- overlay ---------- */
 .ov{position:fixed;inset:0;z-index:40;display:none;background:rgba(21,23,27,.45)}
@@ -140,7 +143,6 @@ a{color:inherit}
   .rail__c a,.rail__c span{display:inline-block;margin-right:18px}
   .main{margin-left:0;padding:20px 16px 0}
   .job__w{margin-left:0;width:100%}
-  .grid{grid-template-columns:1fr}
   .sheet{width:100%;max-height:100vh;border:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -374,16 +376,20 @@ const PROJECTS=[{"title": "Tool Dependency Graph: Deriving Agent Call Order from
 const REPOS=["https://github.com/TanayPratapSingh/tool-dependency-graph", "https://github.com/TanayPratapSingh/distributed-vit-cifar10", "https://github.com/TanayPratapSingh/ztf-transient-pipeline", "https://github.com/TanayPratapSingh/Groundwork", "https://github.com/TanayPratapSingh/beir-replication", "", "https://github.com/TanayPratapSingh/shopfloor-ai", "https://github.com/TanayPratapSingh/handoff", "https://github.com/TanayPratapSingh/comms-agent", "", "https://github.com/TanayPratapSingh/media-pulse", "https://github.com/TanayPratapSingh/multi-horizon-aurora-kp-prediction", "https://github.com/TanayPratapSingh/the-perfect-lap", "https://github.com/TanayPratapSingh/energy-usage-prediction", "", "", "", "", ""];
 const VIDEOS=["", "videos/distributed-vit-cifar10.mp4", "videos/ztf-transient-pipeline.mp4", "videos/groundwork.mp4", "videos/beir-replication.mp4", "", "", "", "videos/comms-agent.mp4", "", "videos/media-pulse.mp4", "", "videos/the-perfect-lap.mp4", "", "", "", "", "", ""];
 const grid=document.getElementById('grid');
+// Tiles show the first few tags; the write up sheet lists all of them.
+const TILE_TAGS=3;
 PROJECTS.forEach(function(p,i){
   const b=document.createElement('button');
+  const extra=p.tags.length-TILE_TAGS;
   b.className='tile'; b.type='button'; b.setAttribute('aria-haspopup','dialog');
   b.innerHTML='<div class="tile__meta">'+p.meta+'</div>'+
     '<h3>'+p.title+'</h3>'+
     '<div class="tile__badge">'+p.badge+'</div>'+
-    '<div class="tile__tags">'+p.tags.join(' &middot; ')+'</div>'+
+    '<div class="tile__tags">'+p.tags.slice(0,TILE_TAGS).join(' &middot; ')+
+      (extra>0?' <span class="more">+'+extra+'</span>':'')+'</div>'+
     '<div class="tile__foot"><span>Open write up</span>'+
-      (VIDEOS[i]?'<span class="rec">walkthrough recorded</span>':'')+
-      (REPOS[i]?'<span class="rec">code public</span>':'')+'</div>';
+      (VIDEOS[i]?'<span class="rec">video</span>':'')+
+      (REPOS[i]?'<span class="rec">code</span>':'')+'</div>';
   b.addEventListener('click',function(){openSheet(i);});
   grid.appendChild(b);
 });
