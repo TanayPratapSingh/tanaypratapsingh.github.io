@@ -11,8 +11,8 @@ PROJECTS.forEach(function(p,i){
     '<div class="tile__tags">'+p.tags.slice(0,TILE_TAGS).join(' &middot; ')+
       (extra>0?' <span class="more">+'+extra+'</span>':'')+'</div>'+
     '<div class="tile__foot"><span>Open write up</span>'+
-      (VIDEOS[i]?'<span class="rec">walkthrough recorded</span>':'')+
-      (REPOS[i]?'<span class="rec">code public</span>':'')+'</div>';
+      (VIDEOS[i]?'<span class="rec">video</span>':'')+
+      (REPOS[i]?'<span class="rec">code</span>':'')+'</div>';
   b.addEventListener('click',function(){openSheet(i);});
   grid.appendChild(b);
 });
