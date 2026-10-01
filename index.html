@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>Tanay Pratap Singh</title>
-<meta name="description" content="Applied data scientist. Retrieval, evaluation harnesses, guardrails, and the warehouse layer underneath them.">
+<meta name="description" content="Applied data scientist who builds retrieval systems, evaluation harnesses, guardrails, and the warehouse layer underneath them.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -200,28 +200,28 @@ a{color:inherit}
         <div><dt>Calibration error</dt><dd>0.10 to 0.05</dd></div>
       </dl>
       <div class="job__b">
-        <p>NSF funded citizen science supporting LIGO. The scientific goal is causal inference on
-          detector noise: identifying which auxiliary subsystems produce the transient glitches that
-          contaminate gravitational wave strain data, so detector commissioners fix the responsible
-          hardware instead of chasing symptoms.</p>
-        <p>Built the ingestion pipeline in Python with pandas and the Zooniverse Panoptes API, parsing
-          276,000+ volunteer classifications across 23 months of observations. The engineering work was
-          reconciling five undocumented subject metadata schemas across project iterations, spanning
-          25,104 glitch subjects and 8,293 auxiliary detector channels, and filtering roughly 38 science
-          team accounts out of the volunteer population.</p>
-        <p>Engineered an OpenCV workflow that retrieved 49,000 spectrograms through batch API calls,
-          transforming 1200x1200 mosaics into paired 224x224 channel heatmaps suitable for deep learning
-          input. The pipeline emits three outputs: a subject level flat file with aggregated volunteer
-          labels, a separate file for subjects missing GPS metadata, and a GPS time by auxiliary channel
-          pivot matrix covering 455 LIGO subsystems including PEM, SUS, LSC, ISI, ASC, and CAL.</p>
-        <p>Trained a two input CNN with a shared MobileNetV2 backbone in TensorFlow and Keras to predict
-          volunteer similarity labels directly from paired spectrograms, reaching 0.89 validation AUC on a
-          held out 2,000 subject set. The result that matters more is calibration: label smoothing, AdamW,
-          and AUC based early stopping brought Expected Calibration Error from 0.10 down to 0.05.</p>
-        <p>Alongside the modeling, ran the descriptive analysis: volunteer effort is heavily right tailed,
-          with the top ten volunteers accounting for 50% of all classifications, and inter volunteer
-          agreement reaches 52% perfect consensus on multi classified subjects. Code is committed to the
-          Syracuse CCDS GravitySpy Classifier repository.</p>
+        <p>Gravity Spy is NSF funded citizen science that supports LIGO. The science goal is causal
+          inference on detector noise: finding which auxiliary subsystems produce the transient glitches
+          that contaminate gravitational wave strain data, so detector commissioners can fix the
+          responsible hardware instead of chasing symptoms.</p>
+        <p>I built the ingestion pipeline in Python with pandas and the Zooniverse Panoptes API. It parses
+          276,000+ volunteer classifications from 23 months of observations. The engineering work was
+          reconciling five undocumented subject metadata schemas from different project iterations,
+          covering 25,104 glitch subjects and 8,293 auxiliary detector channels, and filtering roughly 38
+          science team accounts out of the volunteer population.</p>
+        <p>I wrote an OpenCV workflow that pulled 49,000 spectrograms through batch API calls and converted
+          each 1200x1200 mosaic into paired 224x224 channel heatmaps sized for model input. The pipeline
+          writes three outputs: a subject level flat file with aggregated volunteer labels, a separate file
+          for subjects missing GPS metadata, and a pivot matrix of GPS time by auxiliary channel covering
+          455 LIGO subsystems, including PEM, SUS, LSC, ISI, ASC, and CAL.</p>
+        <p>I trained a two input CNN with a shared MobileNetV2 backbone in TensorFlow and Keras to predict
+          volunteer similarity labels straight from paired spectrograms. It reaches 0.89 validation AUC on
+          a held out 2,000 subject set. Calibration matters more than the AUC here, and label smoothing,
+          AdamW, and AUC based early stopping brought Expected Calibration Error from 0.10 down to 0.05.</p>
+        <p>I also ran the descriptive analysis. Volunteer effort is heavily right tailed: the top ten
+          volunteers account for 50% of all classifications. On subjects classified by more than one
+          volunteer, 52% reach perfect consensus. The code is committed to the Syracuse CCDS GravitySpy
+          Classifier repository.</p>
       </div>
     </article>
 
@@ -238,39 +238,39 @@ a{color:inherit}
         <div><dt>Duration</dt><dd>15 weeks, on site weekly</dd></div>
       </dl>
       <div class="job__b">
-        <p>Client sponsored Lean Six Sigma engagement with a US manufacturer of cell tower transmitters
-          and active 5G infrastructure, sponsored by the SVP of Global Operations with a named project
-          champion. I led a four person team through a full DMAIC cycle in the Jumper Department, which
-          runs one manual assembly line and one fully automated cell side by side.</p>
-        <p>The Define problem was that nobody could compare the two lines, because Uptime and Schedule
+        <p>JMA Wireless is a US manufacturer of cell tower transmitters and active 5G infrastructure. This
+          was a client engagement sponsored by the SVP of Global Operations, with a named project champion.
+          I led a four person team through a full DMAIC cycle in the Jumper Department, which runs one
+          manual assembly line and one fully automated cell side by side.</p>
+        <p>In Define, the problem was that nobody could compare the two lines, because Uptime and Schedule
           Attainment meant different things to different functions. I ran the definition interviews across
-          manufacturing, quality, and production supervision and produced a sponsor approved document
-          fixing one formula and one target for five KPIs: Parts per Labor Hour, Uptime, First Time
+          manufacturing, quality, and production supervision and wrote a sponsor approved document that
+          fixes one formula and one target for five KPIs: Parts per Labor Hour, Uptime, First Time
           Throughput, Schedule Attainment, and a Culture and Engagement index built from a pulse survey
           and dashboard usage.</p>
-        <p>Built the pipeline that made the automated line measurable at all. The cell emits one deeply
+        <p>I built the pipeline that made the automated line measurable at all. The cell emits one deeply
           nested JSON record per test event, and two raw datasets expanded past 31 GB when loaded directly
           into Power BI, which no machine under 64 GB of RAM could even open. Using pandas
           <code>json_normalize</code> with explicit record paths and openpyxl, I flattened it to one row
           per test event, cast types so Power Query never coerces anything, derived cycle time, and got
           the output under 5 MB with instant refresh.</p>
-        <p>The finding that mattered came from the definitions rather than the code. Once both lines were
-          measured the same way, the automated cell showed 97.3% uptime against 46.3% of its weekly
-          target, and those two numbers cannot both describe a machine problem. A cell running almost all
-          the time and still missing plan by half is input limited, so the constraint was kitting and
-          material flow upstream, not the equipment everyone suspected. The manual line was absorbing the
-          shortfall at 139.7% of its own target, which masked the demand signal going back to planning.</p>
-        <p>Recommended three fixes, chosen against six candidates with a Pugh matrix: a daily standup at a
+        <p>The main finding came out of the definitions rather than the code. Once both lines were measured
+          the same way, the automated cell showed 97.3% uptime against 46.3% of its weekly target, and
+          those two numbers cannot both describe a machine problem. A cell that runs almost all the time
+          and still misses plan by half is input limited, so the constraint was kitting and material flow
+          upstream, not the equipment everyone suspected. The manual line was absorbing the shortfall at
+          139.7% of its own target, which hid the demand signal going back to planning.</p>
+        <p>We recommended three fixes, picked from six candidates with a Pugh matrix: a daily standup at a
           dashboard wall screen, a two bin continuous kitting feed so the cell is never starved, and a
           reset of a commissioning era weekly target to demonstrated capability with a documented ramp. I
-          piloted the standup for two weeks and measured it: median time from a KPI turning red to a named
+          piloted the standup for two weeks and measured it. Median time from a KPI turning red to a named
           owner acting fell from about 4 hours to about 25 minutes, and operator familiarity with the five
           KPIs rose from 2.4 to 4.1 on a five point scale.</p>
         <p>Projected recurring value is roughly $355,000 a year: about 27,000 additional cables from the
           automated line at no added labor, plus about 48 analyst hours a week returned from manual
-          reporting. Both rest on conservative rate assumptions the team stated explicitly pending JMA
-          Finance confirmation, so they are a sized opportunity rather than a realized saving. Handover
-          was governed by a Control Plan with a named refresh owner, a dashboard FMEA, and tiered
+          reporting. Both figures rest on conservative rate assumptions that the team wrote down and that
+          still need JMA Finance to confirm, so they are a sized opportunity rather than a realized saving.
+          We handed over with a Control Plan that names a refresh owner, a dashboard FMEA, and tiered
           escalation on red status.</p>
       </div>
     </article>
@@ -286,24 +286,24 @@ a{color:inherit}
         <div><dt>VM stack</dt><dd>Kali, Win 10/Server, CentOS, Metasploitable</dd></div>
       </dl>
       <div class="job__b">
-        <p>Graduate teaching assistant for the cybersecurity course, developing and delivering hands on
-          labs across four domains: cryptography, network security, penetration testing, and digital
+        <p>I was the graduate teaching assistant for the cybersecurity course, and I built and taught hands
+          on labs in four areas: cryptography, network security, penetration testing, and digital
           forensics. Each lab walks students through the full attacker workflow, from OSINT reconnaissance
           and port scanning to exploitation and post compromise enumeration, then flips to the defensive
           reading of the same evidence.</p>
-        <p>Built and maintained the multi VM lab environments the course runs on, using Kali Linux as the
-          attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. Kept
+        <p>I built and maintained the multi VM lab environments the course runs on, with Kali Linux as the
+          attacker platform against Windows 10, Windows Server, CentOS, and Metasploitable targets. I kept
           images, network configuration, and tooling reproducible so a full section could work through the
           same exercises without environment drift derailing the lesson.</p>
-        <p>Technical coverage spans symmetric and asymmetric cryptography and hashing with OpenSSL
-          (SHA 256, SHA 512), scanning and enumeration with Nmap, traffic capture and protocol analysis
-          with Wireshark, and exploitation with Metasploit against intentionally vulnerable targets. On the
-          forensics side, students practice evidence handling, file and metadata analysis, and writing
-          findings up as a report.</p>
-        <p>Held office hours debugging students' own attack chains, and graded labs and incident analysis
-          reports with feedback on methodology rather than only the final answer, since in security the
-          reasoning and the chain of evidence matter as much as the result. Reinforced scope,
-          authorization, and responsible handling of tools throughout.</p>
+        <p>The labs cover symmetric and asymmetric cryptography and hashing with OpenSSL (SHA 256,
+          SHA 512), scanning and enumeration with Nmap, traffic capture and protocol analysis with
+          Wireshark, and exploitation with Metasploit against intentionally vulnerable targets. In the
+          forensics labs, students practice evidence handling, file and metadata analysis, and writing
+          their findings up as a report.</p>
+        <p>I held office hours to debug students' own attack chains, and graded labs and incident analysis
+          reports on methodology as well as the final answer, because in security the reasoning and the
+          chain of evidence matter as much as the result. Throughout the course I kept coming back to
+          scope, authorization, and responsible handling of the tools.</p>
       </div>
     </article>
 
@@ -319,14 +319,14 @@ a{color:inherit}
         <div><dt>Rating lift</dt><dd>4.2 to 4.6</dd></div>
       </dl>
       <div class="job__b">
-        <p>Product and customer analytics in Python across SaaS products serving 5,000+ users. Delivered
-          SWOT analyses, competitive feature benchmarking against Zoho and Salesforce comparing 100 to 150
-          features, and Ideal Customer Profile analyses to inform product strategy and prioritization.</p>
-        <p>Analyzed customer datasets covering 2,000 clients using Python and Excel pivot tables to surface
-          behavior patterns, pain points, and conversion drivers. Findings let the product team prioritize
-          two high impact features for the next release that measurably lifted trial to paid conversion.
-          Built interactive Tableau dashboards sourced from SQL and Excel, identifying under used features
-          and reducing churn by 5 percent.</p>
+        <p>I did product and customer analytics in Python for SaaS products serving 5,000+ users. That
+          meant SWOT analyses, benchmarking 100 to 150 features against Zoho and Salesforce, and Ideal
+          Customer Profile analyses that fed product strategy and prioritization.</p>
+        <p>I analyzed customer data for 2,000 clients with Python and Excel pivot tables, looking for
+          behavior patterns, pain points, and what drove conversion. The findings let the product team
+          prioritize two features for the next release that measurably lifted trial to paid conversion. I
+          also built interactive Tableau dashboards on SQL and Excel sources that identified under used
+          features and reduced churn by 5 percent.</p>
       </div>
     </article>
   </section>
@@ -367,7 +367,8 @@ a{color:inherit}
     </div>
   </section>
 
-  <div class="tail">Built and maintained by hand. Source on GitHub.</div>
+  <div class="tail">Built and maintained by hand.
+    <a href="https://github.com/TanayPratapSingh/tanaypratapsingh.github.io">Source on GitHub</a>.</div>
 </main>
 
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
