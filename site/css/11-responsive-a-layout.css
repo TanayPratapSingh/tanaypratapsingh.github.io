@@ -4,7 +4,7 @@
   .rail nav{flex-direction:row;flex-wrap:wrap;gap:4px 14px;margin-top:16px}
   .rail nav a{margin-left:0;padding:3px 0}
   .rail__spacer{display:none}
-  .rail__cv{align-self:flex-start;margin:16px 0 0}
+  .rail__btns{flex-direction:row;flex-wrap:wrap;margin:16px 0 0}
   .rail__c{margin-top:16px}
   .rail__c a,.rail__c span{display:inline-block;margin-right:18px}
   .main{margin-left:0;padding:20px 16px 0}
