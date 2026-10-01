@@ -1,5 +1,7 @@
 /* ---------- tiles: separated objects, clear division ---------- */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(322px,1fr));gap:18px}
+/* Minimum width tracks the viewport (14vw) so wide monitors get fewer, larger tiles
+   instead of more small ones; 226px is the floor on laptops. */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(max(226px,14vw),100%),1fr));gap:18px}
 .tile{background:var(--surface);border:1px solid var(--rule-2);
   padding:16px 17px 15px;display:flex;flex-direction:column;
   text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
