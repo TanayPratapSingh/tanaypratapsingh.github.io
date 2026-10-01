@@ -9,8 +9,8 @@
 .tile:hover h3{color:var(--met)}
 .tile__meta{font-family:var(--mono);font-size:10.6px;color:var(--ink-3);line-height:1.45}
 .tile h3{font-size:16px;line-height:1.24;margin:5px 0 7px;letter-spacing:-0.008em}
-.tile__badge{font-family:var(--mono);font-size:12.3px;color:var(--ink);background:var(--sunk);
-  padding:9px 11px;line-height:1.65}
+.tile__badge{font-family:var(--mono);font-size:11px;color:var(--ink);background:var(--sunk);
+  padding:6px 8px;line-height:1.5}
 .tile__tags{margin-top:7px;font-family:var(--mono);font-size:10.6px;color:var(--ink-3);
   line-height:1.5;flex:1}
 .tile__foot{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule);
