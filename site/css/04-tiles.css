@@ -8,7 +8,7 @@
 .tile:hover{border-color:var(--met)}
 .tile:hover h3{color:var(--met)}
 .tile__meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);line-height:1.55}
-.tile h3{font-size:18px;margin:8px 0 10px;letter-spacing:-0.012em}
+.tile h3{font-size:16px;line-height:1.24;margin:5px 0 7px;letter-spacing:-0.008em}
 .tile__badge{font-family:var(--mono);font-size:12.3px;color:var(--ink);background:var(--sunk);
   padding:9px 11px;line-height:1.65}
 .tile__tags{margin-top:11px;font-family:var(--mono);font-size:11.3px;color:var(--ink-3);
