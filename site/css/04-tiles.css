@@ -13,6 +13,7 @@
   padding:6px 8px;line-height:1.5}
 .tile__tags{margin-top:7px;font-family:var(--mono);font-size:10.6px;color:var(--ink-3);
   line-height:1.5;flex:1}
+.tile__tags .more{color:var(--ink-2)}
 .tile__foot{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule);
   display:flex;flex-wrap:wrap;gap:2px 9px;font-family:var(--mono);font-size:10.6px;color:var(--met)}
 .tile__foot .rec{color:var(--ink-3)}
