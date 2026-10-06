@@ -393,4 +393,29 @@
   addEventListener('resize', drive);
   drive();
 
+  /* ---------------------------------------------------------------- toolshed, university, post office */
+  tpl('t-skills').querySelectorAll('.skills > div').forEach(g => {
+    const items = g.querySelector('p').textContent.split('·').map(s => s.trim()).filter(Boolean);
+    const d = document.createElement('div');
+    d.className = 'shelf';
+    d.innerHTML = '<h3>' + g.querySelector('h3').textContent + '</h3><div class="chips">' +
+      items.map(s => '<span>' + s + '</span>').join('') + '</div>';
+    $('shelves').appendChild(d);
+  });
+  tpl('t-edu').querySelectorAll('.ent').forEach(e => {
+    const d = document.createElement('article');
+    d.className = 'dip';
+    d.innerHTML = '<h3>' + e.querySelector('h3').textContent + '</h3>' +
+      '<p class="dip__o">' + e.querySelector('.ent__o').textContent + '</p>' +
+      '<p class="dip__w">' + e.querySelector('.ent__w').textContent + '</p>' +
+      '<p class="dip__t">' + e.querySelector('p').innerHTML + '</p>';
+    $('diplomas').appendChild(d);
+  });
+  $('letter').innerHTML =
+    '<p class="letter__big">' + emails.map(a => '<a href="' + a.getAttribute('href') + '">' + a.textContent + '</a>').join('') + '</p>' +
+    '<div class="acts">' + links.map(a => '<a class="btn' + (a.textContent === 'Resume' ? '' : ' btn--2') + '" href="' +
+      a.getAttribute('href') + '"' + (a.hasAttribute('download') ? ' download="' + a.getAttribute('download') + '"' : ' target="_blank" rel="noopener"') +
+      '>' + a.textContent + '</a>').join('') + '</div>' +
+    '<p class="letter__loc">' + rail.querySelector('.rail__loc').innerHTML + '</p>';
+
 })();
