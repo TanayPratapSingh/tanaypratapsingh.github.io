@@ -308,6 +308,9 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .anim .dir.in .dir__item{transition:opacity .45s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s;transition-delay:calc(var(--k) * 40ms),calc(var(--k) * 40ms),0s}
 .anim .stop:not(.in) .stop__card{opacity:0;transform:translateX(-28px)}
 .anim .stop.in .stop__card{transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.anim .rack:not(.in) li{opacity:0}
+.anim .rack.in li{animation:hang .7s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--k) * 35ms)}
+@keyframes hang{from{opacity:0;transform:translateY(-30px) rotate(-12deg)}to{opacity:1;transform:rotate(var(--r,0deg))}}
 .anim .diplomas:not(.in) .dip{opacity:0;transform:translateY(26px)}
 .anim .diplomas.in .dip{transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
 .anim .diplomas.in .dip:nth-child(2){transition-delay:.12s}
