@@ -192,6 +192,23 @@ def factory():
     return s, (x, y - 14)
 
 
+def power_station():
+    x, yb, rxb, ryb = ell(13.0, 1.9, 0.75)
+    _, _, rxt, ryt = ell(13.0, 1.9, 0.48)
+    yt, ym, rw = yb - 58, yb - 36, rxt * 0.9
+    s = '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f A%.1f,%.1f 0 0 1 %.1f,%.1f Z" fill="#E4E9F2"/>' % (
+        x - rxb, yb, x - rw, ym, x - rxt, yt, x + rxt, yt, x + rw, ym, x + rxb, yb, rxb, ryb, x - rxb, yb)
+    s += '<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f A%.1f,%.1f 0 0 1 %.1f,%.1f Z" fill="#C8D0DE"/>' % (
+        x, yt + ryt, x + rxt, yt, x + rw, ym, x + rxb, yb, rxb, ryb, x, yb + ryb)
+    s += '<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#7D889C"/>' % (x, yt, rxt, ryt)
+    s += '<g class="smoke">' + puff(x - 8, yt - 12, 13, 0) + puff(x + 10, yt - 20, 15, 1, 0.85) + puff(x - 2, yt - 34, 12, 2, 0.75) + '</g>'
+    s += box(12.25, 3.0, 1.5, 0.8, 14, tone("#FFC93C"))
+    bx, by = P(13.0, 3.8, 7)
+    s += '<polygon points="%.1f,%.1f %.1f,%.1f %.1f,%.1f %.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="%s"/>' % (
+        bx + 1, by - 7, bx - 5, by + 1, bx - 1, by + 1, bx - 3, by + 7, bx + 4, by - 1, bx, by - 1, INK)
+    return s, (x, yt - 46)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -199,6 +216,7 @@ BUILDINGS = [
     ("tower", "Control tower", control_tower, 8.7),
     ("gym", "Gym", gym, 12.9),
     ("factory", "Factory", factory, 15.6),
+    ("power", "Power station", power_station, 17.55),
 ]
 
 TREES = []
