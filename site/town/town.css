@@ -340,6 +340,6 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .map *,.map,.stop__pin.reached,.panel.open .panel__dot{animation:none!important}
+  .map *,.map,.stop__pin.reached,.panel.open .panel__dot,.rack__tags li,.rack__tags span{animation:none!important}
   .b,.sign,.panel,.btn,.dir__item,.hero__links a{transition:none}
 }
