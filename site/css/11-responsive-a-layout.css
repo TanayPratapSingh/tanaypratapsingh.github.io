@@ -7,7 +7,6 @@
   .rail__btns{flex-direction:row;flex-wrap:wrap;margin:16px 0 0}
   .rail__c{margin-top:16px}
   .rail__c a{display:inline-block;margin-right:18px}
-  .funbar{margin-left:0;padding:14px 16px 0}
   .main{margin-left:0;padding:20px 16px 0}
   .job__w{margin-left:0;width:100%}
   .sheet{width:100%;max-height:100vh;border:0}
