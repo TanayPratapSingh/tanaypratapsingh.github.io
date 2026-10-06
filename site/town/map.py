@@ -253,6 +253,23 @@ def race_track():
     return s, (x, y - ry - 26)
 
 
+def town_hall():
+    s = box(1.2, 8.9, 2.6, 2.0, 28, tone("#FFC93C"))
+    s += band_y(2.15, 2.85, 10.9, 0, 14, "#C9932A")
+    for x0 in (1.45, 3.15):
+        s += band_y(x0, x0 + 0.4, 10.9, 12, 20, "#FFF1C2", "win")
+    s += box(2.05, 9.45, 0.9, 0.9, 30, tone("#FFD666"), z=28)
+    s += pyramid(2.0, 9.4, 1.0, 1.0, 58, 18, "#E0603F", "#B94C31")
+    c = P(2.5, 10.35, 46)
+    s += '<circle cx="%.1f" cy="%.1f" r="7" fill="#FFFFFF" stroke="%s" stroke-width="1.5"/>' % (c[0] - 7, c[1] + 4, INK)
+    s += line((c[0] - 7, c[1] + 4), (c[0] - 7, c[1] - 1), INK, 1.5)
+    s += '<g class="hand" style="transform-origin:%.1fpx %.1fpx">' % (c[0] - 7, c[1] + 4) + line((c[0] - 7, c[1] + 4), (c[0] - 3, c[1] + 5), INK, 1.5) + '</g>'
+    a = P(2.5, 9.9, 76)
+    s += line(a, (a[0], a[1] - 18)) + '<polygon class="flag" style="transform-origin:%.1fpx %.1fpx" points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="#FF4F6B"/>' % (
+        a[0], a[1] - 14, a[0], a[1] - 18, a[0] + 14, a[1] - 14, a[0], a[1] - 10)
+    return s, (a[0], a[1] - 28)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -263,6 +280,7 @@ BUILDINGS = [
     ("power", "Power station", power_station, 17.55),
     ("newsroom", "Newsroom", newsroom, 17.6),
     ("track", "Race track", race_track, 20.8),
+    ("hall", "Town hall", town_hall, 14.7),
 ]
 
 TREES = []
