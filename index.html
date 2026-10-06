@@ -42,16 +42,12 @@ a{color:inherit}
 .rail__btn{padding:10px 12px;background:var(--sunk);color:var(--ink);text-align:center;
   font-size:14.5px;line-height:1.3;text-decoration:none}
 .rail__btn:hover{background:var(--rule);color:var(--met)}
+.rail__btn--town{font-size:16px}
 .rail__c{border-top:1px solid var(--rule);padding-top:14px}
 .rail__c a{display:block;font-size:13.6px;line-height:1.75;color:var(--met);
   text-decoration:none;word-break:break-word}
 .rail__c a:hover{text-decoration:underline;text-underline-offset:2px}
 .rail__loc{margin-top:12px;font-family:var(--mono);font-size:12.2px;color:var(--ink-3)}
-/* ---------- the door to town.html, the visual version of this page ---------- */
-.funbar{margin-left:var(--side);padding:18px clamp(16px,2.6vw,38px) 0}
-.fun{display:inline-flex;align-items:center;gap:9px;padding:9px 17px 9px 12px;border-radius:999px;
-  background:#CFE8FF;color:#1F2A44;border:1px solid #8DBCE8;font-size:15.5px;text-decoration:none}
-.fun:hover{background:#BBDDFF;border-color:#5468D8}
 /* ---------- main ---------- */
 .main{margin-left:var(--side);padding:26px clamp(16px,2.6vw,38px) 0}
 .sec{padding:30px 0;border-top:1px solid var(--rule-2)}
@@ -149,7 +145,6 @@ a{color:inherit}
   .rail__btns{flex-direction:row;flex-wrap:wrap;margin:16px 0 0}
   .rail__c{margin-top:16px}
   .rail__c a{display:inline-block;margin-right:18px}
-  .funbar{margin-left:0;padding:14px 16px 0}
   .main{margin-left:0;padding:20px 16px 0}
   .job__w{margin-left:0;width:100%}
   .sheet{width:100%;max-height:100vh;border:0}
@@ -158,10 +153,6 @@ a{color:inherit}
 </style>
 </head>
 <body>
-
-<div class="funbar">
-  <a class="fun" href="town.html"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><polygon points="9,1 17,5.5 9,10 1,5.5" fill="#FF7A59"/><polygon points="1,5.5 9,10 9,17 1,12.5" fill="#FFB199"/><polygon points="9,10 17,5.5 17,12.5 9,17" fill="#E8826A"/></svg>If this is too boring, click here</a>
-</div>
 
 <aside class="rail">
   <a class="rail__name" href="#">Tanay Pratap Singh</a>
@@ -176,6 +167,7 @@ a{color:inherit}
   </nav>
   <div class="rail__spacer"></div>
   <div class="rail__btns">
+    <a class="rail__btn rail__btn--town" href="town.html">If this is too boring, click here</a>
     <a class="rail__btn" href="https://www.linkedin.com/in/tanay-pratap-singh-8360681b0/"
       target="_blank" rel="noopener">LinkedIn</a>
     <a class="rail__btn" href="https://github.com/TanayPratapSingh" target="_blank" rel="noopener">GitHub</a>
