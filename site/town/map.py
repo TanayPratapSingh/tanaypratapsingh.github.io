@@ -397,7 +397,27 @@ def cars():
 
 
 def sky():
-    return ""
+    s = '<g class="sun"><g class="rays">'
+    for i in range(10):
+        a = math.radians(i * 36)
+        s += line((918 + 38 * math.cos(a), 78 + 38 * math.sin(a)), (918 + 48 * math.cos(a), 78 + 48 * math.sin(a)), "#FFD166", 4)
+    s += '</g><circle cx="918" cy="78" r="30" fill="#FFD166"/></g>'
+    s += '<g class="night-sky"><circle cx="918" cy="78" r="26" fill="#F4F1DE"/><circle cx="908" cy="70" r="5" fill="#E1DCC4"/><circle cx="927" cy="88" r="3.5" fill="#E1DCC4"/>'
+    for sx, sy, r in ((60, 40, 1.6), (160, 90, 1.2), (250, 30, 1.8), (330, 120, 1.3), (420, 60, 1.5), (560, 36, 1.2), (640, 110, 1.7),
+                      (720, 40, 1.3), (800, 140, 1.5), (860, 30, 1.2), (960, 160, 1.4), (40, 190, 1.2), (120, 250, 1.5), (300, 210, 1.1)):
+        s += '<circle class="star" cx="%d" cy="%d" r="%.1f" fill="#FFFFFF"/>' % (sx, sy, r)
+    s += '</g>'
+    for n, (cx, cy, sc) in enumerate(((736, 96, 1.0), (850, 176, 0.8), (70, 650, 0.9), (330, 150, 0.7))):
+        # each cloud crosses the whole sky; the negative delay starts it where it is drawn
+        a, b, dur = -(cx + 120), 1100 - cx, 80 + n * 14
+        s += '<g class="drift" style="--a:%dpx;--b:%dpx;--dur:%ds;--del:%.1fs">' % (a, b, dur, -dur * (-a) / (b - a))
+        s += ('<g transform="translate(%d %d) scale(%.2f)"><ellipse cx="0" cy="0" rx="36" ry="13" fill="#FFFFFF"/>'
+              '<ellipse cx="16" cy="-8" rx="22" ry="13" fill="#FFFFFF"/><ellipse cx="-14" cy="-5" rx="16" ry="10" fill="#FFFFFF"/></g></g>') % (cx, cy, sc)
+    s += '<g class="birds"><g class="flap">'
+    for bx, by in ((0, 0), (16, 7), (-15, 9)):
+        s += '<path d="M%d,%d q5,-6 10,0 q5,-6 10,0" fill="none" stroke="%s" stroke-width="1.8" stroke-linecap="round"/>' % (bx, by, INK)
+    s += '</g></g>'
+    return s
 
 
 def sign(bid, name, anchor):
