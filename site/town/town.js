@@ -97,6 +97,7 @@
   function toSvg(cx, cy) { return new DOMPoint(cx, cy).matrixTransform(svg.getScreenCTM().inverse()); }
   function zoomAt(px, py, f) {
     cancelAnimationFrame(flight);
+    touched = true;
     const w = view.w / f, s = w / view.w;
     view = fit({ w, x: px - (px - view.x) * s, y: py - (py - view.y) * s });
     apply();
@@ -172,14 +173,14 @@
       const w = pinch.v.w / (Math.hypot(a.x - b.x, a.y - b.y) / pinch.d), s = w / pinch.v.w;
       view = fit({ w, x: pinch.m.x - (pinch.m.x - pinch.v.x) * s, y: pinch.m.y - (pinch.m.y - pinch.v.y) * s });
       apply();
-      moved = true;
+      moved = touched = true;
       $('hint').classList.add('gone');
       return;
     }
     if (!drag || !hero.classList.contains('zoomed')) return;
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     if (!moved && Math.hypot(dx, dy) < 6) return;
-    if (!moved) { moved = true; svg.setPointerCapture(e.pointerId); hero.classList.add('panning'); $('tip').hidden = true; }
+    if (!moved) { moved = true; touched = true; svg.setPointerCapture(e.pointerId); hero.classList.add('panning'); $('tip').hidden = true; }
     const s = drag.v.w / svg.getBoundingClientRect().width;
     view = fit({ w: drag.v.w, x: drag.v.x - dx * s, y: drag.v.y - dy * s });
     apply();
