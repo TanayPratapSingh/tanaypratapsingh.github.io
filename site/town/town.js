@@ -418,4 +418,7 @@
       '>' + a.textContent + '</a>').join('') + '</div>' +
     '<p class="letter__loc">' + rail.querySelector('.rail__loc').innerHTML + '</p>';
 
+  // a shared link like town.html#gym opens that building
+  const h = location.hash.slice(1);
+  if (B[h] && B[h].projects) open(h, 0, null);
 })();
