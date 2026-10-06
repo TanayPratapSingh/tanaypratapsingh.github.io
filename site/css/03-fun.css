@@ -1,0 +1,5 @@
+/* ---------- the door to town.html, the visual version of this page ---------- */
+.funbar{margin-left:var(--side);padding:18px clamp(16px,2.6vw,38px) 0}
+.fun{display:inline-flex;align-items:center;gap:9px;padding:9px 17px 9px 12px;border-radius:999px;
+  background:#CFE8FF;color:#1F2A44;border:1px solid #8DBCE8;font-size:15.5px;text-decoration:none}
+.fun:hover{background:#BBDDFF;border-color:#5468D8}
