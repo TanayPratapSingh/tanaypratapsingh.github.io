@@ -1,0 +1,12 @@
+:root{
+  --ink:#1F2A44; --ink-2:#4A5677; --paper:#FFFFFF; --mist:#F1F5FB;
+  --grass:#E3F3D6; --road:#F3D98F; --wood:#C98B5B; --accent:#5468D8;
+  --f:'Bricolage Grotesque',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --on-sky:var(--ink); --on-sky-2:var(--ink-2);
+  /* summer is the base palette; the other seasons override it below */
+  --sky-day:#BFE3FF; --gr:#A2D883; --lot:#8DCB6F; --rd:#F3D98F; --ts:#7DBE63;
+  --t0a:#3F8F35; --t0b:#5DB548; --t1a:#4E9A3C; --t1b:#6FC25A; --t2a:#2F7D3A; --t2b:#57A849;
+  --pond:#6BBDF0; --pondhi:#A9DBFA;
+  --sky:var(--sky-day);
+}
