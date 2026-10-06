@@ -107,7 +107,8 @@
   function flyTo(t, done) {
     cancelAnimationFrame(flight);
     t = fit(t);
-    if (reduce) { view = t; apply(); if (done) done(); return; }
+    // a hidden tab gets no animation frames, so the camera jumps instead of flying and never strands a click
+    if (reduce || document.hidden) { view = t; apply(); if (done) done(); return; }
     const s = { ...view }, t0 = performance.now(), D = 560;
     const ease = x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
     const step = now => {
