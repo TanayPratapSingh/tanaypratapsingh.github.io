@@ -394,13 +394,26 @@
   drive();
 
   /* ---------------------------------------------------------------- toolshed, university, post office */
-  tpl('t-skills').querySelectorAll('.skills > div').forEach(g => {
-    const items = g.querySelector('p').textContent.split('·').map(s => s.trim()).filter(Boolean);
-    const d = document.createElement('div');
-    d.className = 'shelf';
-    d.innerHTML = '<h3>' + g.querySelector('h3').textContent + '</h3><div class="chips">' +
-      items.map(s => '<span>' + s + '</span>').join('') + '</div>';
-    $('shelves').appendChild(d);
+  const ICON = {
+    'Languages': '<path class="ic-line" d="M8 6 3 12l5 6M16 6l5 6-5 6"/>',
+    'LLM and generative AI': '<path class="ic-line" d="M4 5h16v10H10l-6 4Z"/><circle cx="9" cy="10" r="1.3"/><circle cx="12" cy="10" r="1.3"/><circle cx="15" cy="10" r="1.3"/>',
+    'MLOps and deployment': '<path class="ic-line" d="M12 3 20 7.5v9L12 21l-8-4.5v-9ZM12 12l8-4.5M12 12 4 7.5M12 12v9"/>',
+    'Deep learning': '<path class="ic-line" d="M12 4 21 9l-9 5-9-5ZM3 14l9 5 9-5"/>',
+    'ML and data science libraries': '<path class="ic-line" d="M5 20v-8M10 20V6M15 20v-9M20 20V9"/>',
+    'Databases and data engineering': '<ellipse class="ic-line" cx="12" cy="6" rx="7" ry="3"/><path class="ic-line" d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>'
+  };
+  const TAG = ['#FF9A80', '#9AA7F5', '#6FD1C2', '#FFD56A', '#FF9EC4', '#C3B8FF'];
+  tpl('t-skills').querySelectorAll('.skills > div').forEach((g, n) => {
+    const title = g.querySelector('h3').textContent.trim();
+    const items = g.querySelector('p').textContent.split('\u00b7').map(t => t.trim()).filter(Boolean);
+    const rack = document.createElement('section');
+    rack.className = 'rack';
+    rack.style.setProperty('--tag', TAG[n % TAG.length]);
+    rack.setAttribute('aria-labelledby', 'rack' + n);
+    rack.innerHTML = '<h3 class="rack__sign" id="rack' + n + '"><svg viewBox="0 0 24 24" aria-hidden="true">' + (ICON[title] || '') + '</svg>' +
+      title + ' <span class="rack__n">' + items.length + ' tools</span></h3><ul class="rack__tags">' +
+      items.map((t, k) => '<li style="--k:' + k + '"><span>' + t + '</span></li>').join('') + '</ul>';
+    $('shelves').appendChild(rack);
   });
   tpl('t-edu').querySelectorAll('.ent').forEach(e => {
     const d = document.createElement('article');

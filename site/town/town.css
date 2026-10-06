@@ -194,12 +194,30 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .stop__org{color:var(--ink-2);font-size:15px;margin-top:2px}
 .stop__body p{margin-top:10px;max-width:72ch}
 
-.shed{background:var(--paper);padding:68px 0}
-.shelves{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px 26px;margin-top:30px}
-.shelf{border-bottom:9px solid var(--wood);padding-bottom:12px}
-.shelf h3{font-size:18px;margin-bottom:6px}
-.shelf .chips span{background:#F6EADF;transition:transform .15s ease}
-.shelf .chips span:hover{transform:translateY(-3px) rotate(-2deg)}
+.shed{background-color:#D8B88C;background-image:radial-gradient(circle,#9A7550 2.2px,transparent 2.8px);
+  background-size:26px 26px;padding:68px 0}
+.shed h2{display:inline-block;background:#8C5A3C;color:#FFF7EC;padding:8px 20px 10px;border-radius:12px;
+  border-bottom:5px solid #6E452E;transform:rotate(-1.5deg)}
+.shed .sub{display:inline-block;margin:14px 0 0 12px;background:#FFF7EC;color:var(--ink);padding:4px 12px;border-radius:6px;
+  transform:rotate(1deg);font-size:16px}
+.racks{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:40px 34px;margin-top:34px}
+.rack__sign{display:inline-flex;align-items:center;gap:9px;background:#FFF7EC;color:var(--ink);font-size:17px;font-weight:700;
+  padding:8px 14px;border-radius:10px;border:2px solid #6E452E;transform:rotate(-1deg)}
+.rack:nth-child(even) .rack__sign{transform:rotate(1.2deg)}
+.rack__sign svg{width:22px;height:22px;flex:none;fill:currentColor}
+.rack__n{font-weight:500;color:var(--ink-2);font-size:13.5px}
+.rack__tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:16px}
+.rack__tags li{position:relative;padding-top:15px;transform-origin:50% 3px;transform:rotate(var(--r,0deg))}
+.rack__tags li:nth-child(3n){--r:-3deg}
+.rack__tags li:nth-child(3n+1){--r:2deg}
+.rack__tags li:nth-child(3n+2){--r:-1deg}
+.rack__tags li::before{content:"";position:absolute;left:50%;top:0;width:8px;height:16px;margin-left:-4px;
+  background:radial-gradient(circle at 50% 4px,#4A3423 3.5px,transparent 3.8px),linear-gradient(#6E452E,#6E452E) 50% 4px/1.6px 12px no-repeat}
+.rack__tags span{display:block;position:relative;background:var(--tag);color:var(--ink);font-size:13.5px;font-weight:600;line-height:1.25;
+  padding:11px 11px 7px;border-radius:6px 6px 10px 10px;transform-origin:50% -12px}
+.rack__tags span::after{content:"";position:absolute;left:50%;top:3px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#D8B88C}
+.rack__tags li:hover span{animation:swing .9s ease-out}
+@keyframes swing{20%{transform:rotate(14deg)}45%{transform:rotate(-9deg)}70%{transform:rotate(5deg)}}
 
 .school{background:var(--sky-day);padding:68px 0;transition:background-color .9s}
 .diplomas{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:30px}
