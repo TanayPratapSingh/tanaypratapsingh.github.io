@@ -18,3 +18,16 @@
   --t0a:#D3DEEC;--t0b:#FFFFFF;--t1a:#C4D3E6;--t1b:#F4F8FC;--t2a:#DCE5F1;--t2b:#FFFFFF;--pond:#D6EBFA;--pondhi:#FFFFFF}
 [data-time="night"]{--sky:#1C2745;--on-sky:#EEF2FF;--on-sky-2:#B9C4E4}
 
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--sky);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;
+  font-optical-sizing:auto;-webkit-font-smoothing:antialiased;transition:background-color .9s ease}
+body.locked{overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+h1,h2,h3{line-height:1.08;letter-spacing:-0.015em}
+code{font-family:var(--mono);font-size:.88em;background:var(--mist);padding:1px 5px;border-radius:5px}
+svg.ic,.dock svg,.zoom svg{width:17px;height:17px;flex:none;fill:currentColor}
+.ic-line{fill:none!important;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ic-mid{fill:#FFC93C!important}
+
