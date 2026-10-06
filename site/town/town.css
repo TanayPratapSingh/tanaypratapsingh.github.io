@@ -53,3 +53,19 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 [data-time="night"] .hero__links a:first-child{background:#FFD86B;color:var(--ink)}
 .hero__links a:hover{background:var(--accent);color:var(--paper);transform:translateY(-2px)}
 
+/* ---------- the map ---------- */
+.map{display:block;width:100%;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.hero.zoomed .map{cursor:grab;touch-action:none}
+.hero.panning .map{cursor:grabbing}
+.sign text{font:650 13px var(--f);fill:var(--ink)}
+.b,.sign{cursor:pointer;transition:transform .18s ease}
+.b:focus{outline:none}
+.b:hover,.b:focus-visible,.b.is-hot{transform:translateY(-7px)}
+.sign.is-hot{transform:translateY(-7px)}
+.sign.is-hot rect{fill:var(--ink)}
+.sign.is-hot text{fill:var(--paper)}
+.b>.b__in,.b>.lights{animation:rise .55s cubic-bezier(.2,.9,.25,1.15) both;animation-delay:calc(var(--i) * 60ms + 120ms)}
+.signs{animation:fade .45s ease both;animation-delay:1.05s}
+@keyframes rise{from{opacity:0;transform:translateY(-40px)}}
+@keyframes fade{from{opacity:0}}
+
