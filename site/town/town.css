@@ -69,3 +69,17 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 @keyframes rise{from{opacity:0;transform:translateY(-40px)}}
 @keyframes fade{from{opacity:0}}
 
+/* seasons repaint the town; fills ease so a change of season reads as weather, not a jump */
+.map .gr,.map .lot,.map .rd,.map .ts,.map .tc1,.map .tc2,.map .pond,.map .pond-hi,.map .snow1,.map .snow2{transition:fill .9s ease}
+.map .gr{fill:var(--gr)}
+.map .lot{fill:var(--lot)}
+.map .rd{fill:var(--rd)}
+.map .ts{fill:var(--ts)}
+.map .tc1.v0{fill:var(--t0a)} .map .tc2.v0{fill:var(--t0b)}
+.map .tc1.v1{fill:var(--t1a)} .map .tc2.v1{fill:var(--t1b)}
+.map .tc1.v2{fill:var(--t2a)} .map .tc2.v2{fill:var(--t2b)}
+.map .pond{fill:var(--pond)}
+.map .pond-hi{fill:var(--pondhi)}
+[data-season="winter"] .map .snow1{fill:#F8FBFF}
+[data-season="winter"] .map .snow2{fill:#D9E3F0}
+
