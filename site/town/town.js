@@ -13,6 +13,8 @@
   PROJECTS.forEach((p, i) => { idx[key(p.title)] = i; });
   const B = {};
   TOWN.buildings.forEach(b => { B[b.id] = b; });
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash) scrollTo(0, 0);
   const svg = $('map'), hero = svg.closest('.hero');
   if (!reduce) root.classList.add('anim');
   const say = msg => { const a = $('announce'); a.textContent = ''; setTimeout(() => { a.textContent = msg; }, 60); };
