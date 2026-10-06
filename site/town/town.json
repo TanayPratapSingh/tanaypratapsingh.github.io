@@ -1,0 +1,145 @@
+{
+  "buildings": [
+    {
+      "id": "observatory",
+      "name": "Observatory",
+      "color": "#9AA7F5",
+      "about": "Space and the sky",
+      "projects": [
+        "ZTF Transient Pipeline",
+        "Multi Horizon Geomagnetic Kp Index Prediction"
+      ]
+    },
+    {
+      "id": "tower",
+      "name": "Control tower",
+      "color": "#6FD1C2",
+      "about": "AI agents, and who tells them what to do",
+      "projects": [
+        "Tool Dependency Graph",
+        "handoff",
+        "comms-agent"
+      ]
+    },
+    {
+      "id": "library",
+      "name": "Library",
+      "color": "#C3B8FF",
+      "about": "Search, and answering questions from documents",
+      "projects": [
+        "Replicating BEIR",
+        "Groundwork"
+      ]
+    },
+    {
+      "id": "gym",
+      "name": "Gym",
+      "color": "#FF9A80",
+      "about": "Where models get trained",
+      "projects": [
+        "Replicating Dr. GRPO",
+        "Distributed ViT on CIFAR-10",
+        "Digit Recognition Neural Network from Scratch"
+      ]
+    },
+    {
+      "id": "factory",
+      "name": "Factory",
+      "color": "#FFB199",
+      "about": "Factories, machines, and the people who run them",
+      "projects": [
+        "ShopFloor AI",
+        "JMA Wireless"
+      ]
+    },
+    {
+      "id": "power",
+      "name": "Power station",
+      "color": "#FFD56A",
+      "about": "Energy use in a heat wave",
+      "projects": [
+        "Managing July Energy Demand Under a Warming Climate"
+      ]
+    },
+    {
+      "id": "newsroom",
+      "name": "Newsroom",
+      "color": "#FF9EC4",
+      "about": "Media, and testing what AI gets wrong",
+      "projects": [
+        "media-pulse",
+        "Project Mark"
+      ]
+    },
+    {
+      "id": "track",
+      "name": "Race track",
+      "color": "#A8DB8A",
+      "about": "Formula 1 strategy",
+      "projects": [
+        "The Perfect Lap"
+      ]
+    },
+    {
+      "id": "hall",
+      "name": "Town hall",
+      "color": "#FFC93C",
+      "about": "Health, money and schooling across countries",
+      "projects": [
+        "Challenging \"Wealth Equals Health\""
+      ]
+    },
+    {
+      "id": "yard",
+      "name": "Train yard",
+      "color": "#D9CFC0",
+      "about": "Moving data from place to place",
+      "projects": [
+        "Uber Data Engineering Pipeline",
+        "Real Time Big Data Inflow"
+      ]
+    },
+    {
+      "id": "travel",
+      "name": "Travel agency",
+      "color": "#9FE0D6",
+      "about": "Trip planning",
+      "projects": [
+        "Travel Itinerary Management System"
+      ]
+    },
+    {
+      "id": "school",
+      "name": "University",
+      "color": "#D8E0F2",
+      "about": "Where I studied",
+      "section": "school"
+    },
+    {
+      "id": "shed",
+      "name": "Toolshed",
+      "color": "#E0B48E",
+      "about": "The tools I use",
+      "section": "shed"
+    },
+    {
+      "id": "post",
+      "name": "Post office",
+      "color": "#FF8C89",
+      "about": "How to reach me",
+      "section": "post"
+    }
+  ],
+  "short": {
+    "Replicating Dr. GRPO": "Dr. GRPO",
+    "Distributed ViT on CIFAR-10": "Distributed ViT",
+    "Digit Recognition Neural Network from Scratch": "Digit recognition",
+    "Multi Horizon Geomagnetic Kp Index Prediction": "Kp forecasting",
+    "Managing July Energy Demand Under a Warming Climate": "July energy demand",
+    "Challenging \"Wealth Equals Health\"": "Wealth and health",
+    "Uber Data Engineering Pipeline": "Uber pipeline",
+    "Real Time Big Data Inflow": "Big data inflow",
+    "Travel Itinerary Management System": "Travel itinerary",
+    "ZTF Transient Pipeline": "ZTF pipeline"
+  }
+}
