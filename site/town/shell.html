@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tanay's town</title>
+<meta name="description" content="Tanay Pratap Singh's portfolio as a small town. Every building holds a project, with the full technical write up inside.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="bar__name" href="#top">Tanay Pratap Singh</a>
+  <nav class="bar__nav" aria-label="Sections">
+    <a href="#top">Projects</a>
+    <a href="#road">Experience</a>
+    <a href="#shed">Skills</a>
+    <a href="#school">Education</a>
+    <a href="#post">Contact</a>
+    <a class="bar__classic" href="index.html">Classic site</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hi">
+    <div class="hero__txt">
+      <h1 id="hi">Hi, I'm Tanay.</h1>
+      <p class="hero__lead">Every building in this town is something I built. Click one to look inside.</p>
+      <p class="hero__role" id="role"></p>
+      <p class="hero__links" id="heroLinks"></p>
+    </div>
+    {{MAP}}
+  </section>
+
+  <section class="dir" aria-labelledby="dirH">
+    <h2 id="dirH">Every building, as a list</h2>
+    <div class="dir__grid" id="dir"></div>
+  </section>
+
+  <section class="road" id="road" aria-labelledby="roadH">
+    <div class="wrap">
+      <h2 id="roadH">The road so far</h2>
+      <p class="sub">Four jobs, newest first.</p>
+      <ol class="road__stops" id="stops"></ol>
+    </div>
+  </section>
+
+  <section class="shed" id="shed" aria-labelledby="shedH">
+    <div class="wrap">
+      <h2 id="shedH">The toolshed</h2>
+      <p class="sub">The tools I use, by kind.</p>
+      <div class="shelves" id="shelves"></div>
+    </div>
+  </section>
+
+  <section class="school" id="school" aria-labelledby="schoolH">
+    <div class="wrap">
+      <h2 id="schoolH">The university</h2>
+      <div class="diplomas" id="diplomas"></div>
+    </div>
+  </section>
+
+  <section class="post" id="post" aria-labelledby="postH">
+    <div class="wrap">
+      <h2 id="postH">The post office</h2>
+      <div class="letter" id="letter"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Prefer everything on one plain page? <a href="index.html">Go to the classic site</a>.</p>
+</footer>
+
+<div class="ov" id="ov" hidden></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pName" tabindex="-1" hidden>
+  <button class="panel__x" type="button" id="pClose">Close</button>
+  <header class="panel__head">
+    <span class="panel__dot" aria-hidden="true"></span>
+    <div><h2 id="pName"></h2><p id="pAbout"></p></div>
+  </header>
+  <div class="tabs" id="pTabs" role="tablist" aria-label="Projects in this building"></div>
+  <article class="proj" id="pBody"></article>
+</aside>
+
+{{TEMPLATES}}
+<script>
+{{SCRIPTS}}
+</script>
+</body>
+</html>
