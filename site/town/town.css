@@ -221,3 +221,10 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .letter__big a+a{font-size:clamp(17px,2vw,21px);font-weight:600;color:var(--ink-2)}
 .letter__loc{margin-top:18px;color:var(--ink-2)}
 
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.btn{display:inline-flex;align-items:center;font:inherit;font-weight:700;font-size:14.5px;background:var(--ink);
+  color:var(--paper);text-decoration:none;border:0;border-radius:12px;padding:9px 15px;cursor:pointer;transition:transform .15s ease,background-color .15s}
+.btn:hover{background:var(--accent);transform:translateY(-2px)}
+.btn--2{background:var(--mist);color:var(--ink)}
+.btn--2:hover{background:var(--ink);color:var(--paper)}
+
