@@ -123,8 +123,25 @@ def tree(gx, gy, n, s=1.0):
             + '</g>')
 
 
+# ---------------------------------------------------------------- buildings
+# Each returns (svg, sign anchor in screen space). Footprints never overlap,
+# so sorting by the front corner (gx + w + gy + d) draws them back to front.
+
+def observatory():
+    s = box(1.2, 1.2, 2.2, 2.2, 20, tone("#DDE4F2"))
+    s += cylinder(2.3, 2.3, 0.8, 22, "#F2F5FB", "#FFFFFF", "#D3DAE8", z=20)
+    s += dome(2.3, 2.3, 0.8, 42, "#5468D8")
+    x, y, rx, ry = ell(2.3, 2.3, 0.8, 42)
+    slit = [(x - 5, y - rx * 0.9 + 6), (x + 5, y - rx * 0.9 + 6), (x + 5, y + ry - 2), (x - 5, y + ry - 2)]
+    s += poly(slit, "#2E3B8F", "win")
+    s += '<rect x="%.1f" y="%.1f" width="34" height="8" rx="3" fill="#2E3B8F" transform="rotate(-32 %.1f %.1f)"/>' % (
+        x - 2, y - 40, x, y - 36)
+    return s, (x, y - rx * 0.9 - 8)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
+    ("observatory", "Observatory", observatory, 6.8),
 ]
 
 TREES = []
