@@ -16,3 +16,7 @@
   text-decoration:none;border:1px solid var(--met);padding:6px 13px;margin-bottom:18px}
 .sheet__code:hover{background:var(--met);color:var(--paper)}
 .sheet video{width:100%;display:block;background:#000;border:1px solid var(--rule-2);margin-bottom:20px}
+.ov.on{animation:ov-in .2s ease-out}
+.ov.on .sheet{animation:sheet-in .26s cubic-bezier(.2,.8,.2,1)}
+@keyframes ov-in{from{opacity:0}}
+@keyframes sheet-in{from{opacity:0;transform:translateY(18px)}}
