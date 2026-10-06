@@ -211,3 +211,13 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .dip p+p{margin-top:2px}
 .dip__t{margin-top:12px!important;font-size:15px;line-height:1.55}
 
+.post{background:#FFE3E2;padding:68px 0}
+.letter{background:var(--paper);border-radius:6px;padding:30px clamp(20px,3vw,36px);margin-top:28px;max-width:760px;
+  border:10px solid transparent;
+  border-image:repeating-linear-gradient(45deg,#F25F5C 0 14px,#FFFFFF 14px 28px,#5468D8 28px 42px,#FFFFFF 42px 56px) 10}
+.letter__big{display:flex;flex-direction:column;gap:2px}
+.letter__big a{font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.02em;text-decoration:none;word-break:break-word}
+.letter__big a:hover{color:var(--accent)}
+.letter__big a+a{font-size:clamp(17px,2vw,21px);font-weight:600;color:var(--ink-2)}
+.letter__loc{margin-top:18px;color:var(--ink-2)}
+
