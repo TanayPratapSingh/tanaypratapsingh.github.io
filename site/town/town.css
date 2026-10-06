@@ -64,6 +64,8 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .sign text{font:650 13px var(--f);fill:var(--ink)}
 .b,.sign{cursor:pointer;transition:transform .18s ease}
 .b:focus{outline:none}
+.b:focus-visible .b__in{filter:drop-shadow(2.5px 0 0 var(--accent)) drop-shadow(-2.5px 0 0 var(--accent)) drop-shadow(0 2.5px 0 var(--accent)) drop-shadow(0 -2.5px 0 var(--accent))}
+[data-time="night"] .map .b:focus-visible .b__in{filter:brightness(.52) saturate(.8) drop-shadow(2.5px 0 0 #FFD86B) drop-shadow(-2.5px 0 0 #FFD86B) drop-shadow(0 2.5px 0 #FFD86B) drop-shadow(0 -2.5px 0 #FFD86B)}
 .b:hover,.b:focus-visible,.b.is-hot{transform:translateY(-7px)}
 .sign.is-hot{transform:translateY(-7px)}
 .sign.is-hot rect{fill:var(--ink)}
