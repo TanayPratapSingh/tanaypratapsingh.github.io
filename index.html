@@ -143,6 +143,11 @@ a{color:inherit}
 .ent p{margin-top:9px;font-size:14.8px;color:var(--ink-2)}
 .tail{padding:26px 0 60px;border-top:1px solid var(--rule-2);
   font-family:var(--mono);font-size:12.2px;color:var(--ink-3)}
+.totop{position:fixed;right:20px;bottom:20px;z-index:35;display:flex;align-items:center;gap:7px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--rule-2);padding:9px 14px;font:inherit;font-size:14.5px;cursor:pointer;
+  opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .2s,transform .2s,visibility .2s}
+.totop.show{opacity:1;visibility:visible;transform:none}
+.totop:hover{border-color:var(--met);color:var(--met)}
 @media (max-width:900px){
   .rail{position:static;width:auto;flex-direction:column;border-right:0;
     border-bottom:1px solid var(--rule-2);padding:18px 16px}
@@ -380,6 +385,7 @@ a{color:inherit}
 
   <div class="tail">Built and maintained by hand.
     <a href="https://github.com/TanayPratapSingh/tanaypratapsingh.github.io">Source on GitHub</a>.</div>
+  <button type="button" class="totop" id="totop"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16V4M4.5 9.5 10 4l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to top</button>
 </main>
 
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
@@ -441,6 +447,18 @@ ov.addEventListener('keydown',function(e){
   const first=f[0], lastEl=f[f.length-1];
   if(e.shiftKey&&document.activeElement===first){e.preventDefault();lastEl.focus();}
   else if(!e.shiftKey&&document.activeElement===lastEl){e.preventDefault();first.focus();}
+});
+// back to top: shown once the page has scrolled a screen down, and it brings keyboard focus back up too
+const totop=document.getElementById('totop');
+let totopQueued=false;
+addEventListener('scroll',function(){
+  if(totopQueued)return; totopQueued=true;
+  requestAnimationFrame(function(){ totopQueued=false; totop.classList.toggle('show',scrollY>innerHeight*0.8); });
+},{passive:true});
+totop.addEventListener('click',function(){
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  scrollTo({top:0,behavior:still?'auto':'smooth'});
+  document.querySelector('.rail__name').focus({preventScroll:true});
 });
 </script>
 </body>
