@@ -228,6 +228,31 @@ def newsroom():
     return s, (x, y - 30)
 
 
+def race_track():
+    s = poly([P(11.4, 4.0), P(13.85, 4.0), P(13.85, 6.95), P(11.4, 6.95)], "#93CF74", "lot")
+    x, y, rx, ry = ell(12.6, 5.45, 1.05)
+    s += '<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#5B6478"/>' % (x, y, rx, ry)
+    _, _, ix, iy = ell(12.6, 5.45, 0.7)
+    s += '<ellipse class="lot" cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#A8DB8A"/>' % (x, y, ix, iy)
+    mx, my = (rx + ix) / 2, (ry + iy) / 2
+    s += '<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="5 5"/>' % (
+        x, y, mx, my)
+    s += rect(x - 2, y + iy, 4, ry - iy, "#FFFFFF")
+    lap = "M%.1f,%.1f a%.1f,%.1f 0 1,0 %.1f,0 a%.1f,%.1f 0 1,0 %.1f,0" % (x - mx, y, mx, my, 2 * mx, mx, my, -2 * mx)
+    s += ('<g class="racer"><rect x="-7" y="-3.5" width="14" height="7" rx="2.5" fill="#FF4F6B"/>'
+          '<rect x="1" y="-2.5" width="4" height="5" rx="1" fill="#FFFFFF"/>'
+          '<animateMotion dur="6s" repeatCount="indefinite" rotate="auto" path="%s"/></g>' % lap)
+    s += box(11.55, 6.55, 1.6, 0.35, 10, tone("#3FB8A6"))
+    f = P(13.55, 4.3)
+    s += line(f, (f[0], f[1] - 38))
+    s += '<g class="flag" style="transform-origin:%.1fpx %.1fpx">' % (f[0], f[1] - 33)
+    for i in range(4):
+        for j in range(2):
+            s += rect(f[0] + i * 4.5, f[1] - 38 + j * 5, 4.5, 5, INK if (i + j) % 2 == 0 else "#FFFFFF")
+    s += '</g>'
+    return s, (x, y - ry - 26)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -237,6 +262,7 @@ BUILDINGS = [
     ("factory", "Factory", factory, 15.6),
     ("power", "Power station", power_station, 17.55),
     ("newsroom", "Newsroom", newsroom, 17.6),
+    ("track", "Race track", race_track, 20.8),
 ]
 
 TREES = []
