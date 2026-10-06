@@ -306,6 +306,14 @@ def travel_agency():
     return s, (x - 16, y - 12)
 
 
+def toolshed():
+    s = box(11.8, 9.0, 1.4, 1.2, 16, tone("#C98B5B"))
+    s += band_y(12.25, 12.75, 10.2, 0, 11, "#7A4A30")
+    s += gable_y(11.75, 8.95, 1.5, 1.32, 16, 12, tone("#8C5A3C"))
+    x, y = P(12.5, 9.6, 28)
+    return s, (x, y - 10)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -319,6 +327,7 @@ BUILDINGS = [
     ("hall", "Town hall", town_hall, 14.7),
     ("yard", "Train yard", train_yard, 19.6),
     ("travel", "Travel agency", travel_agency, 20.8),
+    ("shed", "Toolshed", toolshed, 23.4),
 ]
 
 TREES = []
