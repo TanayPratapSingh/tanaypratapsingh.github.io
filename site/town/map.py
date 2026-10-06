@@ -163,11 +163,25 @@ def control_tower():
     return s, (a[0], a[1] - 34)
 
 
+def gym():
+    s = box(3.9, 4.4, 2.6, 2.0, 24, tone("#FF7A59"))
+    s += band_y(4.85, 5.65, 6.4, 0, 15, "#C9583C")
+    for x0 in (4.15, 5.95):
+        s += band_y(x0, x0 + 0.4, 6.4, 13, 19, "#FFE1D6", "win")
+    x, y = P(5.2, 5.4, 24)
+    s += line((x - 22, y - 2), (x - 22, y - 22), INK, 2) + line((x + 22, y - 2), (x + 22, y - 22), INK, 2)
+    s += rect(x - 38, y - 52, 76, 32, "#FFFFFF", 7, ' stroke="%s" stroke-width="2"' % INK)
+    s += ('<g class="lift">' + rect(x - 17, y - 38.5, 34, 5, INK, 2) + rect(x - 23, y - 45, 7, 18, "#FF7A59", 2)
+          + rect(x + 16, y - 45, 7, 18, "#FF7A59", 2) + '</g>')
+    return s, (x, y - 58)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
     ("library", "Library", library, 10.45),
     ("tower", "Control tower", control_tower, 8.7),
+    ("gym", "Gym", gym, 12.9),
 ]
 
 TREES = []
