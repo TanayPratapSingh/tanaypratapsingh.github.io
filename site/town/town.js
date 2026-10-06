@@ -547,6 +547,14 @@
     document.querySelectorAll('.dir, .stop, .rack, .diplomas, .post').forEach(el => seen.observe(el));
   }
 
+  // back to top: shown once the town has scrolled out of view, and it brings keyboard focus back up too
+  const totop = $('totop');
+  new IntersectionObserver(es => totop.classList.toggle('show', !es[0].isIntersecting)).observe(hero);
+  totop.addEventListener('click', () => {
+    scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    $('top').focus({ preventScroll: true });
+  });
+
   // a shared link like town.html#gym opens that building
   const h = location.hash.slice(1);
   if (B[h] && B[h].projects) open(h, 0, null);

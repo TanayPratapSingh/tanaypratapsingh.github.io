@@ -251,6 +251,14 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
 .btn--2{background:var(--mist);color:var(--ink)}
 .btn--2:hover{background:var(--ink);color:var(--paper)}
 
+/* appears once the town is out of view; hidden from the tab order until then */
+.totop{position:fixed;right:clamp(16px,2vw,28px);bottom:18px;z-index:30;display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;
+  font-size:14.5px;background:var(--ink);color:var(--paper);border:0;border-radius:14px;padding:10px 15px;cursor:pointer;
+  opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s,background-color .15s}
+.totop svg{width:17px;height:17px}
+.totop.show{opacity:1;visibility:visible;transform:none}
+.totop:hover{background:var(--accent)}
+#top:focus{outline:none}
 .foot{background:var(--sky-day);padding:30px clamp(16px,3vw,40px) 50px;text-align:center;color:var(--ink-2);transition:background-color .9s}
 
 .ov{position:fixed;inset:0;background:rgba(31,42,68,.4);z-index:40}
@@ -341,5 +349,5 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .map *,.map,.stop__pin.reached,.panel.open .panel__dot,.rack__tags li,.rack__tags span{animation:none!important}
-  .b,.sign,.panel,.btn,.dir__item,.hero__links a{transition:none}
+  .b,.sign,.panel,.btn,.dir__item,.hero__links a,.totop{transition:none}
 }
