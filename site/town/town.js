@@ -132,4 +132,20 @@
     else if (e.key === '0') flyTo(FULL);
   });
 
+  /* ---------------------------------------------------------------- buildings */
+  const hot = (id, on) => svg.querySelectorAll('[data-b="' + id + '"]').forEach(el => el.classList.toggle('is-hot', on));
+  svg.querySelectorAll('[data-b]').forEach(el => {
+    const id = el.dataset.b;
+    el.addEventListener('click', () => enter(id, el));
+    el.addEventListener('mouseenter', () => hot(id, true));
+    el.addEventListener('mouseleave', () => hot(id, false));
+    if (el.classList.contains('b')) {
+      el.addEventListener('focus', () => hot(id, true));
+      el.addEventListener('blur', () => hot(id, false));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(id, el); }
+      });
+    }
+  });
+
 })();
