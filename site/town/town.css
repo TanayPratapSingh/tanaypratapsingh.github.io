@@ -40,3 +40,16 @@ svg.ic,.dock svg,.zoom svg{width:17px;height:17px;flex:none;fill:currentColor}
 .bar__nav .bar__classic{color:var(--ink);background:var(--paper);padding:5px 13px;border-radius:999px;font-weight:600}
 .bar__nav .bar__classic:hover{text-decoration:none;background:var(--ink);color:var(--paper)}
 
+.hero{position:relative;max-width:1240px;margin:0 auto}
+.hero__txt{position:absolute;left:clamp(16px,3vw,40px);top:4px;max-width:390px;z-index:2;color:var(--on-sky);transition:color .9s,opacity .35s}
+@media (min-width:1021px){.hero.zoomed .hero__txt{opacity:0;pointer-events:none}}
+h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line-height:.95}
+.hero__lead{font-size:clamp(18px,1.6vw,21px);line-height:1.4;margin-top:14px;max-width:28ch}
+.hero__role{margin-top:10px;font-size:15px;line-height:1.5;color:var(--on-sky-2);max-width:38ch;transition:color .9s}
+.hero__links{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.hero__links a{background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;
+  padding:7px 13px;border-radius:10px;transition:transform .15s ease,background-color .15s}
+.hero__links a:first-child{background:var(--ink);color:var(--paper)}
+[data-time="night"] .hero__links a:first-child{background:#FFD86B;color:var(--ink)}
+.hero__links a:hover{background:var(--accent);color:var(--paper);transform:translateY(-2px)}
+
