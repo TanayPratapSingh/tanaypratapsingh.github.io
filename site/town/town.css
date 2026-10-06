@@ -83,3 +83,15 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 [data-season="winter"] .map .snow1{fill:#F8FBFF}
 [data-season="winter"] .map .snow2{fill:#D9E3F0}
 
+/* night: the town dims, the windows and headlights come on, the moon and stars come out */
+.map .ground,.map .tree,.map .b__in,.map .cars,.map .drift{transition:filter .9s ease}
+.map .lights,.map .hl,.map .night-sky{opacity:0;transition:opacity .9s ease}
+.map .sun{transition:opacity .9s ease;cursor:pointer}
+.map .night-sky{cursor:pointer}
+[data-time="night"] .map .ground,[data-time="night"] .map .tree,[data-time="night"] .map .b__in,
+[data-time="night"] .map .cars{filter:brightness(.52) saturate(.8)}
+[data-time="night"] .map .drift{filter:brightness(.45)}
+[data-time="night"] .map .lights,[data-time="night"] .map .hl,[data-time="night"] .map .night-sky{opacity:1}
+[data-time="night"] .map .sun{opacity:0;pointer-events:none}
+[data-time="night"] .map .smoke{opacity:.45}
+
