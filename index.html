@@ -12,7 +12,7 @@
 <style>
 :root{
   --paper:#F2F0EA; --surface:#FCFBF9; --sunk:#EEEBE3;
-  --ink:#15171B; --ink-2:#565B62; --ink-3:#878D95;
+  --ink:#15171B; --ink-2:#565B62; --ink-3:#646A73;
   --rule:#DCD8D0; --rule-2:#B9B4A9; --met:#1B4D8F; --missed:#B3261E;
   --serif:'Newsreader',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   --side:252px;
@@ -27,6 +27,8 @@ h1,h2,h3,h4{font-weight:400;margin:0;line-height:1.15;letter-spacing:-0.013em}
 p{margin:0}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--met);outline-offset:3px}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--ink);color:var(--surface);padding:8px 14px;font-size:15px;text-decoration:none}
+.skip:focus{top:12px}
 /* ---------- left rail ---------- */
 .rail{position:fixed;top:0;left:0;bottom:0;width:var(--side);z-index:30;
   background:var(--surface);border-right:1px solid var(--rule-2);
@@ -60,7 +62,8 @@ a{color:inherit}
 .tile{background:var(--surface);border:1px solid var(--rule-2);
   padding:11px 12px 10px;display:flex;flex-direction:column;
   text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
-.tile:hover{border-color:var(--met)}
+.tile{transition:transform .16s ease,border-color .16s ease}
+.tile:hover{border-color:var(--met);transform:translateY(-2px)}
 .tile:hover h3{color:var(--met)}
 .tile__meta{font-family:var(--mono);font-size:10.6px;color:var(--ink-3);line-height:1.45}
 .tile h3{font-size:16px;line-height:1.24;margin:5px 0 7px;letter-spacing:-0.008em}
@@ -90,6 +93,10 @@ a{color:inherit}
   text-decoration:none;border:1px solid var(--met);padding:6px 13px;margin-bottom:18px}
 .sheet__code:hover{background:var(--met);color:var(--paper)}
 .sheet video{width:100%;display:block;background:#000;border:1px solid var(--rule-2);margin-bottom:20px}
+.ov.on{animation:ov-in .2s ease-out}
+.ov.on .sheet{animation:sheet-in .26s cubic-bezier(.2,.8,.2,1)}
+@keyframes ov-in{from{opacity:0}}
+@keyframes sheet-in{from{opacity:0;transform:translateY(18px)}}
 .body h4{font-size:17px;margin:22px 0 7px;letter-spacing:-0.01em}
 .body p{margin:0 0 11px;max-width:80ch;color:var(--ink-2)}
 .body strong{color:var(--ink);font-weight:600}
@@ -149,11 +156,12 @@ a{color:inherit}
   .job__w{margin-left:0;width:100%}
   .sheet{width:100%;max-height:100vh;border:0}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
+<a class="skip" href="#projects">Skip to projects</a>
 <aside class="rail">
   <a class="rail__name" href="#">Tanay Pratap Singh</a>
   <p class="rail__sum">Graduate data science student <br> Syracuse University</p>
@@ -176,7 +184,6 @@ a{color:inherit}
   </div>
   <div class="rail__c">
     <a href="mailto:tanayyps@gmail.com">tanayyps@gmail.com</a>
-    <a href="mailto:tsingh13@syr.edu">tsingh13@syr.edu</a>
   </div>
   <p class="rail__loc">Syracuse, NY<br>Open to AI, data, ML, and analytics roles</p>
 </aside>
