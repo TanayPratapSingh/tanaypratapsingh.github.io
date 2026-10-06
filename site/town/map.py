@@ -153,10 +153,21 @@ def library():
     return s, (x, y - 10)
 
 
+def control_tower():
+    s = box(1.65, 4.95, 0.7, 0.7, 64, tone("#3FB8A6"))
+    s += box(1.35, 4.65, 1.3, 1.3, 16, ("#2C8F80", "#BDEBFF", "#93D6F0"), z=64, cls=("snow1", "win", "win"))
+    s += band_y(1.35, 2.65, 5.95, 69, 71, "#2C8F80") + band_x(4.65, 5.95, 2.65, 69, 71, "#26806F")
+    s += box(1.3, 4.6, 1.4, 1.4, 4, tone("#2C8F80"), z=80)
+    a = P(2.0, 5.3, 84)
+    s += line(a, (a[0], a[1] - 24)) + '<circle class="blink" cx="%.1f" cy="%.1f" r="4" fill="#FF4F6B"/>' % (a[0], a[1] - 26)
+    return s, (a[0], a[1] - 34)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
     ("library", "Library", library, 10.45),
+    ("tower", "Control tower", control_tower, 8.7),
 ]
 
 TREES = []
