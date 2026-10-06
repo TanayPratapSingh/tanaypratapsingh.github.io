@@ -449,7 +449,7 @@ def render(labels):
                    % (bid, labels.get(bid, name), n, svg, lights))
         signs.append(sign(bid, name, anchor))
         n += 1
-    return ('<svg class="map" id="map" viewBox="0 0 980 770" role="group" aria-label="A small town. Each building holds some of my work." aria-describedby="mapHelp">'
+    return ('<svg class="map" id="map" viewBox="32 200 956 570" role="group" aria-label="A small town. Each building holds some of my work." aria-describedby="mapHelp">'
             + '<g class="sky">' + sky() + '</g>' + ground() + cars() + "".join(out) + '<g class="signs">' + "".join(signs) + "</g></svg>")
 
 
