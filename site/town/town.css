@@ -175,3 +175,22 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .chips span{background:var(--mist);border-radius:999px;padding:4px 11px;font-size:13.5px;line-height:1.35}
 .chips b{font-weight:700}
 
+.road{background:var(--grass);padding:68px 0 52px}
+.road__stops{list-style:none;position:relative;margin-top:34px;padding-left:72px}
+.road__stops::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:30px;background:var(--road);border-radius:15px}
+.road__stops::after{content:"";position:absolute;left:32px;top:18px;bottom:18px;border-left:2px dashed var(--paper)}
+.road__car{position:absolute;left:20px;top:0;width:26px;height:41px;z-index:2;list-style:none;will-change:transform}
+.road__car svg{display:block;width:100%;height:100%}
+.stop{position:relative;margin-bottom:26px}
+.stop__pin{position:absolute;left:-67px;top:10px;width:52px;height:52px;border-radius:50%;z-index:1;
+  background:var(--paper);border:3px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:21px;
+  transition:background-color .25s,color .25s}
+.stop__pin.reached{background:var(--ink);color:var(--paper);animation:pop .45s ease}
+@keyframes pop{50%{transform:scale(1.2)}}
+.stop__card{background:var(--paper);border-radius:20px;padding:22px clamp(18px,2.6vw,30px)}
+.stop__when{font-size:14px;color:var(--ink-2);font-weight:600}
+.stop__plain{font-size:clamp(19px,1.9vw,23px);font-weight:600;line-height:1.3;letter-spacing:-0.01em;margin:6px 0 14px;max-width:46ch}
+.stop h3{font-size:19px}
+.stop__org{color:var(--ink-2);font-size:15px;margin-top:2px}
+.stop__body p{margin-top:10px;max-width:72ch}
+
