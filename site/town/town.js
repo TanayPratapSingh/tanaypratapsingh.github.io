@@ -363,4 +363,34 @@
   setSeason(root.dataset.season || 'summer');
   setNight(root.dataset.time === 'night');
 
+  /* ---------------------------------------------------------------- the road */
+  tpl('t-exp').querySelectorAll('article.job').forEach((job, n) => {
+    const h = job.querySelector('h3').textContent.trim();
+    const stats = [...job.querySelectorAll('.job__s > div')].map(d =>
+      '<span>' + d.querySelector('dt').textContent + ': <b>' + d.querySelector('dd').innerHTML + '</b></span>').join('');
+    const li = document.createElement('li');
+    li.className = 'stop';
+    li.innerHTML = '<span class="stop__pin" aria-hidden="true">' + (n + 1) + '</span><div class="stop__card">' +
+      '<p class="stop__when">' + job.querySelector('.job__w').textContent + '</p>' +
+      '<p class="stop__plain">' + (TOWN.jobs[h] || '') + '</p>' +
+      '<h3>' + h + '</h3><p class="stop__org">' + job.querySelector('.job__o').innerHTML + '</p>' +
+      '<div class="chips">' + stats + '</div><div class="stop__body">' + job.querySelector('.job__b').innerHTML + '</div></div>';
+    $('stops').appendChild(li);
+  });
+  // a little car drives down the road as you scroll, and lights each stop it reaches
+  const road = $('stops'), car = $('car'), pins = [...road.querySelectorAll('.stop__pin')];
+  let roadQueued = false;
+  function drive() {
+    roadQueued = false;
+    const r = road.getBoundingClientRect();
+    const travel = r.height - car.offsetHeight;
+    const y = Math.max(0, Math.min(travel, innerHeight * 0.55 - r.top));
+    car.style.transform = 'translateY(' + y.toFixed(1) + 'px)';
+    const front = r.top + y + car.offsetHeight;
+    pins.forEach(p => { const pr = p.getBoundingClientRect(); p.classList.toggle('reached', pr.top + pr.height / 2 <= front); });
+  }
+  addEventListener('scroll', () => { if (!roadQueued) { roadQueued = true; requestAnimationFrame(drive); } }, { passive: true });
+  addEventListener('resize', drive);
+  drive();
+
 })();
