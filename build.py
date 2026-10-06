@@ -30,8 +30,6 @@ def build():
         "</head>",
         "<body>",
         "",
-        read(p / "fun.html").rstrip(),
-        "",
         read(p / "rail.html").rstrip(),
         "",
         read(p / "projects.html").rstrip(),
