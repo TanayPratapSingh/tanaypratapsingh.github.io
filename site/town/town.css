@@ -47,9 +47,9 @@ svg.ic,.dock svg,.zoom svg{width:17px;height:17px;flex:none;fill:currentColor}
 .hero{position:relative;height:calc(100vh - var(--bar,60px));height:calc(100svh - var(--bar,60px));min-height:520px;overflow:hidden}
 .hero__txt{position:absolute;left:clamp(16px,3vw,40px);top:4px;max-width:390px;z-index:2;color:var(--on-sky);transition:color .9s,opacity .35s}
 @media (min-width:1021px){.hero.zoomed .hero__txt{opacity:0;pointer-events:none}}
-h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line-height:.95}
-.hero__lead{font-size:clamp(18px,1.6vw,21px);line-height:1.4;margin-top:14px;max-width:28ch}
-.hero__role{margin-top:10px;font-size:15px;line-height:1.5;color:var(--on-sky-2);max-width:38ch;transition:color .9s}
+h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0.035em;line-height:.95}
+.hero__lead{font-size:clamp(15px,min(1.25vw,2.1vh),19px);line-height:1.4;margin-top:12px;max-width:31ch}
+.hero__role{margin-top:10px;font-size:14.5px;line-height:1.5;color:var(--on-sky-2);max-width:38ch;transition:color .9s}
 .hero__links{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
 .hero__links a{background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;
   padding:7px 13px;border-radius:10px;transition:transform .15s ease,background-color .15s}
