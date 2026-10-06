@@ -14,6 +14,7 @@
   const B = {};
   TOWN.buildings.forEach(b => { B[b.id] = b; });
   const svg = $('map'), hero = svg.closest('.hero');
+  const say = msg => { const a = $('announce'); a.textContent = ''; setTimeout(() => { a.textContent = msg; }, 60); };
 
   // hero and contact links come from the classic sidebar, so the two pages never disagree
   const rail = tpl('t-rail');
@@ -296,7 +297,7 @@
 
   /* ---------------------------------------------------------------- seasons, night and weather */
   const cv = $('weather'), ctx = cv.getContext('2d');
-  let W = 0, H = 0, parts = [], running = false, onScreen = true;
+  let W = 0, H = 0, parts = [], running = false, onScreen = true, held = store.get('town-motion') === 'paused';
   const WEATHER = {
     spring: { n: 46, colors: ['#F4A6C6', '#FFD0E1', '#FFFFFF'], fall: [0.35, 0.8], size: [3, 5.5], sway: 1.4, spin: 0.03 },
     summer: { n: 28, colors: ['rgba(255,255,255,.85)', 'rgba(255,238,170,.9)'], fall: [-0.35, -0.12], size: [1.4, 2.6], sway: 0.6, spin: 0 },
@@ -346,7 +347,7 @@
   }
   // nothing moves while the town is off screen, the tab is hidden, or a panel covers it
   function sync() {
-    const go = !reduce && onScreen && !document.hidden && panel.hidden;
+    const go = !reduce && !held && onScreen && !document.hidden && panel.hidden;
     hero.classList.toggle('paused', !go && !reduce);
     if (go) svg.unpauseAnimations(); else svg.pauseAnimations();
     if (go && !running) { running = true; requestAnimationFrame(tick); }
@@ -361,24 +362,46 @@
   document.addEventListener('visibilitychange', sync);
   new ResizeObserver(() => { resize(); weather(); }).observe(hero);
 
-  function setSeason(s) {
+  const SAY = {
+    spring: 'Spring: blossom on the trees and falling petals.',
+    summer: 'Summer: green trees and drifting pollen.',
+    autumn: 'Autumn: orange and red trees and falling leaves.',
+    winter: 'Winter: snow on the roofs and the ground, and falling snow.'
+  };
+  const seasons = [...document.querySelectorAll('.seg [data-season]')];
+  function setSeason(s, speak) {
     root.dataset.season = s;
-    document.querySelectorAll('.seg [data-season]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.season === s)));
+    seasons.forEach(b => { const on = b.dataset.season === s; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
     store.set('town-season', s);
     weather();
+    if (speak) say(SAY[s]);
   }
-  function setNight(on) {
+  function setNight(on, speak) {
     if (on) root.dataset.time = 'night'; else delete root.dataset.time;
     const b = $('night');
     b.setAttribute('aria-pressed', String(on));
     b.querySelector('span').textContent = on ? 'Day' : 'Night';
     store.set('town-night', on ? '1' : '0');
+    if (speak) say(on ? 'Night: the moon is out and the windows are lit.' : 'Day.');
   }
-  document.querySelectorAll('.seg [data-season]').forEach(b => b.addEventListener('click', () => setSeason(b.dataset.season)));
-  $('night').addEventListener('click', () => setNight(root.dataset.time !== 'night'));
-  svg.querySelectorAll('.sun, .night-sky').forEach(el => el.addEventListener('click', () => setNight(root.dataset.time !== 'night')));
+  function setMotion(paused, speak) {
+    held = paused;
+    const b = $('motion');
+    b.setAttribute('aria-pressed', String(paused));
+    b.querySelector('span').textContent = paused ? 'Play motion' : 'Pause motion';
+    store.set('town-motion', paused ? 'paused' : 'playing');
+    sync();
+    if (speak) say(paused ? 'Motion paused.' : 'Motion playing.');
+  }
+  seasons.forEach((b, k) => b.addEventListener('click', () => setSeason(b.dataset.season, true)));
+  document.querySelector('.seg').addEventListener('keydown', e => arrows(e, seasons, k => setSeason(seasons[k].dataset.season, true)));
+  $('night').addEventListener('click', () => setNight(root.dataset.time !== 'night', true));
+  $('motion').addEventListener('click', () => setMotion(!held, true));
+  if (reduce) $('motion').hidden = true;
+  svg.querySelectorAll('.sun, .night-sky').forEach(el => el.addEventListener('click', () => setNight(root.dataset.time !== 'night', true)));
   setSeason(root.dataset.season || 'summer');
   setNight(root.dataset.time === 'night');
+  setMotion(held);
 
   /* ---------------------------------------------------------------- the road */
   tpl('t-exp').querySelectorAll('article.job').forEach((job, n) => {
