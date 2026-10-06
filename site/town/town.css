@@ -10,3 +10,9 @@
   --pond:#6BBDF0; --pondhi:#A9DBFA;
   --sky:var(--sky-day);
 }
+[data-season="spring"]{--sky-day:#D7ECFF;--gr:#B3E29A;--lot:#9FD786;--ts:#94C97C;
+  --t0a:#F4A6C6;--t0b:#FFD0E1;--t1a:#5DAA48;--t1b:#8BD46C;--t2a:#F1EAFF;--t2b:#FFFFFF;--pond:#7CC4F2}
+[data-season="autumn"]{--sky-day:#F6E2CB;--gr:#CBD48A;--lot:#BCC879;--rd:#F0D592;--ts:#B3BC74;
+  --t0a:#E8742E;--t0b:#F49A4A;--t1a:#C9432B;--t1b:#EB6A43;--t2a:#E3A934;--t2b:#F6CB5A;--pond:#7DB7DD;--pondhi:#B5DBF2}
+[data-season="winter"]{--sky-day:#DCE6F2;--gr:#F3F7FC;--lot:#E8EFF7;--rd:#E6E3DC;--ts:#D9E2EE;
+  --t0a:#D3DEEC;--t0b:#FFFFFF;--t1a:#C4D3E6;--t1b:#F4F8FC;--t2a:#DCE5F1;--t2b:#FFFFFF;--pond:#D6EBFA;--pondhi:#FFFFFF}
