@@ -314,6 +314,22 @@ def toolshed():
     return s, (x, y - 10)
 
 
+def university():
+    s = box(1.2, 11.7, 2.8, 1.9, 30, tone("#D8E0F2"))
+    for i in range(5):
+        x0 = 1.6 + i * 0.44
+        s += band_y(x0, x0 + 0.2, 13.6, 10, 22, "#B8C4E0", "win")
+    for i in range(6):
+        x0 = 1.42 + i * 0.44
+        s += band_y(x0, x0 + 0.13, 13.6, 0, 30, "#FFFFFF")
+    s += box(1.15, 11.65, 2.9, 2.0, 4, tone("#AEB9D3"), z=30)
+    s += cylinder(2.6, 12.65, 0.55, 12, "#F2F5FB", "#FFFFFF", "#D3DAE8", z=34)
+    s += dome(2.6, 12.65, 0.55, 46, "#FFC93C")
+    x, y, rx, _ = ell(2.6, 12.65, 0.55, 46)
+    s += line((x, y - rx * 0.9), (x, y - rx * 0.9 - 14))
+    return s, (x, y - rx * 0.9 - 22)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -328,6 +344,7 @@ BUILDINGS = [
     ("yard", "Train yard", train_yard, 19.6),
     ("travel", "Travel agency", travel_agency, 20.8),
     ("shed", "Toolshed", toolshed, 23.4),
+    ("school", "University", university, 17.6),
 ]
 
 TREES = []
