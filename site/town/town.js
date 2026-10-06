@@ -24,4 +24,52 @@
   mailBtn.textContent = 'Email me';
   $('heroLinks').append(mailBtn, ...links.map(a => { const c = a.cloneNode(true); c.removeAttribute('class'); return c; }));
 
+  /* ---------------------------------------------------------------- camera */
+  const FULL = { x: 0, y: 0, w: 980, h: 770 }, R = FULL.h / FULL.w, MAXZ = 4;
+  let view = { ...FULL }, flight = 0;
+  function apply() {
+    svg.setAttribute('viewBox', [view.x, view.y, view.w, view.h].map(n => n.toFixed(1)).join(' '));
+    hero.classList.toggle('zoomed', view.w < FULL.w - 0.5);
+  }
+  // zoomed in, the camera may drift half a view past the edge, so any building can sit beside the panel
+  function fit(v) {
+    const w = Math.max(FULL.w / MAXZ, Math.min(FULL.w, v.w)), h = w * R;
+    if (w >= FULL.w - 0.5) return { ...FULL };
+    const sx = w / 2, sy = h / 2;
+    return { w, h, x: Math.max(-sx, Math.min(FULL.w - w + sx, v.x)), y: Math.max(-sy, Math.min(FULL.h - h + sy, v.y)) };
+  }
+  function toSvg(cx, cy) { return new DOMPoint(cx, cy).matrixTransform(svg.getScreenCTM().inverse()); }
+  function zoomAt(px, py, f) {
+    cancelAnimationFrame(flight);
+    const w = view.w / f, s = w / view.w;
+    view = fit({ w, x: px - (px - view.x) * s, y: py - (py - view.y) * s });
+    apply();
+    $('hint').classList.add('gone');
+  }
+  function zoomCenter(f) { zoomAt(view.x + view.w / 2, view.y + view.h / 2, f); }
+  function flyTo(t, done) {
+    cancelAnimationFrame(flight);
+    t = fit(t);
+    if (reduce) { view = t; apply(); if (done) done(); return; }
+    const s = { ...view }, t0 = performance.now(), D = 560;
+    const ease = x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const step = now => {
+      const k = Math.min(1, (now - t0) / D), e = ease(k);
+      const w = s.w + (t.w - s.w) * e;
+      view = { x: s.x + (t.x - s.x) * e, y: s.y + (t.y - s.y) * e, w, h: w * R };
+      apply();
+      if (k < 1) flight = requestAnimationFrame(step); else if (done) done();
+    };
+    flight = requestAnimationFrame(step);
+  }
+  // frame a building, leaving it visible beside the panel that is about to open
+  function frame(id) {
+    const bb = svg.querySelector('.b[data-b="' + id + '"]').getBBox();
+    const w = Math.max(bb.width * 1.9, (bb.height * 1.9) / R, FULL.w / 3.2);
+    const r = svg.getBoundingClientRect();
+    const visRight = Math.min(r.right, innerWidth - Math.min(820, innerWidth));
+    const fx = visRight - r.left > 260 ? ((r.left + visRight) / 2 - r.left) / r.width : 0.5;
+    return { w, x: bb.x + bb.width / 2 - fx * w, y: bb.y + bb.height / 2 - 0.5 * w * R };
+  }
+
 })();
