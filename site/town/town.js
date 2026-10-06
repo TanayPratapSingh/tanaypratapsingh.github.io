@@ -17,7 +17,7 @@
 
   // hero and contact links come from the classic sidebar, so the two pages never disagree
   const rail = tpl('t-rail');
-  const links = [...rail.querySelectorAll('.rail__btns a')];
+  const links = [...rail.querySelectorAll('.rail__btns a:not(.rail__btn--town)')];
   const emails = [...rail.querySelectorAll('.rail__c a')];
   $('role').textContent = rail.querySelector('.rail__role').textContent.replace(/\s+/g, ' ').trim();
   const mailBtn = emails[0].cloneNode(true);
