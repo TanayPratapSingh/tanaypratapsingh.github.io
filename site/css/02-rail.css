@@ -13,6 +13,7 @@
 .rail__btn{padding:10px 12px;background:var(--sunk);color:var(--ink);text-align:center;
   font-size:14.5px;line-height:1.3;text-decoration:none}
 .rail__btn:hover{background:var(--rule);color:var(--met)}
+.rail__btn--town{font-size:16px}
 .rail__c{border-top:1px solid var(--rule);padding-top:14px}
 .rail__c a{display:block;font-size:13.6px;line-height:1.75;color:var(--met);
   text-decoration:none;word-break:break-word}
