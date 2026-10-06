@@ -330,6 +330,18 @@ def university():
     return s, (x, y - rx * 0.9 - 22)
 
 
+def post_office():
+    s = box(8.9, 11.7, 2.2, 1.7, 24, tone("#F25F5C"))
+    s += band_y(9.75, 10.3, 13.4, 0, 13, "#B23F3C") + band_x(12.0, 12.9, 11.1, 10, 18, "#FFD1CF", "win")
+    e = P(9.35, 13.4, 18)
+    s += rect(e[0] - 2, e[1] - 4, 22, 14, "#FFFFFF", 2)
+    s += '<polyline points="%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="1.3"/>' % (
+        e[0] - 2, e[1] - 4, e[0] + 9, e[1] + 4, e[0] + 20, e[1] - 4, INK)
+    s += box(11.4, 13.0, 0.3, 0.3, 12, tone("#5468D8"))
+    x, y = P(10.0, 12.55, 24)
+    return s, (x, y - 10)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -345,6 +357,7 @@ BUILDINGS = [
     ("travel", "Travel agency", travel_agency, 20.8),
     ("shed", "Toolshed", toolshed, 23.4),
     ("school", "University", university, 17.6),
+    ("post", "Post office", post_office, 25.0),
 ]
 
 TREES = []
