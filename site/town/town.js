@@ -277,4 +277,90 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   document.addEventListener('focusin', e => { if (!panel.hidden && !panel.contains(e.target)) panel.focus(); });
 
+  /* ---------------------------------------------------------------- seasons, night and weather */
+  const cv = $('weather'), ctx = cv.getContext('2d');
+  let W = 0, H = 0, parts = [], running = false, onScreen = true;
+  const WEATHER = {
+    spring: { n: 46, colors: ['#F4A6C6', '#FFD0E1', '#FFFFFF'], fall: [0.35, 0.8], size: [3, 5.5], sway: 1.4, spin: 0.03 },
+    summer: { n: 28, colors: ['rgba(255,255,255,.85)', 'rgba(255,238,170,.9)'], fall: [-0.35, -0.12], size: [1.4, 2.6], sway: 0.6, spin: 0 },
+    autumn: { n: 34, colors: ['#E8742E', '#C9432B', '#E3A934', '#F49A4A'], fall: [0.5, 1.1], size: [5, 8], sway: 2.2, spin: 0.05 },
+    winter: { n: 120, colors: ['rgba(255,255,255,.92)'], fall: [0.35, 1.0], size: [1.2, 3.2], sway: 0.8, spin: 0 }
+  };
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  function seed(p, cfg, anywhere) {
+    p.x = rnd(0, W);
+    p.y = anywhere ? rnd(0, H) : (cfg.fall[0] < 0 ? H + 10 : -10);
+    p.v = rnd(cfg.fall[0], cfg.fall[1]);
+    p.s = rnd(cfg.size[0], cfg.size[1]);
+    p.c = cfg.colors[Math.floor(Math.random() * cfg.colors.length)];
+    p.ph = rnd(0, 6.28);
+    p.r = rnd(0, 6.28);
+    return p;
+  }
+  function resize() {
+    const r = hero.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function weather() {
+    const cfg = WEATHER[root.dataset.season];
+    parts = Array.from({ length: cfg.n }, () => seed({}, cfg, true));
+  }
+  function tick(t) {
+    if (!running) return;
+    const cfg = WEATHER[root.dataset.season], night = root.dataset.time === 'night';
+    ctx.clearRect(0, 0, W, H);
+    for (const p of parts) {
+      p.y += p.v;
+      p.x += Math.sin(t / 900 + p.ph) * cfg.sway * 0.35;
+      p.r += cfg.spin;
+      if (p.y > H + 12 || p.y < -12 || p.x < -20 || p.x > W + 20) seed(p, cfg, false);
+      ctx.fillStyle = night && root.dataset.season === 'summer' ? 'rgba(255,224,102,' + (0.45 + 0.5 * Math.abs(Math.sin(t / 400 + p.ph))) + ')' : p.c;
+      ctx.beginPath();
+      if (cfg.spin) {
+        ctx.ellipse(p.x, p.y, p.s, p.s * 0.55, p.r, 0, 6.283);
+      } else {
+        ctx.arc(p.x, p.y, p.s, 0, 6.283);
+      }
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  // nothing moves while the town is off screen, the tab is hidden, or a panel covers it
+  function sync() {
+    const go = !reduce && onScreen && !document.hidden && panel.hidden;
+    hero.classList.toggle('paused', !go && !reduce);
+    if (go) svg.unpauseAnimations(); else svg.pauseAnimations();
+    if (go && !running) { running = true; requestAnimationFrame(tick); }
+    if (!go) { running = false; if (reduce) ctx.clearRect(0, 0, W, H); }
+  }
+  // the controls float at the bottom of the screen while at least a quarter of the town is in view
+  new IntersectionObserver(es => {
+    onScreen = es[0].isIntersecting;
+    hero.classList.toggle('on', es[0].intersectionRatio >= 0.25);
+    sync();
+  }, { threshold: [0, 0.25, 0.5] }).observe(hero);
+  document.addEventListener('visibilitychange', sync);
+  new ResizeObserver(() => { resize(); weather(); }).observe(hero);
+
+  function setSeason(s) {
+    root.dataset.season = s;
+    document.querySelectorAll('.seg [data-season]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.season === s)));
+    store.set('town-season', s);
+    weather();
+  }
+  function setNight(on) {
+    if (on) root.dataset.time = 'night'; else delete root.dataset.time;
+    const b = $('night');
+    b.setAttribute('aria-pressed', String(on));
+    b.querySelector('span').textContent = on ? 'Day' : 'Night';
+    store.set('town-night', on ? '1' : '0');
+  }
+  document.querySelectorAll('.seg [data-season]').forEach(b => b.addEventListener('click', () => setSeason(b.dataset.season)));
+  $('night').addEventListener('click', () => setNight(root.dataset.time !== 'night'));
+  svg.querySelectorAll('.sun, .night-sky').forEach(el => el.addEventListener('click', () => setNight(root.dataset.time !== 'night')));
+  setSeason(root.dataset.season || 'summer');
+  setNight(root.dataset.time === 'night');
+
 })();
