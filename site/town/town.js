@@ -85,4 +85,51 @@
     zoomAt(p.x, p.y, Math.exp(-e.deltaY * 0.004));
   }, { passive: false });
 
+  // drag to pan once zoomed in, two fingers to pinch; a drag never counts as a click
+  const pts = new Map();
+  let drag = null, pinch = null, moved = false;
+  svg.addEventListener('pointerdown', e => {
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 1) { drag = { x: e.clientX, y: e.clientY, v: { ...view } }; moved = false; }
+    if (pts.size === 2) {
+      const [a, b] = [...pts.values()];
+      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), v: { ...view }, m: toSvg((a.x + b.x) / 2, (a.y + b.y) / 2) };
+      drag = null;
+    }
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && pts.size === 2) {
+      const [a, b] = [...pts.values()];
+      const w = pinch.v.w / (Math.hypot(a.x - b.x, a.y - b.y) / pinch.d), s = w / pinch.v.w;
+      view = fit({ w, x: pinch.m.x - (pinch.m.x - pinch.v.x) * s, y: pinch.m.y - (pinch.m.y - pinch.v.y) * s });
+      apply();
+      moved = true;
+      $('hint').classList.add('gone');
+      return;
+    }
+    if (!drag || !hero.classList.contains('zoomed')) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!moved && Math.hypot(dx, dy) < 6) return;
+    if (!moved) { moved = true; svg.setPointerCapture(e.pointerId); hero.classList.add('panning'); $('tip').hidden = true; }
+    const s = drag.v.w / svg.getBoundingClientRect().width;
+    view = fit({ w: drag.v.w, x: drag.v.x - dx * s, y: drag.v.y - dy * s });
+    apply();
+  });
+  const lift = e => {
+    pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!pts.size) { drag = null; hero.classList.remove('panning'); }
+  };
+  svg.addEventListener('pointerup', lift);
+  svg.addEventListener('pointercancel', lift);
+  svg.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  document.addEventListener('keydown', e => {
+    if (!e.target.closest || !e.target.closest('.map')) return;
+    if (e.key === '+' || e.key === '=') zoomCenter(1.5);
+    else if (e.key === '-') zoomCenter(1 / 1.5);
+    else if (e.key === '0') flyTo(FULL);
+  });
+
 })();
