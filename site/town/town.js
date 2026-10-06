@@ -213,10 +213,14 @@
       t.type = 'button';
       t.className = 'tab';
       t.setAttribute('role', 'tab');
+      t.id = 'ptab-' + m;
+      t.setAttribute('aria-controls', 'pBody');
       t.textContent = short(k);
       t.addEventListener('click', () => show(m));
       tabs.appendChild(t);
     });
+    const body = $('pBody');
+    if (n > 1) body.setAttribute('role', 'tabpanel'); else { body.removeAttribute('role'); body.removeAttribute('aria-labelledby'); }
     show(j || 0);
     ov.hidden = false;
     panel.hidden = false;
@@ -229,7 +233,8 @@
 
   function show(j) {
     const k = cur.projects[j], i = idx[k], p = PROJECTS[i];
-    [...$('pTabs').children].forEach((t, m) => t.setAttribute('aria-selected', String(m === j)));
+    [...$('pTabs').children].forEach((t, m) => { t.setAttribute('aria-selected', String(m === j)); t.tabIndex = m === j ? 0 : -1; });
+    if (cur.projects.length > 1) $('pBody').setAttribute('aria-labelledby', 'ptab-' + j);
     const v = VIDEOS[i], r = REPOS[i];
     const chips = p.badge.split('&middot;').map(s => '<span>' + s.trim() + '</span>').join('');
     const acts = (v || r) ? '<div class="acts">' +
@@ -272,6 +277,18 @@
     setUrl(location.href.split('#')[0]);
     if (back) { flyTo(back); back = null; }
   }
+  // arrow keys move between tabs, and between seasons, the way the roles promise
+  function arrows(e, items, pick) {
+    const i = items.indexOf(document.activeElement);
+    if (i < 0) return;
+    const n = { ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: items.length - 1 }[e.key];
+    if (n === undefined) return;
+    e.preventDefault();
+    const k = (n + items.length) % items.length;
+    pick(k);
+    items[k].focus();
+  }
+  $('pTabs').addEventListener('keydown', e => arrows(e, [...$('pTabs').children], show));
   $('pClose').addEventListener('click', close);
   ov.addEventListener('click', close);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
