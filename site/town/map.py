@@ -289,6 +289,23 @@ def train_yard():
     return s, (x, y - 8)
 
 
+def travel_agency():
+    s = box(9.1, 9.0, 1.4, 1.3, 30, tone("#7FD3C7"))
+    s += band_y(9.6, 10.0, 10.3, 0, 13, "#3E9E91") + band_x(9.25, 9.95, 10.5, 12, 22, "#D7F3EE", "win")
+    n = 5
+    for i in range(n):
+        x0, x1 = 9.1 + i * 1.4 / n, 9.1 + (i + 1) * 1.4 / n
+        s += poly([P(x0, 10.3, 24), P(x1, 10.3, 24), P(x1, 10.62, 17), P(x0, 10.62, 17)], "#FF7A59" if i % 2 == 0 else "#FFFFFF")
+    g = P(10.25, 9.3, 30)
+    s += line(g, (g[0], g[1] - 20))
+    s += '<g class="globe" style="transform-origin:%.1fpx %.1fpx">' % (g[0], g[1] - 31)
+    s += '<circle cx="%.1f" cy="%.1f" r="11" fill="#5468D8"/>' % (g[0], g[1] - 31)
+    s += '<ellipse cx="%.1f" cy="%.1f" rx="5" ry="11" fill="none" stroke="#FFFFFF" stroke-width="1.3"/>' % (g[0], g[1] - 31)
+    s += line((g[0] - 11, g[1] - 31), (g[0] + 11, g[1] - 31), "#FFFFFF", 1.3) + '</g>'
+    x, y = P(9.8, 9.65, 30)
+    return s, (x - 16, y - 12)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -301,6 +318,7 @@ BUILDINGS = [
     ("track", "Race track", race_track, 20.8),
     ("hall", "Town hall", town_hall, 14.7),
     ("yard", "Train yard", train_yard, 19.6),
+    ("travel", "Travel agency", travel_agency, 20.8),
 ]
 
 TREES = []
