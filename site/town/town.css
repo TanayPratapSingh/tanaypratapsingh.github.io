@@ -16,3 +16,5 @@
   --t0a:#E8742E;--t0b:#F49A4A;--t1a:#C9432B;--t1b:#EB6A43;--t2a:#E3A934;--t2b:#F6CB5A;--pond:#7DB7DD;--pondhi:#B5DBF2}
 [data-season="winter"]{--sky-day:#DCE6F2;--gr:#F3F7FC;--lot:#E8EFF7;--rd:#E6E3DC;--ts:#D9E2EE;
   --t0a:#D3DEEC;--t0b:#FFFFFF;--t1a:#C4D3E6;--t1b:#F4F8FC;--t2a:#DCE5F1;--t2b:#FFFFFF;--pond:#D6EBFA;--pondhi:#FFFFFF}
+[data-time="night"]{--sky:#1C2745;--on-sky:#EEF2FF;--on-sky-2:#B9C4E4}
+
