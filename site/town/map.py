@@ -209,6 +209,25 @@ def power_station():
     return s, (x, yt - 46)
 
 
+def newsroom():
+    s = box(8.8, 4.4, 2.4, 2.0, 34, tone("#FF6FA3"))
+    for z0 in (8, 20):
+        for x0 in (9.05, 9.75, 10.45):
+            s += band_y(x0, x0 + 0.45, 6.4, z0, z0 + 7, "#FFE0EC", "win")
+        for y0 in (4.65, 5.4):
+            s += band_x(y0, y0 + 0.5, 11.2, z0, z0 + 7, "#F2B8CF", "win")
+    a = P(9.3, 4.8, 34)
+    s += line(a, (a[0], a[1] - 30)) + line((a[0] - 6, a[1] - 22), (a[0] + 6, a[1] - 22))
+    d = P(10.5, 5.2, 34)
+    s += line(d, (d[0], d[1] - 10), INK, 2.5)
+    s += ('<g class="dish" style="transform-origin:%.1fpx %.1fpx">' % (d[0], d[1] - 16)
+          + '<ellipse cx="%.1f" cy="%.1f" rx="15" ry="8" fill="#FFFFFF" stroke="%s" stroke-width="1.5" transform="rotate(-28 %.1f %.1f)"/>' % (
+              d[0], d[1] - 16, INK, d[0], d[1] - 16)
+          + '<circle cx="%.1f" cy="%.1f" r="2.5" fill="%s"/></g>' % (d[0], d[1] - 16, INK))
+    x, y = P(10.0, 5.4, 34)
+    return s, (x, y - 30)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -217,6 +236,7 @@ BUILDINGS = [
     ("gym", "Gym", gym, 12.9),
     ("factory", "Factory", factory, 15.6),
     ("power", "Power station", power_station, 17.55),
+    ("newsroom", "Newsroom", newsroom, 17.6),
 ]
 
 TREES = []
