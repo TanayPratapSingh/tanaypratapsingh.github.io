@@ -18,7 +18,9 @@
   const say = msg => { const a = $('announce'); a.textContent = ''; setTimeout(() => { a.textContent = msg; }, 60); };
   const hi = $('hi'), name = hi.textContent;
   hi.setAttribute('aria-label', name);
-  hi.innerHTML = [...name].map((ch, n) => ch === ' ' ? ' ' : '<span class="ch" aria-hidden="true" style="--c:' + n + '">' + ch + '</span>').join('');
+  let c = 0;
+  hi.innerHTML = name.split(' ').map(word => '<span class="w" aria-hidden="true">' +
+    [...word].map(ch => '<span class="ch" style="--c:' + (c++) + '">' + ch + '</span>').join('') + '</span>').join(' ');
 
   // hero and contact links come from the classic sidebar, so the two pages never disagree
   const rail = tpl('t-rail');

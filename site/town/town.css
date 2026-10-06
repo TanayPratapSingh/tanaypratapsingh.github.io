@@ -302,6 +302,7 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .wu a{color:#3445B8}
 
 /* entrances: only when the script runs and motion is allowed, so nothing is ever hidden without it */
+.w{display:inline-block;white-space:nowrap}
 .anim .ch{display:inline-block;animation:hop .6s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--c) * 40ms + 200ms)}
 @keyframes hop{from{opacity:0;transform:translateY(-.5em) rotate(-8deg)}}
 .anim .dir:not(.in) .dir__item{opacity:0;transform:translateY(14px)}
