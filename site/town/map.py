@@ -270,6 +270,25 @@ def town_hall():
     return s, (a[0], a[1] - 28)
 
 
+def train_yard():
+    s = poly([P(4.3, 8.8), P(6.8, 8.8), P(6.8, 12.8), P(4.3, 12.8)], "#D9CFC0")
+    y = 8.9
+    while y < 13.9:
+        s += poly([P(5.1, y), P(5.82, y), P(5.82, y + 0.09), P(5.1, y + 0.09)], "#9B8268")
+        y += 0.3
+    for x0 in (5.2, 5.66):
+        s += poly([P(x0, 8.85), P(x0 + 0.06, 8.85), P(x0 + 0.06, 13.95), P(x0, 13.95)], "#5E5145")
+    s += box(4.45, 9.0, 0.55, 2.4, 6, tone("#C9D2E3"))
+    s += '<g class="train">'
+    for i, c in enumerate(("#5468D8", "#FFC93C", "#FF7A59")):
+        s += box(5.18, 9.25 + i * 1.12, 0.55, 1.0, 15, tone(c), z=1)
+        s += band_x(9.45 + i * 1.12, 10.05 + i * 1.12, 5.73, 8, 13, "#FFFFFF", "win")
+    s += box(5.24, 9.3, 0.43, 0.42, 9, tone("#2E3B8F"), z=16)
+    s += '</g>'
+    x, y = P(5.45, 10.4, 30)
+    return s, (x, y - 8)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
@@ -281,6 +300,7 @@ BUILDINGS = [
     ("newsroom", "Newsroom", newsroom, 17.6),
     ("track", "Race track", race_track, 20.8),
     ("hall", "Town hall", town_hall, 14.7),
+    ("yard", "Train yard", train_yard, 19.6),
 ]
 
 TREES = []
