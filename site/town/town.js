@@ -37,18 +37,62 @@
   $('heroLinks').append(mailBtn, ...links.map(a => { const c = a.cloneNode(true); c.removeAttribute('class'); return c; }));
 
   /* ---------------------------------------------------------------- camera */
-  const FULL = { x: 0, y: 0, w: 980, h: 770 }, R = FULL.h / FULL.w, MAXZ = 4;
-  let view = { ...FULL }, flight = 0;
+  // the camera's home is the whole island, centered on screen; it zooms in from there but never out past it
+  const MAXZ = 4, heroTxt = hero.querySelector('.hero__txt');
+  // measure buildings from their drawn shapes where they rest: an animated group's box would include its motion,
+  // and the race car sits at the origin until its lap animation places it
+  const union = bs => {
+    const x = Math.min(...bs.map(b => b.x)), y = Math.min(...bs.map(b => b.y));
+    return { x, y, width: Math.max(...bs.map(b => b.x + b.width)) - x, height: Math.max(...bs.map(b => b.y + b.height)) - y };
+  };
+  const SHAPES = 'polygon,path,rect,circle,ellipse,line,polyline';
+  const restBox = el => union([...el.querySelectorAll(SHAPES)].filter(n => !n.closest('.racer')).map(n => n.getBBox()));
+  const buildings = [...svg.querySelectorAll('.b')].map(restBox);
+  const island = (() => {
+    const b = union([svg.querySelector('.ground').getBBox(), ...buildings]);
+    return { x: b.x, y: b.y - 34, w: b.width, h: b.height + 34 };   // 34: room for the signs above the tallest roofs
+  })();
+  let A = 1, home = { ...island }, view = { ...island }, flight = 0, touched = false;
+  // on wide screens the text sits in the sky; with the town centered at width w, would it cover a building, a sign or the ground?
+  function covers(w, y0) {
+    const r = svg.getBoundingClientRect(), t = heroTxt.getBoundingClientRect(), s = r.width / w;
+    const x0 = island.x + island.w / 2 - w / 2;
+    const l = x0 + (t.left - 10 - r.left) / s, top = y0 + (t.top - 10 - r.top) / s;
+    const rt = x0 + (t.right + 10 - r.left) / s, bt = y0 + (t.bottom + 10 - r.top) / s;
+    const hit = b => b.width > 0 && b.x < rt && b.x + b.width > l && b.y < bt && b.y + b.height > top;
+    const onGround = (px, py) => Math.abs(px - 510) / 448 + Math.abs(py - 510) / 224 < 1;
+    const signs = [...svg.querySelectorAll('.sign')].map(el => el.getBBox());
+    return onGround(rt - 30 / s, bt - 16 / s) || buildings.some(hit) || signs.some(hit);
+  }
+  function findHome() {
+    const r = svg.getBoundingClientRect();
+    A = r.height / r.width;
+    let w = Math.max(island.w * 1.05, (island.h * 1.05) / A);
+    const centered = w => island.y + island.h / 2 - (w * A) / 2;
+    let y = centered(w);
+    if (getComputedStyle(heroTxt).position === 'absolute') {
+      // try the centered spot, then lower the town in steps while it still fits whole, and only then shrink it
+      search: for (let k = 0; k < 40; k++, w *= 1.03) {
+        const slack = (w * A - island.h) / 2 - w * 0.01;
+        for (let d = 0; d <= Math.max(0, slack); d += Math.max(4, slack / 8)) {
+          y = centered(w) - d;
+          if (!covers(w, y)) break search;
+        }
+      }
+    }
+    home = { w, h: w * A, x: island.x + island.w / 2 - w / 2, y };
+  }
   function apply() {
     svg.setAttribute('viewBox', [view.x, view.y, view.w, view.h].map(n => n.toFixed(1)).join(' '));
-    hero.classList.toggle('zoomed', view.w < FULL.w - 0.5);
+    hero.classList.toggle('zoomed', view.w < home.w - 0.5);
   }
-  // zoomed in, the camera may drift half a view past the edge, so any building can sit beside the panel
+  // zoomed in, the camera may drift half a view past the town, so any building can sit beside the panel
   function fit(v) {
-    const w = Math.max(FULL.w / MAXZ, Math.min(FULL.w, v.w)), h = w * R;
-    if (w >= FULL.w - 0.5) return { ...FULL };
+    const w = Math.max(home.w / MAXZ, Math.min(home.w, v.w)), h = w * A;
+    if (w >= home.w - 0.5) return { ...home };
     const sx = w / 2, sy = h / 2;
-    return { w, h, x: Math.max(-sx, Math.min(FULL.w - w + sx, v.x)), y: Math.max(-sy, Math.min(FULL.h - h + sy, v.y)) };
+    return { w, h, x: Math.max(home.x - sx, Math.min(home.x + home.w - w + sx, v.x)),
+             y: Math.max(home.y - sy, Math.min(home.y + home.h - h + sy, v.y)) };
   }
   function toSvg(cx, cy) { return new DOMPoint(cx, cy).matrixTransform(svg.getScreenCTM().inverse()); }
   function zoomAt(px, py, f) {
@@ -68,7 +112,7 @@
     const step = now => {
       const k = Math.min(1, (now - t0) / D), e = ease(k);
       const w = s.w + (t.w - s.w) * e;
-      view = { x: s.x + (t.x - s.x) * e, y: s.y + (t.y - s.y) * e, w, h: w * R };
+      view = { x: s.x + (t.x - s.x) * e, y: s.y + (t.y - s.y) * e, w, h: w * A };
       apply();
       if (k < 1) flight = requestAnimationFrame(step); else if (done) done();
     };
@@ -77,18 +121,29 @@
   // frame a building, leaving it visible beside the panel that is about to open
   function frame(id) {
     const bb = svg.querySelector('.b[data-b="' + id + '"]').getBBox();
-    const w = Math.max(bb.width * 1.9, (bb.height * 1.9) / R, FULL.w / 3.2);
+    const w = Math.max(bb.width * 1.9, (bb.height * 1.9) / A, home.w / 3.2);
     const r = svg.getBoundingClientRect();
     const visRight = Math.min(r.right, innerWidth - Math.min(820, innerWidth));
     const fx = visRight - r.left > 260 ? ((r.left + visRight) / 2 - r.left) / r.width : 0.5;
-    return { w, x: bb.x + bb.width / 2 - fx * w, y: bb.y + bb.height / 2 - 0.5 * w * R };
+    return { w, x: bb.x + bb.width / 2 - fx * w, y: bb.y + bb.height / 2 - 0.5 * w * A };
   }
+  // re-center whenever the window, the bar or the text changes size, unless the visitor has zoomed in
+  function recenter() {
+    setBar();
+    findHome();
+    view = !touched && $('panel').hidden ? { ...home } : fit(view);
+    apply();
+  }
+  recenter();
+  new ResizeObserver(recenter).observe(svg);
+  new ResizeObserver(recenter).observe(heroTxt);
+  if (document.fonts) document.fonts.ready.then(recenter);
 
   document.querySelectorAll('.zoom [data-z]').forEach(btn => btn.addEventListener('click', () => {
     const z = btn.dataset.z;
     if (z === 'in') zoomCenter(1.5);
     else if (z === 'out') zoomCenter(1 / 1.5);
-    else flyTo(FULL);
+    else { touched = false; flyTo(home); }
   }));
   svg.addEventListener('wheel', e => {
     if (!(e.ctrlKey || e.metaKey)) return;
@@ -141,7 +196,7 @@
     if (!e.target.closest || !e.target.closest('.map')) return;
     if (e.key === '+' || e.key === '=') zoomCenter(1.5);
     else if (e.key === '-') zoomCenter(1 / 1.5);
-    else if (e.key === '0') flyTo(FULL);
+    else if (e.key === '0') { touched = false; flyTo(home); }
   });
 
   /* ---------------------------------------------------------------- buildings */
