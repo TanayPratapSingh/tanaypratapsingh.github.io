@@ -228,3 +228,5 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .btn--2{background:var(--mist);color:var(--ink)}
 .btn--2:hover{background:var(--ink);color:var(--paper)}
 
+.foot{background:var(--sky-day);padding:30px clamp(16px,3vw,40px) 50px;text-align:center;color:var(--ink-2);transition:background-color .9s}
+
