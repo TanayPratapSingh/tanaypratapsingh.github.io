@@ -26,6 +26,10 @@ body.locked{overflow:hidden}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
 h1,h2,h3{line-height:1.08;letter-spacing:-0.015em}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:60;background:var(--ink);color:var(--paper);padding:9px 15px;border-radius:10px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
+#list:focus{outline:none}
 code{font-family:var(--mono);font-size:.88em;background:var(--mist);padding:1px 5px;border-radius:5px}
 svg.ic,.dock svg,.zoom svg{width:17px;height:17px;flex:none;fill:currentColor}
 .ic-line{fill:none!important;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
