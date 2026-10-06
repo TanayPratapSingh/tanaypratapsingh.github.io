@@ -192,4 +192,89 @@
     $('dir').appendChild(btn);
   });
 
+  /* ---------------------------------------------------------------- inside a building */
+  const ov = $('ov'), panel = $('panel');
+  let opener = null, cur = null;
+  // the hash makes a building linkable; some hosts refuse history edits, which must not break the panel
+  const setUrl = u => { try { history.replaceState(null, '', u); } catch (e) {} };
+
+  function open(id, j, from) {
+    cur = B[id];
+    opener = from || document.activeElement;
+    panel.style.setProperty('--c', cur.color);
+    $('pName').textContent = cur.name;
+    const n = cur.projects.length;
+    $('pAbout').textContent = cur.about + '. ' + (n === 1 ? 'One project inside.' : n + ' projects inside.');
+    const tabs = $('pTabs');
+    tabs.innerHTML = '';
+    tabs.hidden = n < 2;
+    cur.projects.forEach((k, m) => {
+      const t = document.createElement('button');
+      t.type = 'button';
+      t.className = 'tab';
+      t.setAttribute('role', 'tab');
+      t.textContent = short(k);
+      t.addEventListener('click', () => show(m));
+      tabs.appendChild(t);
+    });
+    show(j || 0);
+    ov.hidden = false;
+    panel.hidden = false;
+    document.body.classList.add('locked');
+    requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add('open')));
+    panel.focus({ preventScroll: true });
+    setUrl('#' + id);
+    sync();
+  }
+
+  function show(j) {
+    const k = cur.projects[j], i = idx[k], p = PROJECTS[i];
+    [...$('pTabs').children].forEach((t, m) => t.setAttribute('aria-selected', String(m === j)));
+    const v = VIDEOS[i], r = REPOS[i];
+    const chips = p.badge.split('&middot;').map(s => '<span>' + s.trim() + '</span>').join('');
+    const acts = (v || r) ? '<div class="acts">' +
+      (v ? '<button class="btn" type="button" data-play>Watch the walkthrough</button>' : '') +
+      (r ? '<a class="btn btn--2" href="' + r + '" target="_blank" rel="noopener">See the code on GitHub</a>' : '') +
+      '</div>' : '';
+    const body = $('pBody');
+    body.innerHTML =
+      '<p class="proj__plain">' + TOWN.plain[k] + '</p>' +
+      '<div class="chips">' + chips + '</div>' + acts + '<div class="vid"></div>' +
+      '<section class="tech"><p class="tech__label">The technical version</p><h3>' + p.title + '</h3>' +
+      '<p class="tech__meta">' + p.meta + '</p><div class="wu">' + p.body + '</div>' +
+      '<p class="tags">Built with ' + p.tags.join(', ') + '.</p></section>';
+    body.querySelectorAll('.wu table').forEach(t => {
+      const w = document.createElement('div');
+      w.className = 'tw';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
+    });
+    const play = body.querySelector('[data-play]');
+    if (play) play.addEventListener('click', () => {
+      const base = v.replace(/\.mp4$/, '');
+      body.querySelector('.vid').innerHTML = '<video controls autoplay playsinline preload="metadata" poster="' + base +
+        '.jpg"><source src="' + v + '" type="video/mp4"><track kind="captions" src="' + base +
+        '.vtt" srclang="en" label="English" default></video>';
+      play.remove();
+    });
+    panel.scrollTop = 0;
+  }
+
+  function close() {
+    if (panel.hidden) return;
+    const vid = panel.querySelector('video');
+    if (vid) vid.pause();
+    panel.classList.remove('open');
+    document.body.classList.remove('locked');
+    const done = () => { panel.hidden = true; ov.hidden = true; $('pBody').innerHTML = ''; sync(); };
+    if (reduce) done(); else setTimeout(done, 280);
+    if (opener && opener.focus) opener.focus({ preventScroll: true });
+    setUrl(location.href.split('#')[0]);
+    if (back) { flyTo(back); back = null; }
+  }
+  $('pClose').addEventListener('click', close);
+  ov.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.addEventListener('focusin', e => { if (!panel.hidden && !panel.contains(e.target)) panel.focus(); });
+
 })();
