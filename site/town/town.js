@@ -72,4 +72,17 @@
     return { w, x: bb.x + bb.width / 2 - fx * w, y: bb.y + bb.height / 2 - 0.5 * w * R };
   }
 
+  document.querySelectorAll('.zoom [data-z]').forEach(btn => btn.addEventListener('click', () => {
+    const z = btn.dataset.z;
+    if (z === 'in') zoomCenter(1.5);
+    else if (z === 'out') zoomCenter(1 / 1.5);
+    else flyTo(FULL);
+  }));
+  svg.addEventListener('wheel', e => {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    e.preventDefault();
+    const p = toSvg(e.clientX, e.clientY);
+    zoomAt(p.x, p.y, Math.exp(-e.deltaY * 0.004));
+  }, { passive: false });
+
 })();
