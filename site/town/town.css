@@ -277,3 +277,23 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .wu pre code{background:none;padding:0;color:inherit}
 .wu a{color:#3445B8}
 
+@media (max-width:1020px){
+  .hero__txt{position:relative;left:auto;top:auto;z-index:2;max-width:none;padding:6px clamp(16px,3vw,40px) 0}
+  .hero__lead,.hero__role{max-width:52ch}
+  .map{margin-top:-15%}
+  .dock,.zoom{position:relative;left:auto;right:auto;bottom:auto;justify-content:center;padding:4px 16px 0}
+  .hero:not(.on) .dock,.hero:not(.on) .zoom{opacity:1;visibility:visible}
+  .zoom__hint{text-align:center;max-width:none;flex-basis:100%;margin:0 0 4px;background:none;color:var(--on-sky-2)}
+  .zoom{flex-wrap:wrap}
+}
+@media (max-width:640px){
+  .signs{display:none}
+  .seg button{padding:8px 10px;font-size:13.5px}
+  .seg .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .zoom__hint{font-size:12.5px}
+  .road__stops{padding-left:56px}
+  .road__stops::before{left:10px;width:24px}
+  .road__stops::after{left:21px}
+  .road__car{left:11px;width:22px;height:35px}
+  .stop__pin{left:-56px;width:44px;height:44px;font-size:18px}
+}
