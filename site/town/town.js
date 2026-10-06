@@ -165,4 +165,31 @@
   });
   svg.addEventListener('pointerleave', () => { tip.hidden = true; });
 
+  let back = null;
+  function enter(id, from) {
+    const b = B[id];
+    tip.hidden = true;
+    if (b.section) { $(b.section).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+    if (from && from.closest && from.closest('.map')) {
+      back = { ...view };
+      flyTo(frame(id), () => open(id, 0, from));
+    } else {
+      back = null;
+      open(id, 0, from);
+    }
+  }
+
+  // the same buildings as a list, for phones, keyboards and skimmers
+  TOWN.buildings.forEach(b => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'dir__item';
+    btn.style.setProperty('--c', b.color);
+    const what = b.projects ? b.projects.map(short).join(', ') : b.about;
+    btn.innerHTML = '<span class="dir__sw" aria-hidden="true"></span><span><span class="dir__name">' + b.name +
+      '</span><span class="dir__what">' + what + '</span></span>';
+    btn.addEventListener('click', () => enter(b.id, btn));
+    $('dir').appendChild(btn);
+  });
+
 })();
