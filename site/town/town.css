@@ -157,3 +157,14 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .tip b{display:block;font-size:15px;font-weight:700}
 .tip .go{display:block;color:var(--ink-2);font-size:12.5px;margin-top:5px}
 
+.dir{max-width:1240px;margin:0 auto;padding:22px clamp(16px,3vw,40px) 60px}
+.dir h2{font-size:22px;font-weight:700;margin-bottom:14px;color:var(--on-sky);transition:color .9s}
+.dir__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.dir__item{display:flex;gap:12px;align-items:flex-start;text-align:left;font:inherit;color:inherit;
+  background:var(--paper);border:2px solid var(--paper);border-radius:16px;padding:12px 14px;cursor:pointer;transition:transform .15s ease,border-color .15s}
+.dir__item:hover{border-color:var(--c);transform:translateY(-2px)}
+.dir__sw{flex:none;width:34px;height:34px;border-radius:10px;background:var(--c);transition:transform .2s ease}
+.dir__item:hover .dir__sw{transform:rotate(-8deg) scale(1.06)}
+.dir__name{display:block;font-weight:700;font-size:16.5px;line-height:1.25}
+.dir__what{display:block;font-size:13.5px;color:var(--ink-2);line-height:1.4;margin-top:3px}
+
