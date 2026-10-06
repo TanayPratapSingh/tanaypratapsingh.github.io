@@ -176,12 +176,29 @@ def gym():
     return s, (x, y - 58)
 
 
+def factory():
+    s = cylinder(8.45, 0.75, 0.24, 74, "#B8574A", "#7E3A31", "#9C4A3F")
+    cx, cy, _, _ = ell(8.45, 0.75, 0.24, 74)
+    s += '<g class="smoke">' + puff(cx + 6, cy - 12, 9, 0) + puff(cx + 16, cy - 24, 12, 1, 0.85) + puff(cx + 30, cy - 34, 14, 2, 0.75) + '</g>'
+    s += box(8.8, 1.2, 3.4, 2.2, 22, tone("#FFB199"))
+    s += band_y(9.1, 9.7, 3.4, 0, 13, "#C9583C") + band_y(10.4, 11.9, 3.4, 9, 15, "#FFE1D6", "win")
+    seg = 3.4 / 3
+    for i in range(3):
+        x0, x1 = 8.8 + i * seg, 8.8 + (i + 1) * seg
+        s += poly([P(x0, 1.2, 22), P(x1, 1.2, 38), P(x1, 3.4, 38), P(x0, 3.4, 22)], "#E3E8F1", "snow1")
+        s += poly([P(x1, 1.2, 22), P(x1, 3.4, 22), P(x1, 3.4, 38), P(x1, 1.2, 38)], "#93D6F0", "win")
+        s += poly([P(x0, 3.4, 22), P(x1, 3.4, 22), P(x1, 3.4, 38)], "#FFB199")
+    x, y = P(10.5, 2.3, 38)
+    return s, (x, y - 14)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
     ("library", "Library", library, 10.45),
     ("tower", "Control tower", control_tower, 8.7),
     ("gym", "Gym", gym, 12.9),
+    ("factory", "Factory", factory, 15.6),
 ]
 
 TREES = []
