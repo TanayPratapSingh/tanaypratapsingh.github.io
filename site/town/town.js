@@ -190,6 +190,7 @@
     btn.type = 'button';
     btn.className = 'dir__item';
     btn.style.setProperty('--c', b.color);
+    btn.style.setProperty('--k', $('dir').children.length);
     const what = b.projects ? b.projects.map(short).join(', ') : b.about;
     btn.innerHTML = '<span class="dir__sw" aria-hidden="true"></span><span><span class="dir__name">' + b.name +
       '</span><span class="dir__what">' + what + '</span></span>';
@@ -474,6 +475,13 @@
       a.getAttribute('href') + '"' + (a.hasAttribute('download') ? ' download="' + a.getAttribute('download') + '"' : ' target="_blank" rel="noopener"') +
       '>' + a.textContent + '</a>').join('') + '</div>' +
     '<p class="letter__loc">' + rail.querySelector('.rail__loc').innerHTML + '</p>';
+
+  if (!reduce) {
+    const seen = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); seen.unobserve(e.target); }
+    }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.dir, .stop, .rack, .diplomas, .post').forEach(el => seen.observe(el));
+  }
 
   // a shared link like town.html#gym opens that building
   const h = location.hash.slice(1);

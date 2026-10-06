@@ -304,6 +304,16 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 /* entrances: only when the script runs and motion is allowed, so nothing is ever hidden without it */
 .anim .ch{display:inline-block;animation:hop .6s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--c) * 40ms + 200ms)}
 @keyframes hop{from{opacity:0;transform:translateY(-.5em) rotate(-8deg)}}
+.anim .dir:not(.in) .dir__item{opacity:0;transform:translateY(14px)}
+.anim .dir.in .dir__item{transition:opacity .45s ease,transform .5s cubic-bezier(.2,.8,.2,1),border-color .15s;transition-delay:calc(var(--k) * 40ms),calc(var(--k) * 40ms),0s}
+.anim .stop:not(.in) .stop__card{opacity:0;transform:translateX(-28px)}
+.anim .stop.in .stop__card{transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.anim .diplomas:not(.in) .dip{opacity:0;transform:translateY(26px)}
+.anim .diplomas.in .dip{transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.anim .diplomas.in .dip:nth-child(2){transition-delay:.12s}
+.anim .diplomas.in .dip:nth-child(3){transition-delay:.24s}
+.anim .post:not(.in) .letter{opacity:0;transform:translateY(48px) rotate(-2.5deg)}
+.anim .post.in .letter{transition:opacity .5s ease,transform .8s cubic-bezier(.2,1.2,.3,1)}
 
 @media (max-width:1020px){
   .hero__txt{position:relative;left:auto;top:auto;z-index:2;max-width:none;padding:6px clamp(16px,3vw,40px) 0}
