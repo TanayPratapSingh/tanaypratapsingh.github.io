@@ -16,6 +16,9 @@
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   if (!location.hash) scrollTo(0, 0);
   const svg = $('map'), hero = svg.closest('.hero');
+  const bar = document.querySelector('.bar');
+  const setBar = () => root.style.setProperty('--bar', bar.offsetHeight + 'px');
+  setBar();
   if (!reduce) root.classList.add('anim');
   const say = msg => { const a = $('announce'); a.textContent = ''; setTimeout(() => { a.textContent = msg; }, 60); };
   const hi = $('hi'), name = hi.textContent;
