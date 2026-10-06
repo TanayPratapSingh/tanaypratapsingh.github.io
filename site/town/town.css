@@ -153,6 +153,7 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .night{background:var(--paper);border-radius:14px;padding:11px 14px}
 .night:hover{background:var(--mist)}
 .night[aria-pressed="true"]{background:#FFD86B;color:var(--ink)}
+#motion[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .zoom{position:fixed;right:clamp(16px,2vw,28px);bottom:18px;z-index:5;display:flex;align-items:center;gap:6px;transition:opacity .3s,visibility .3s}
 .zoom button{background:var(--paper);min-width:40px;height:40px;justify-content:center;border-radius:12px;padding:0 12px}
 .zoom button:hover{background:var(--mist)}
