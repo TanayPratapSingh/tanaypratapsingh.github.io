@@ -148,4 +148,21 @@
     }
   });
 
+  // a preview card follows the mouse over a building
+  const tip = $('tip');
+  svg.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse' || hero.classList.contains('panning')) return;
+    const el = e.target.closest('[data-b]');
+    if (!el) { tip.hidden = true; return; }
+    const b = B[el.dataset.b];
+    tip.innerHTML = '<b>' + b.name + '</b>' + (b.projects ? b.projects.map(short).join(', ') : b.about) +
+      '<span class="go">' + (b.projects ? 'Click to look inside' : 'Click to go there') + '</span>';
+    tip.hidden = false;
+    const r = hero.getBoundingClientRect();
+    const x = Math.min(e.clientX - r.left + 18, r.width - tip.offsetWidth - 8);
+    const y = Math.min(e.clientY - r.top + 18, r.height - tip.offsetHeight - 8);
+    tip.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  });
+  svg.addEventListener('pointerleave', () => { tip.hidden = true; });
+
 })();
