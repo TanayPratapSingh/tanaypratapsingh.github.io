@@ -141,5 +141,27 @@
     "Real Time Big Data Inflow": "Big data inflow",
     "Travel Itinerary Management System": "Travel itinerary",
     "ZTF Transient Pipeline": "ZTF pipeline"
+  },
+  "plain": {
+    "Replicating Dr. GRPO": "I re-ran a 2025 paper about training AI models to reason. Its accuracy result held up. Its two claims about answer length came out the other way, in one training run.",
+    "Tool Dependency Graph": "AI assistants fail when they call tools in the wrong order. I worked out the right order for 1,391 tools using nothing but each tool's written spec.",
+    "Distributed ViT on CIFAR-10": "I split one model's training across two GPUs and nearly doubled the speed. Switching to a smaller number format shrank the gain to 1.15x, and I traced the slowdown to the machine's 4 CPUs.",
+    "ZTF Transient Pipeline": "A sky survey telescope sends alerts whenever something in the sky changes. I replayed one real night of them, 27,378 alerts, through a pipeline that streams them, scores a 500 alert sample, and stores the results.",
+    "Groundwork": "A test bench for AI that answers questions. It checks whether the system finds the right passage, admits when it does not know, and resists people trying to trick it.",
+    "Replicating BEIR": "I rebuilt a well known search benchmark from scratch. All six published numbers reproduced, four of them exactly. One was off at first because a library quietly cut every document short, and I tracked that down.",
+    "JMA Wireless": "At a maker of 5G equipment, a robot assembly line ran 97% of the time but hit only 46% of its weekly target. My team showed it was waiting on parts, not broken.",
+    "ShopFloor AI": "Predicts which factory machines are about to fail, streams live production numbers, and answers questions from maintenance manuals, all running as seven connected services.",
+    "handoff": "Automated systems often wait forever for a person to approve something. Here every request has a deadline, and the rules say what happens if nobody answers: escalate, use a safer option, drop it, or freeze.",
+    "comms-agent": "An AI agent that sorts media mentions about a brand, stops so a person can fix the ones it is unsure of, and only then writes its report. Tested on sample data.",
+    "Project Mark": "I built data analysis puzzles with hidden traps and verified answers, to see whether top AI models fall for them. On the clean versions, they did not.",
+    "media-pulse": "Sorts news mentions by topic and mood, and sends the uncertain ones to a person. With that review, topic accuracy rises from 88% to 96% on sample data.",
+    "Multi Horizon Geomagnetic Kp Index Prediction": "Forecasts geomagnetic storms, the space weather behind the northern lights, from solar wind data. One hour ahead, its error is 45% lower than guessing the average.",
+    "The Perfect Lap": "Predicts when a Formula 1 team will make its first pit stop. On average it is about 3 laps off.",
+    "Managing July Energy Demand Under a Warming Climate": "If July were 5°C hotter, my model says peak home energy use would rise about 25%. Nudging thermostats up 1°C during peak hours would win back about 9%.",
+    "Challenging \"Wealth Equals Health\"": "Across 180+ countries, years of schooling predict child mortality as strongly as income does, with a tighter fit. Income matters, but it is not the first lever funders should pull.",
+    "Uber Data Engineering Pipeline": "Takes raw New York City taxi trip data and builds it into clean, connected tables in Google BigQuery, ready for a dashboard.",
+    "Travel Itinerary Management System": "A trip planning database that rejects bad data on its own, like negative prices or zero length activities, and assembles a whole itinerary in one call.",
+    "Digit Recognition Neural Network from Scratch": "A neural network that reads handwritten digits, written without any AI library so every step is visible. It gets 94% right.",
+    "Real Time Big Data Inflow": "A review of 12+ studies on where to process streaming data: in a distant cloud, or closer to where it is produced. For suitable workloads the comparison puts the cut in delay at 40 to 60%."
   }
 }
