@@ -1,134 +1,30 @@
 {
   "buildings": [
-    {
-      "id": "observatory",
-      "name": "Observatory",
-      "color": "#9AA7F5",
-      "about": "Space and the sky",
-      "projects": [
-        "ZTF Transient Pipeline",
-        "Multi Horizon Geomagnetic Kp Index Prediction"
-      ]
-    },
-    {
-      "id": "tower",
-      "name": "Control tower",
-      "color": "#6FD1C2",
-      "about": "AI agents, and who tells them what to do",
-      "projects": [
-        "Tool Dependency Graph",
-        "handoff",
-        "comms-agent"
-      ]
-    },
-    {
-      "id": "library",
-      "name": "Library",
-      "color": "#C3B8FF",
-      "about": "Search, and answering questions from documents",
-      "projects": [
-        "Replicating BEIR",
-        "Groundwork"
-      ]
-    },
-    {
-      "id": "gym",
-      "name": "Gym",
-      "color": "#FF9A80",
-      "about": "Where models get trained",
-      "projects": [
-        "Replicating Dr. GRPO",
-        "Distributed ViT on CIFAR-10",
-        "Digit Recognition Neural Network from Scratch"
-      ]
-    },
-    {
-      "id": "factory",
-      "name": "Factory",
-      "color": "#FFB199",
-      "about": "Factories, machines, and the people who run them",
-      "projects": [
-        "ShopFloor AI",
-        "JMA Wireless"
-      ]
-    },
-    {
-      "id": "power",
-      "name": "Power station",
-      "color": "#FFD56A",
-      "about": "Energy use in a heat wave",
-      "projects": [
-        "Managing July Energy Demand Under a Warming Climate"
-      ]
-    },
-    {
-      "id": "newsroom",
-      "name": "Newsroom",
-      "color": "#FF9EC4",
-      "about": "Media, and testing what AI gets wrong",
-      "projects": [
-        "media-pulse",
-        "Project Mark"
-      ]
-    },
-    {
-      "id": "track",
-      "name": "Race track",
-      "color": "#A8DB8A",
-      "about": "Formula 1 strategy",
-      "projects": [
-        "The Perfect Lap"
-      ]
-    },
-    {
-      "id": "hall",
-      "name": "Town hall",
-      "color": "#FFC93C",
-      "about": "Health, money and schooling across countries",
-      "projects": [
-        "Challenging \"Wealth Equals Health\""
-      ]
-    },
-    {
-      "id": "yard",
-      "name": "Train yard",
-      "color": "#D9CFC0",
-      "about": "Moving data from place to place",
-      "projects": [
-        "Uber Data Engineering Pipeline",
-        "Real Time Big Data Inflow"
-      ]
-    },
-    {
-      "id": "travel",
-      "name": "Travel agency",
-      "color": "#9FE0D6",
-      "about": "Trip planning",
-      "projects": [
-        "Travel Itinerary Management System"
-      ]
-    },
-    {
-      "id": "school",
-      "name": "University",
-      "color": "#D8E0F2",
-      "about": "Where I studied",
-      "section": "school"
-    },
-    {
-      "id": "shed",
-      "name": "Toolshed",
-      "color": "#E0B48E",
-      "about": "The tools I use",
-      "section": "shed"
-    },
-    {
-      "id": "post",
-      "name": "Post office",
-      "color": "#FF8C89",
-      "about": "How to reach me",
-      "section": "post"
-    }
+    {"id": "observatory", "name": "Observatory", "color": "#9AA7F5", "about": "Space and the sky",
+     "projects": ["ZTF Transient Pipeline", "Multi Horizon Geomagnetic Kp Index Prediction"]},
+    {"id": "tower", "name": "Control tower", "color": "#6FD1C2", "about": "AI agents, and who tells them what to do",
+     "projects": ["Tool Dependency Graph", "handoff", "comms-agent"]},
+    {"id": "library", "name": "Library", "color": "#C3B8FF", "about": "Search, and answering questions from documents",
+     "projects": ["Replicating BEIR", "Groundwork"]},
+    {"id": "gym", "name": "Gym", "color": "#FF9A80", "about": "Where models get trained",
+     "projects": ["Replicating Dr. GRPO", "Distributed ViT on CIFAR-10", "Digit Recognition Neural Network from Scratch"]},
+    {"id": "factory", "name": "Factory", "color": "#FFB199", "about": "Factories, machines, and the people who run them",
+     "projects": ["ShopFloor AI", "JMA Wireless"]},
+    {"id": "power", "name": "Power station", "color": "#FFD56A", "about": "Energy use in a heat wave",
+     "projects": ["Managing July Energy Demand Under a Warming Climate"]},
+    {"id": "newsroom", "name": "Newsroom", "color": "#FF9EC4", "about": "Media, and testing what AI gets wrong",
+     "projects": ["media-pulse", "Project Mark"]},
+    {"id": "track", "name": "Race track", "color": "#A8DB8A", "about": "Formula 1 strategy",
+     "projects": ["The Perfect Lap"]},
+    {"id": "hall", "name": "Town hall", "color": "#FFC93C", "about": "Health, money and schooling across countries",
+     "projects": ["Challenging \"Wealth Equals Health\""]},
+    {"id": "yard", "name": "Train yard", "color": "#D9CFC0", "about": "Moving data from place to place",
+     "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow"]},
+    {"id": "travel", "name": "Travel agency", "color": "#9FE0D6", "about": "Trip planning",
+     "projects": ["Travel Itinerary Management System"]},
+    {"id": "school", "name": "University", "color": "#D8E0F2", "about": "Where I studied", "section": "school"},
+    {"id": "shed", "name": "Toolshed", "color": "#E0B48E", "about": "The tools I use", "section": "shed"},
+    {"id": "post", "name": "Post office", "color": "#FF8C89", "about": "How to reach me", "section": "post"}
   ],
   "short": {
     "Replicating Dr. GRPO": "Dr. GRPO",
@@ -163,5 +59,11 @@
     "Travel Itinerary Management System": "A trip planning database that rejects bad data on its own, like negative prices or zero length activities, and assembles a whole itinerary in one call.",
     "Digit Recognition Neural Network from Scratch": "A neural network that reads handwritten digits, written without any AI library so every step is visible. It gets 94% right.",
     "Real Time Big Data Inflow": "A review of 12+ studies on where to process streaming data: in a distant cloud, or closer to where it is produced. For suitable workloads the comparison puts the cut in delay at 40 to 60%."
+  },
+  "jobs": {
+    "Research Assistant, Gravity Spy 2.0": "LIGO listens for colliding black holes, and noise glitches get in the way. I help find which parts of the detector cause them, working from 276,000+ volunteer classifications.",
+    "Lean Six Sigma Project Lead": "I led a four person team at JMA Wireless that found why a robot line missed its targets, and gave managers numbers they could finally compare across lines.",
+    "Cybersecurity Teaching Assistant": "I taught hands on security labs: breaking into deliberately weak machines, then reading the same evidence the way a defender would.",
+    "Data and Product Analyst Intern": "I dug through customer data at a software company to find which features people used, ignored, and paid for."
   }
 }
