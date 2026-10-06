@@ -321,9 +321,9 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 @media (max-width:1020px){
   .hero__txt{position:relative;left:auto;top:auto;z-index:2;max-width:none;padding:6px clamp(16px,3vw,40px) 0}
   .hero__lead,.hero__role{max-width:52ch}
-  .map{margin-top:-15%}
+  .hero{height:auto;min-height:0;overflow:visible}
+  .map{position:relative;height:auto;aspect-ratio:956/600}
   .dock,.zoom{position:relative;left:auto;right:auto;bottom:auto;justify-content:center;padding:4px 16px 0}
-  .hero:not(.on) .dock,.hero:not(.on) .zoom{opacity:1;visibility:visible}
   .zoom__hint{text-align:center;max-width:none;flex-basis:100%;margin:0 0 4px;background:none;color:var(--on-sky-2)}
   .zoom{flex-wrap:wrap}
 }
