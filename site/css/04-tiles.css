@@ -5,7 +5,8 @@
 .tile{background:var(--surface);border:1px solid var(--rule-2);
   padding:11px 12px 10px;display:flex;flex-direction:column;
   text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
-.tile:hover{border-color:var(--met)}
+.tile{transition:transform .16s ease,border-color .16s ease}
+.tile:hover{border-color:var(--met);transform:translateY(-2px)}
 .tile:hover h3{color:var(--met)}
 .tile__meta{font-family:var(--mono);font-size:10.6px;color:var(--ink-3);line-height:1.45}
 .tile h3{font-size:16px;line-height:1.24;margin:5px 0 7px;letter-spacing:-0.008em}
