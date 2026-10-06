@@ -105,10 +105,10 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .drift{animation:drift var(--dur) linear infinite;animation-delay:var(--del)}
 @keyframes drift{0%{transform:translateX(var(--a));opacity:0}6%{opacity:0}14%,84%{opacity:1}90%,100%{opacity:0}100%{transform:translateX(var(--b))}}
 .birds{animation:fly 30s linear infinite;animation-delay:-9s}
-@keyframes fly{0%{transform:translate(-80px,250px)}100%{transform:translate(1080px,120px)}}
+@keyframes fly{0%{transform:translate(-80px,330px)}100%{transform:translate(1080px,236px)}}
 .flap{transform-box:fill-box;transform-origin:center;animation:flap .32s ease-in-out infinite alternate}
 @keyframes flap{to{transform:scaleY(.45)}}
-.rays{transform-origin:918px 78px;animation:spin 48s linear infinite}
+.rays{transform-origin:900px 262px;animation:spin 48s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .puff{transform-box:fill-box;transform-origin:center;animation:puff 4.2s ease-out infinite;animation-delay:calc(var(--k) * -1.4s)}
 @keyframes puff{0%{opacity:0;transform:translate(-6px,12px) scale(.55)}25%{opacity:.95}100%{opacity:0;transform:translate(12px,-28px) scale(1.5)}}

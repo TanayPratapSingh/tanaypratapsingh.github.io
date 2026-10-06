@@ -400,14 +400,15 @@ def sky():
     s = '<g class="sun"><g class="rays">'
     for i in range(10):
         a = math.radians(i * 36)
-        s += line((918 + 38 * math.cos(a), 78 + 38 * math.sin(a)), (918 + 48 * math.cos(a), 78 + 48 * math.sin(a)), "#FFD166", 4)
-    s += '</g><circle cx="918" cy="78" r="30" fill="#FFD166"/></g>'
-    s += '<g class="night-sky"><circle cx="918" cy="78" r="26" fill="#F4F1DE"/><circle cx="908" cy="70" r="5" fill="#E1DCC4"/><circle cx="927" cy="88" r="3.5" fill="#E1DCC4"/>'
-    for sx, sy, r in ((60, 40, 1.6), (160, 90, 1.2), (250, 30, 1.8), (330, 120, 1.3), (420, 60, 1.5), (560, 36, 1.2), (640, 110, 1.7),
-                      (720, 40, 1.3), (800, 140, 1.5), (860, 30, 1.2), (960, 160, 1.4), (40, 190, 1.2), (120, 250, 1.5), (300, 210, 1.1)):
+        s += line((900 + 38 * math.cos(a), 262 + 38 * math.sin(a)), (900 + 48 * math.cos(a), 262 + 48 * math.sin(a)), "#FFD166", 4)
+    s += '</g><circle cx="900" cy="262" r="30" fill="#FFD166"/></g>'
+    s += '<g class="night-sky"><circle cx="900" cy="262" r="26" fill="#F4F1DE"/><circle cx="890" cy="254" r="5" fill="#E1DCC4"/><circle cx="909" cy="272" r="3.5" fill="#E1DCC4"/>'
+    for sx, sy, r in ((70, 240, 1.6), (140, 300, 1.2), (220, 250, 1.8), (300, 330, 1.3), (380, 236, 1.5), (110, 420, 1.2), (250, 385, 1.4),
+                      (600, 250, 1.3), (680, 300, 1.6), (760, 236, 1.2), (840, 330, 1.5), (960, 330, 1.3),
+                      (90, 600, 1.4), (200, 700, 1.2), (60, 730, 1.6), (900, 640, 1.3), (800, 720, 1.5), (960, 700, 1.2)):
         s += '<circle class="star" cx="%d" cy="%d" r="%.1f" fill="#FFFFFF"/>' % (sx, sy, r)
     s += '</g>'
-    for n, (cx, cy, sc) in enumerate(((736, 96, 1.0), (850, 176, 0.8), (70, 650, 0.9), (330, 150, 0.7))):
+    for n, (cx, cy, sc) in enumerate(((700, 250, 1.0), (820, 300, 0.8), (110, 640, 0.9), (250, 270, 0.7))):
         # each cloud crosses the whole sky; the negative delay starts it where it is drawn
         a, b, dur = -(cx + 120), 1100 - cx, 80 + n * 14
         s += '<g class="drift" style="--a:%dpx;--b:%dpx;--dur:%ds;--del:%.1fs">' % (a, b, dur, -dur * (-a) / (b - a))
