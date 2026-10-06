@@ -168,3 +168,10 @@ h1{font-size:clamp(44px,5.4vw,74px);font-weight:800;letter-spacing:-0.035em;line
 .dir__name{display:block;font-weight:700;font-size:16.5px;line-height:1.25}
 .dir__what{display:block;font-size:13.5px;color:var(--ink-2);line-height:1.4;margin-top:3px}
 
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+.road h2,.shed h2,.school h2,.post h2{font-size:clamp(32px,3.6vw,46px);font-weight:800;letter-spacing:-0.03em}
+.sub{color:var(--ink-2);margin-top:6px;font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+.chips span{background:var(--mist);border-radius:999px;padding:4px 11px;font-size:13.5px;line-height:1.35}
+.chips b{font-weight:700}
+
