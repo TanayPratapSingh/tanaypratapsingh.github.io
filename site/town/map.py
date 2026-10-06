@@ -139,9 +139,24 @@ def observatory():
     return s, (x, y - rx * 0.9 - 8)
 
 
+def library():
+    s = box(4.4, 1.2, 2.4, 2.0, 30, tone("#E6E0FF"))
+    for i in range(5):
+        x0 = 4.62 + i * 0.47
+        s += band_y(x0, x0 + 0.14, 3.2, 0, 30, "#FFFFFF")
+    for i in range(4):
+        x0 = 4.82 + i * 0.47
+        s += band_y(x0, x0 + 0.2, 3.2, 8, 20, "#C9C0F2", "win")
+    s += gable_y(4.3, 1.1, 2.6, 2.25, 30, 18, tone("#5468D8"))
+    s += box(4.3, 3.2, 2.6, 0.35, 5, tone("#C9D2E3"))
+    x, y = P(5.6, 2.2, 48)
+    return s, (x, y - 10)
+
+
 BUILDINGS = [
     # id, sign name, drawing, footprint front corner for draw order
     ("observatory", "Observatory", observatory, 6.8),
+    ("library", "Library", library, 10.45),
 ]
 
 TREES = []
