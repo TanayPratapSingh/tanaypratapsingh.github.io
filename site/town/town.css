@@ -31,3 +31,12 @@ svg.ic,.dock svg,.zoom svg{width:17px;height:17px;flex:none;fill:currentColor}
 .ic-line{fill:none!important;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .ic-mid{fill:#FFC93C!important}
 
+.bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 20px;
+  padding:14px clamp(16px,3vw,36px)}
+.bar__name{font-weight:700;font-size:17px;text-decoration:none;color:var(--on-sky);transition:color .9s}
+.bar__nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;font-size:15px}
+.bar__nav a{text-decoration:none;color:var(--on-sky-2);transition:color .9s}
+.bar__nav a:hover{color:var(--on-sky);text-decoration:underline;text-underline-offset:3px}
+.bar__nav .bar__classic{color:var(--ink);background:var(--paper);padding:5px 13px;border-radius:999px;font-weight:600}
+.bar__nav .bar__classic:hover{text-decoration:none;background:var(--ink);color:var(--paper)}
+
