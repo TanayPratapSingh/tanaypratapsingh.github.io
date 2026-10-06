@@ -8,6 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<script>
+// pick the season and time before the first paint, so the town never flashes the wrong colors
+(function(){var d=document.documentElement,s=null,n=null;try{s=localStorage.getItem('town-season');n=localStorage.getItem('town-night')}catch(e){}
+d.dataset.season=s||['winter','winter','spring','spring','spring','summer','summer','summer','autumn','autumn','autumn','winter'][new Date().getMonth()];
+if(n==='1')d.dataset.time='night';})();
+</script>
 <style>
 {{CSS}}
 </style>
