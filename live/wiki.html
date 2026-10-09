@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wikipedia Edit Stream</title>
+<meta name="description" content="Every edit to Wikipedia and its sister sites, live. Compact estimators run beside exact counts in the browser, so each estimate's error is measured against its promised bound.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/live.css">
+<style>
+  /* scope selector: cells keep their borders when the row wraps on a phone */
+  #scope{border:0;background:transparent;flex-wrap:wrap;max-width:100%;padding:1px 0 0 1px}
+  #scope button{border:1px solid var(--rule-2);margin:-1px 0 0 -1px;background:var(--surface);white-space:nowrap}
+  #scope button+button{border-left:1px solid var(--rule-2)}
+  #scope button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink);position:relative;z-index:1}
+
+  /* the edit river */
+  .stage__cv{position:relative}
+  .stage__cv canvas{touch-action:pan-y}
+  .stage .tip{max-width:300px}
+  .stage .tip__t{font-weight:600;color:var(--ink);white-space:normal;margin-bottom:4px;overflow-wrap:anywhere}
+  .stage__foot .how{flex-basis:100%;margin-top:0}
+  .stage__foot .how__b{max-width:110ch}
+  .spot{width:256px}
+  .spot__t{font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .spot__m{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:3px}
+  .legend i.ring{background:transparent!important;border:1.5px solid var(--ink-2);border-radius:50%;width:10px;height:10px}
+
+  /* stat tiles: seven tiles in rows that fill, at every width */
+  @media (min-width:1280px){.kpis{grid-template-columns:repeat(8,minmax(0,1fr))}}
+  @media (min-width:761px) and (max-width:1279px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .kpi__v[data-wait]{font-size:15px;font-weight:500;letter-spacing:0;color:var(--ink-3);line-height:24px}
+  .kpi--hero .kpi__v[data-wait]{line-height:51px}
+  .kprog{display:block;height:3px;background:var(--sunk);margin-top:3px;max-width:140px}
+  .kprog b{display:block;height:100%;background:var(--ink-3)}
+
+  /* plain footer line, then the disclosure */
+  .card__f > p{color:var(--ink-2)}
+  .how__b p b{color:var(--ink);font-weight:600}
+
+  /* busiest pages */
+  .hh .row__l a,.tape__r .t a{color:var(--ink);text-decoration:none}
+  .hh .row__l a:hover,.tape__r .t a:hover{text-decoration:underline}
+  .hh .row__v span{display:inline-block;min-width:46px;text-align:right}
+  .hh .row__v .badge{min-width:0;margin-left:6px}
+  .hh .hh__h{padding:0 0 3px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+  .hh .rk{display:inline-block;min-width:20px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+  /* count-min table */
+  .cmsw{overflow-x:auto}
+  .cmst{width:100%;border-collapse:collapse;font-size:12.5px}
+  .cmst th,.cmst td{padding:5px 6px;border-bottom:1px solid var(--rule);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .cmst th:first-child,.cmst td:first-child{text-align:left}
+  .cmst th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-2);background:var(--sunk)}
+  .cmst td.z{color:var(--ink-3)}
+  #tape{max-height:none}
+  @media (max-width:760px){
+    .kpi--hero .kpi__v[data-wait]{line-height:40px}
+    .hh .row__v span{min-width:38px}
+    .spot{width:auto}
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="top__in">
+  <a class="top__brand" href="../index.html">Tanay Pratap Singh<span>/ live</span></a>
+  <nav aria-label="Dashboards">
+    <a href="index.html">Overview</a>
+    <a href="wiki.html" aria-current="page">Edit stream</a>
+    <a href="book.html">Order book</a>
+    <a href="quakes.html">Earthquakes</a>
+    <a href="sun.html">Space weather</a>
+  </nav>
+  <button class="top__theme" type="button">Dark theme</button>
+</div></header>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <p class="hero__k">01 &middot; Live from Wikimedia &middot; server sent events</p>
+      <h1>Every Wikipedia edit, live, with each estimate checked against an exact count</h1>
+      <p class="hero__dek">This page reads every change to Wikipedia and its sister sites the moment it is published. It counts them twice, once with compact estimators that fit in a few kilobytes (sketches) and once exactly, so you can watch how far each estimate drifts and whether it stays inside its promised error.</p>
+      <p class="hero__src">Source <a href="https://stream.wikimedia.org/v2/stream/recentchange">stream.wikimedia.org/v2/stream/recentchange</a> &middot; Transport: server sent events, resumed with Last-Event-ID &middot; License: the stream states none; linked pages carry their wiki's license (CC BY-SA 4.0 for Wikipedia text, CC0 for Wikidata)</p>
+    </div>
+    <div class="status" id="status"></div>
+  </section>
+
+  <section class="stage" id="stage" aria-label="Edit river: every edit as a dot, by wiki and age">
+    <div class="stage__cap"><h2>Every edit to Wikipedia and its sister sites, as it happens</h2><p>Each dot is one edit, sliding left as it ages. Bigger dots changed more text; rings are new pages.</p></div>
+    <div class="legend stage__legend"></div>
+    <div class="stage__cv" id="river"></div>
+    <div class="spot" id="spot"><div class="spot__k" id="spot-k">Largest change in the last minute</div><div class="spot__v" id="spot-v">waiting</div><div class="spot__t" id="spot-t"></div><div class="spot__m" id="spot-m"></div></div>
+    <div class="stage__foot">
+      <span id="sf1">Waiting for the first edit</span><span id="sf2"></span><span id="sf3"></span><span id="sf4"></span>
+      <details class="how"><summary>How the river is drawn</summary><div class="how__b">
+        <p>Each dot is one change of type edit or new from the scope chosen below; category changes and log actions are counted in the cards. Rows are the 6 wikis with the most edits since the counters started, plus one row for the rest, and they slide into place as the ranking settles. Horizontal position is the edit's age on this computer's clock, so it includes the clock offset in the delay tile; the span grows from 4 to 60 seconds over the first minute. Position inside a row comes from a hash of the event id, so dots do not stack. The river keeps the latest 2,000 edits.</p>
+        <span class="eq">dot area &prop; 1 + 1.5 log10(1 + |bytes changed|)</span>
+      </div></details>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="seg" id="scope" role="group" aria-label="Which wikis to count">
+      <button type="button" data-scope="all" aria-pressed="true">All projects</button>
+      <button type="button" data-scope="wikipedia" aria-pressed="false">Wikipedia</button>
+      <button type="button" data-scope="wikidata" aria-pressed="false">Wikidata</button>
+      <button type="button" data-scope="commons" aria-pressed="false">Commons</button>
+      <button type="button" data-scope="enwiki" aria-pressed="false">English Wikipedia</button>
+    </div>
+    <span class="ctl" id="since" aria-live="polite">waiting for the first event</span>
+    <span class="controls__sp"></span>
+    <button class="btn" id="pause" type="button" aria-pressed="false">Pause display</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi kpi--hero"><div class="kpi__l">Changes per second</div><div class="kpi__v num" id="k-rate" data-wait>0 / 5 s</div><div class="kpi__s" id="k-rate-s">opening the stream</div></div>
+    <div class="kpi"><div class="kpi__l">Different editors</div><div class="kpi__v num" id="k-hll" data-wait>waiting</div><div class="kpi__s" id="k-hll-s">estimated in 4 KB</div></div>
+    <div class="kpi"><div class="kpi__l">Made by people</div><div class="kpi__v num" id="k-human" data-wait>waiting</div><div class="kpi__s" id="k-human-s">the rest by bot accounts</div></div>
+    <div class="kpi"><div class="kpi__l">New pages</div><div class="kpi__v num" id="k-new" data-wait>waiting</div><div class="kpi__s" id="k-new-s">pages created</div></div>
+    <div class="kpi"><div class="kpi__l">Pages edited</div><div class="kpi__v num" id="k-pages" data-wait>waiting</div><div class="kpi__s" id="k-pages-s">counted exactly</div></div>
+    <div class="kpi"><div class="kpi__l">Wikis with activity</div><div class="kpi__v num" id="k-wikis" data-wait>waiting</div><div class="kpi__s" id="k-wikis-s">counted exactly</div></div>
+    <div class="kpi"><div class="kpi__l">Edit to screen delay</div><div class="kpi__v num" id="k-lag" data-wait>waiting</div><div class="kpi__s" id="k-lag-s">median / 95th percentile</div></div>
+  </div>
+
+  <div class="grid">
+    <section class="card card--8" id="c-rate">
+      <div class="card__h"><div class="card__t"><h2>How busy is it right now?</h2><p>Changes per second over the last 5 minutes, people stacked under bots. Triangles mark bursts.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f"><p id="f-rate">Waiting for the first complete second.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>A burst is a second far above the recent norm. The norm is an exponentially weighted mean &mu; and standard deviation &sigma; of earlier seconds, with a 60 second half life. A flagged second still updates the norm, and nothing is flagged in the first 30 seconds.</p>
+          <span class="eq">flag second t  if  x_t &gt; &mu; + 4&sigma;  and  x_t &ge; &mu; + 10</span>
+          <p>Seconds are binned by event time (<code>meta.dt</code>) and close 2 s after the newest event time passes them, so this computer's clock plays no part. Delivery arrives in clumps, and arrival time bins would read those clumps as bursts; the comparison below counts how often.</p>
+          <p id="h-rate"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--4" id="c-hll">
+      <div class="card__h"><div class="card__t"><h2>How many different people are editing?</h2><p>Error of a 4 KB estimate (HyperLogLog) against an exact count, each second. Lines mark the typical error; the band is twice that.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f"><p id="f-hll">Waiting for the first editor.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>HyperLogLog with p = 12 keeps 4,096 one byte registers (4 KB). The top 12 bits of the MurmurHash3 of a user name pick a register, which keeps the largest rank seen: one plus the leading zeros in the other 20 bits.</p>
+          <span class="eq">E = &alpha;_m m&sup2; / &Sigma;_j 2^(&minus;M[j]),   m = 4,096
+if E &le; 2.5 m and V &gt; 0:  E = m ln(m / V)
+typical error &sigma; = 1.04 / &radic;m = 1.625%</span>
+          <p>Below 2.5 m = 10,240 the linear counting branch (V = registers still zero) is in use, and its error there is a little smaller, close to 1 / &radic;(2m) &asymp; 1.1%. Successive points come from one sketch, so they are not independent trials.</p>
+          <p id="h-hll"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-hh">
+      <div class="card__h"><div class="card__t"><h2>Which pages are busiest?</h2><p>The 15 most edited pages, from 200 counters (Space-Saving). Solid bar: guaranteed minimum. Gray: possible overcount. Tick: exact count.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div><div class="rows hh viz" id="hh"><div class="empty">Waiting for the first edit in this scope</div></div></div>
+      <div class="card__f"><p id="f-hh">Waiting for edits.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Space-Saving (Metwally, Agrawal and El Abbadi, 2005) keeps k = 200 counters for edits and page creations. A page it has not seen takes over the smallest counter and inherits that count as possible error.</p>
+          <span class="eq">count &minus; error &le; exact &le; count
+smallest count &le; N / k,  so exact &gt; N / k means tracked</span>
+          <p>Both guarantees are checked every second against an exact map of every page. For pages near N / k most of a counter is inherited error, so the order of the lower rows is unreliable.</p>
+          <p id="h-hh"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-cms">
+      <div class="card__h"><div class="card__t"><h2>Which wikis are busiest?</h2><p>Changes per wiki from a fixed table of 4 by 1,024 counters (Count-Min), next to exact counts.</p></div></div>
+      <div class="card__b"><div class="cmsw" id="cms"><div class="empty">Waiting for the first event in this scope</div></div></div>
+      <div class="card__f"><p id="f-cms">Waiting for events.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Count-Min adds each change to one counter in each of 4 rows and reports the smallest of the 4. Wikis that share a counter inflate each other, so it can overcount and never undercounts. This is the standard update, so the textbook bound applies as stated.</p>
+          <span class="eq">exact &le; estimate,   P(estimate &minus; exact &gt; &epsilon; N) &le; &delta;
+&epsilon; = e / 1,024 = 0.00265,   &delta; = e^&minus;4 = 0.0183</span>
+          <p>The proof assumes pairwise independent hashes, which seeded MurmurHash3 is not provably. With a few hundred wikis in 1,024 columns an overcount needs a collision in all 4 rows, so it is rare here.</p>
+          <p id="h-cms"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-size">
+      <div class="card__h"><div class="card__t"><h2>How big are the edits?</h2><p>Share of each group's edits by bytes added or removed, people and bots side by side.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f"><p id="f-size">Waiting for edits.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Byte change is new length minus old length, for edits only. Bins are orders of magnitude and each label is the edge nearest zero: +100 means +100 to +999 bytes. Shares are within each group, so each color sums to 100%.</p>
+          <p id="h-size"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-kind">
+      <div class="card__h"><div class="card__t"><h2>What kind of change?</h2><p>Changes by type since the counters started, people and bots side by side.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f"><p id="f-kind">Waiting for events.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Types come from the stream. An edit changes a page's text and new creates a page. Categorize records a page entering or leaving a category, and log covers actions such as moves, deletions, uploads and new accounts.</p>
+          <p>The bot flag is the wiki's own: accounts with the bot right. Automated edits from accounts without it count as people.</p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--12" id="c-tape">
+      <div class="card__h"><div class="card__t"><h2>Latest changes</h2><p>The 25 newest changes, newest first. Editors are never shown.</p></div></div>
+      <div class="card__b"><div class="tape" id="tape"><div class="empty">Waiting for events</div></div></div>
+      <div class="card__f"><p id="f-tape">Waiting for events.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Each event's <code>meta.id</code> passes through a set of the 5,000 most recent ids, and repeats after a reconnect are dropped. Wikimedia's synthetic canary events are discarded. Times are event times (<code>meta.dt</code>) in this computer's time zone. Byte change is new length minus old length, blank when the event carries no length. User and User talk pages are named after an account, so their titles are hidden.</p>
+          <p id="h-tape"></p>
+        </div></details>
+      </div>
+    </section>
+  </div>
+
+  <section class="method">
+    <h2>Method</h2>
+    <p>This page keeps two sets of books on the same stream. One uses sketches, compact summaries that answer &ldquo;how many&rdquo; and &ldquo;which are biggest&rdquo; in a fixed few kilobytes at the price of a small, bounded error. The other keeps every count exactly, which works here only because the stream is small. Each card puts the two side by side, and the sections below give the details.</p>
+    <div class="method__cols">
+      <div>
+        <h3>Transport and resume</h3>
+        <p>The page opens one <code>EventSource</code> on Wikimedia's recentchange stream. Every message carries an SSE id: a JSON list of Kafka topic and partition positions (in the stream as observed, a millisecond timestamp for the active datacenter's topic). Wikimedia closes every connection after 15 minutes. The browser then reconnects on its own and sends the last id it saw as the <code>Last-Event-ID</code> header, so the stream resumes where it stopped. If the browser gives up (an HTTP error it will not retry), the page reconnects itself with <code>since</code> set 5 seconds before the newest event time, which can replay a few events.</p>
+        <p>Each event's <code>meta.id</code> passes through a set of the 5,000 most recent ids; repeats are dropped and counted in the tape footer. Wikimedia's synthetic canary events (<code>meta.domain</code> = canary) are discarded before anything is counted. Changing the scope resets every counter and sketch.</p>
+
+        <h3>Edit river</h3>
+        <p>The river draws events of type edit and new from the chosen scope; category changes and log actions appear in the cards. Rows are the 6 wikis with the most edits since the counters started, plus one row for the rest. A wiki takes a row, or passes the row above, only when its count exceeds that row's by 10% plus one, so rows settle without flapping, and they slide to new places. Horizontal position is age, this computer's clock minus <code>meta.dt</code>, so it includes the clock offset in the delay tile. The span grows from 4 to 60 seconds over the first minute. Vertical position inside a row comes from a hash of the event id, so dots do not stack. The river keeps the latest 2,000 edits.</p>
+        <div class="eq">dot area &prop; 1 + 1.5 log10(1 + |bytes changed|)</div>
+
+        <h3>Hashing</h3>
+        <p>All three sketches hash with MurmurHash3, x86 32 bit, over UTF-8 bytes. The implementation is checked in the test suite against the published test vectors and SMHasher's verification value. Count-Min uses a different seed for each row.</p>
+
+        <h3>HyperLogLog</h3>
+        <p>Distinct editors are counted by user name with p = 12, so m = 4,096 registers of one byte each. The top 12 bits of the hash choose a register, which keeps the largest rank it has seen; the rank is one plus the number of leading zeros in the remaining 20 bits.</p>
+        <div class="eq">j = h &gt;&gt;&gt; (32 − p)     register index: the top p bits
+ρ = clz(h &lt;&lt; p) + 1    rank: at most 32 − p + 1 = 21
+M[j] = max(M[j], ρ)
+
+E = α_m m² / Σ_j 2^(−M[j]),   α_m = 0.7213 / (1 + 1.079 / m)
+if E ≤ 2.5 m and V &gt; 0:  E = m ln(m / V),  V = registers still 0
+if E &gt; 2^32 / 30:        E = −2^32 ln(1 − E / 2^32)
+
+relative standard error ≈ 1.04 / √m = 1.04 / 64 = 1.625%</div>
+        <p>Below 2.5 m = 10,240 the linear counting branch is in use, and its error there is a little smaller than the raw bound (close to 1 / &radic;(2m) &asymp; 1.1% for small counts). The chart follows one sketch over time, so neighbouring points are strongly correlated; a coverage test would need many independent sketches.</p>
+        <p>The exact set beside it stores only a 53 bit hash of each user name (two seeded MurmurHash3 values). The chance of any collision among 100,000 editors is about n&sup2; / 2^54 &asymp; 6 &times; 10^&minus;7, so it is exact in practice.</p>
+      </div>
+      <div>
+        <h3>Count-Min</h3>
+        <p>Events per wiki go into a table of 4 rows by 1,024 counters. Each event adds one to a counter in every row and the estimate is the minimum over rows. The page uses the standard update, so the textbook bound applies as stated; the conservative update tightens estimates but falls outside that proof.</p>
+        <div class="eq">f(x) ≤ f̂(x) = min_i C[i, h_i(x)]
+P( f̂(x) − f(x) &gt; ε N ) ≤ δ
+ε = e / w = 0.00265,   δ = e^(−d) = 0.0183</div>
+        <p>The proof assumes pairwise independent hash functions, which seeded MurmurHash3 is not provably. With a few hundred wikis in 1,024 columns, a key is inflated only when it collides in all four rows, so most estimates come out exact and the bound is far from tight here. The card puts the share of inflated keys expected under uniform hashing next to the share observed.</p>
+
+        <h3>Space-Saving</h3>
+        <p>Pages (edits and creations) are tracked with k = 200 counters, after Metwally, Agrawal and El Abbadi (2005).</p>
+        <div class="eq">hit:   count[x] ← count[x] + 1
+miss:  evict the counter y with the smallest count c_min
+       count[x] ← c_min + 1,   error[x] ← c_min
+
+count[x] − error[x] ≤ f(x) ≤ count[x]
+c_min ≤ N / k,  so f(x) &gt; N / k implies x is tracked</div>
+        <p>Every second the page checks both guarantees against an exact map of every page seen and counts any failure. The guarantees are deterministic, so that count should stay at zero; it is on the page so that a bug would show. The ranking is weaker: for pages near N / k, most of a counter's count is error inherited from the page it evicted, so the order of the lower rows is unreliable. The card counts how many of the 15 rows belong in the exact top 15.</p>
+
+        <h3>Bursts</h3>
+        <div class="eq">μ, σ  = exponentially weighted mean and standard
+       deviation of per second totals, half life 60 s
+flag second t  if  x_t &gt; μ + 4σ  and  x_t ≥ μ + 10</div>
+        <p>&mu; and &sigma; are taken before second t is added, and flagged seconds still update the baseline. Nothing is flagged during the first 30 seconds. Seconds are binned by event time (<code>meta.dt</code>) because delivery comes in clumps, and a clump of delivery is no burst of editing; the card counts what the same rule flags on arrival time bins for comparison. A second is closed, and judged, once the newest event time seen is 2 seconds past it, so the judgement does not depend on this computer's clock. Events that arrive later still fill the chart, miss the detector, and are counted. The rate tile uses the same closed seconds, smoothed with a 10 second half life.</p>
+
+        <h3>Delay, bot flag and privacy</h3>
+        <p>The delay is arrival time on this computer minus <code>meta.dt</code> from Wikimedia, over the last 2,000 events. It includes the offset between the two clocks, which can be a second or more and can even make the delay negative. The bot flag is the wiki's own: accounts with the bot right. Automated edits from accounts without it count as people.</p>
+        <p>User names and IP addresses are never displayed. A name is hashed on arrival, into the HyperLogLog registers and the 53 bit exact set, and the string is not kept. The tape and the river show pages and leave out editors. Pages in the User and User talk namespaces (2 and 3) are named after an account or an IP address, so their titles are counted by hash and shown only as &ldquo;User page (name hidden)&rdquo;, without a link. Titles in other namespaces can still mention an account, for example a noticeboard subpage; those are shown as the wiki published them.</p>
+
+        <h3>What the comparison shows</h3>
+        <p>The exact counters are only affordable because this stream is small, tens of events a second as the rate tile shows. The exact set and maps grow with every new editor and page (the page resets itself if the page map reaches 500,000 keys), while the sketches stay at 4 KB, 4 &times; 1,024 counters and 200 counters. At a scale where exact counting does not fit in memory, the sketch is all there is; running both here shows what the sketch gives up in exchange.</p>
+      </div>
+    </div>
+  </section>
+  <p class="foot">Data: Wikimedia EventStreams, recentchange stream, published by the Wikimedia Foundation. Page titles link back to the wiki they came from. Nothing is stored between visits and nothing passes through a server of mine. <a href="index.html">All dashboards</a> &middot; <a href="../index.html">Back to the portfolio</a></p>
+</main>
+<script type="module" src="wiki/app.js"></script>
+</body>
+</html>
