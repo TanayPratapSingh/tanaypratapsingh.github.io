@@ -20,9 +20,11 @@ export const fmt = {
     const a = Math.abs(ms);
     if (a < 1000) return Math.round(ms) + ' ms';
     if (a < 60e3) return (ms / 1000).toFixed(a < 10e3 ? 1 : 0) + ' s';
-    if (a < 3600e3) return Math.round(ms / 60e3) + ' min';
-    const h = Math.floor(a / 3600e3), m = Math.round((a % 3600e3) / 60e3);
-    return (ms < 0 ? '−' : '') + h + ' h' + (m ? ' ' + m + ' min' : '');
+    // round once to whole minutes, then split, so 2 h 59.6 min reads 3 h and never 2 h 60 min
+    const tm = Math.round(a / 60e3), sign = ms < 0 ? '−' : '';
+    if (tm < 60) return sign + tm + ' min';
+    const h = Math.floor(tm / 60), m = tm % 60;
+    return sign + h + ' h' + (m ? ' ' + m + ' min' : '');
   },
   ago: ms => isNum(ms) ? fmt.dur(Math.max(0, ms)) + ' ago' : '–',
   time(t, utc = false, secs = true) {
