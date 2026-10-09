@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Earthquake Statistics</title>
+<meta name="description" content="Every earthquake USGS logged in the past week, refreshed every minute and analyzed in the browser: how much rarer large quakes are, how fast aftershocks fade, and every correction the catalog makes while the page is open.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/live.css">
+<style>
+  /* ---- controls ---- */
+  .seg{flex-wrap:wrap;max-width:100%}
+
+  /* ---- stage: the map ---- */
+  #stage .chart canvas{cursor:crosshair}
+  #stage .stage__cap{max-width:min(380px,calc(100% - 32px))}
+  #stage .stage__foot{align-items:center}
+  #stage .stage__sp{flex:1}
+  #stage .stage__foot .how{flex-basis:100%;margin-top:0}
+  #stage .stage__foot .how__b{max-width:120ch}
+  #stage .tv{margin:0 16px 12px}
+  #stage[data-view="table"] .viz,#stage[data-view="table"] .spot{display:none}
+  #stage:not([data-view="table"]) .tv{display:none}
+  #stage[data-view="table"] .stage__cap,#stage[data-view="table"] .stage__legend{position:static;margin:12px 16px 10px;max-width:none}
+  #stage .card__a button{border:1px solid var(--rule);background:transparent;padding:3px 7px;font-family:var(--mono);font-size:11px;cursor:pointer;color:var(--ink-2)}
+  #stage .card__a button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  .stage__legend{gap:4px 12px;align-items:center}
+  .stage__legend .grad{display:inline-block;width:58px;height:8px;border-radius:4px}
+  .stage__legend .sz{display:inline-flex;align-items:center;gap:3px}
+  .stage__legend .sz i{display:inline-block;border-radius:50%;border:1px solid var(--ink-3);background:transparent}
+  .stage__legend .rip{display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid;box-shadow:0 0 0 2.5px var(--surface),0 0 0 3.5px currentColor}
+  #spot{width:250px;pointer-events:none}
+  #spot .spot__v small{font-size:13px;font-weight:500;color:var(--ink-2);margin-left:4px;letter-spacing:0}
+  #spot .spot__p{color:var(--ink)}
+  #spot .spot__m{color:var(--ink-2);margin-top:2px}
+  .dscale{position:relative;max-width:340px;margin:4px 0 20px}
+  .dscale__bar{height:8px;border-radius:4px}
+  .dscale__t{position:absolute;top:11px;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap}
+  .dscale__t.first{transform:none}
+  .dscale__t.last{transform:translateX(-100%)}
+
+  /* ---- KPI tiles: rows always full ---- */
+  @media (min-width:1200px){ .kpis{grid-template-columns:repeat(7,minmax(0,1fr))} }
+  @media (min-width:761px) and (max-width:1199px){ .kpis{grid-template-columns:repeat(4,minmax(0,1fr))} .kpis .kpi--hero{grid-column:span 3} }
+  @media (max-width:760px){ .kpis .kpi:last-child{grid-column:span 2} }
+  .kpi__v.na{font-size:17px;font-weight:600;letter-spacing:0;white-space:normal;line-height:1.3;margin-top:8px}
+  .kpi--hero .kpi__v.na{font-size:22px}
+  .kpi__l{white-space:normal}
+
+  /* ---- cards ---- */
+  .grid{grid-auto-flow:row dense}
+  @media (max-width:1100px){ #latest{grid-column:span 12} }
+  .card__f > p{margin:0}
+  .card__f > p b{color:var(--ink);font-weight:600}
+  .how__b p b{color:var(--ink);font-weight:600}
+  .msg b{color:var(--ink);font-weight:600}
+  .legend i.tick{width:2px;height:10px;border-radius:0}
+
+  /* ---- latest earthquakes ---- */
+  #latest-list{container-type:inline-size;max-height:420px;overflow:auto}
+  .evr{display:grid;grid-template-columns:84px 74px minmax(0,1fr) 64px 92px;gap:2px 10px;padding:6px 0;border-bottom:1px solid var(--rule);font-size:12.5px;align-items:baseline}
+  .evr:last-child{border-bottom:0}
+  .evr time,.evr .ago{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .evr .ago{display:block}
+  .evr .m{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .evr .m small{font-weight:400;color:var(--ink-2);font-family:var(--mono);font-size:11px;margin-left:4px}
+  .evr .pl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .evr .d{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .evr .st{text-align:right;white-space:nowrap}
+  .evr .pill{margin:0 0 0 4px}
+  .evr.new{animation:flash 1.2s ease-out}
+  .evh{font-family:var(--mono);font-size:11px;color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding:0 0 5px}
+  @container (max-width:560px){
+    .evr{grid-template-columns:auto minmax(0,1fr) auto}
+    .evr .m{grid-column:1;grid-row:1}
+    .evr .d{grid-column:2;grid-row:1}
+    .evr .st{grid-column:3;grid-row:1}
+    .evr .pl{grid-column:1/-1;grid-row:2;white-space:normal}
+    .evr time{grid-column:1/-1;grid-row:3}
+    .evr .ago{display:inline;margin-left:6px}
+    .evh{display:none}
+  }
+  @media (max-width:760px){ #latest-list{max-height:none} #rev-list .empty{min-height:96px} }
+
+  /* ---- revision log ---- */
+  #revs .card__b{display:flex;flex-direction:column}
+  #rev-list{flex:1;max-height:300px;overflow:auto}
+  #rev-list .empty{min-height:200px}
+  .rvr{display:grid;grid-template-columns:62px minmax(0,1fr);gap:1px 10px;padding:6px 0;border-bottom:1px solid var(--rule);font-size:12.5px}
+  .rvr:last-child{border-bottom:0}
+  .rvr time{font-family:var(--mono);font-size:11px;color:var(--ink-3);grid-row:span 2}
+  .rvr .ev{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rvr .ch{color:var(--ink-2)}
+  .rvr .ch b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<header class="top"><div class="top__in">
+  <a class="top__brand" href="../index.html">Tanay Pratap Singh<span>/ live</span></a>
+  <nav aria-label="Dashboards">
+    <a href="index.html">Overview</a>
+    <a href="wiki.html">Edit stream</a>
+    <a href="book.html">Order book</a>
+    <a href="quakes.html" aria-current="page">Earthquakes</a>
+    <a href="sun.html">Space weather</a>
+  </nav>
+  <button class="top__theme" type="button">Dark theme</button>
+</div></header>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <p class="hero__k">03 &middot; Live USGS catalog &middot; refreshed every 60 seconds</p>
+      <h1>A week of earthquakes, and a record that keeps changing</h1>
+      <p class="hero__dek">Every earthquake the US Geological Survey logged in the past seven days, refreshed every minute and analyzed in your browser. The page measures how much rarer large quakes are than small ones and how fast aftershocks die away (the Gutenberg-Richter and Omori-Utsu laws), and it logs every correction USGS makes while you watch.</p>
+      <p class="hero__src">Source: <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">USGS earthquake feeds</a> &middot; past hour checked every 60 s, past day every 5 min &middot; public domain</p>
+    </div>
+    <div class="status" id="status"></div>
+  </section>
+
+  <div class="controls">
+    <span class="ctl" id="region-l">Region</span>
+    <div class="seg" role="group" aria-labelledby="region-l" id="region">
+      <button type="button" data-region="all" aria-pressed="true">All events</button>
+      <button type="button" data-region="m45" aria-pressed="false">Global M4.5+</button>
+      <button type="button" data-region="ca" aria-pressed="false">California</button>
+      <button type="button" data-region="ak" aria-pressed="false">Alaska</button>
+      <button type="button" data-region="hi" aria-pressed="false">Hawaii</button>
+      <button type="button" data-region="pr" aria-pressed="false">Puerto Rico</button>
+    </div>
+    <span class="controls__sp"></span>
+    <button class="btn" id="pause" type="button" aria-pressed="false">Pause display</button>
+  </div>
+
+  <section class="stage" id="stage" aria-label="Map of the week's earthquakes: size by magnitude, color by depth, rings on the newest">
+    <div class="stage__cap"><h2 id="stage-h">The week's earthquakes, updated every minute</h2><p id="stage-p">Each dot is one earthquake. Size shows its magnitude and color its depth; rings ripple out from the last hour's quakes.</p></div>
+    <div class="legend stage__legend" id="stage-legend"></div>
+    <div class="tv" tabindex="0"></div>
+    <div id="stage-mount"></div>
+    <div class="spot" id="spot" hidden>
+      <div class="spot__k" id="spot-k">Latest M 2.5 or larger</div>
+      <div class="spot__v num" id="spot-v"></div>
+      <div class="spot__p" id="spot-p"></div>
+      <div class="spot__m" id="spot-m"></div>
+    </div>
+    <div class="stage__foot">
+      <span>Last 24 hours <b id="sf-day">waiting</b></span>
+      <span>Largest this week <b id="sf-big">waiting</b></span>
+      <span>Newest <b id="sf-new">waiting</b></span>
+      <span>Changes seen <b id="sf-rev">0</b></span>
+      <span class="stage__sp"></span>
+      <span class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></span>
+      <details class="how"><summary>How to read the map</summary><div class="how__b">
+        <div class="dscale" id="dscale"></div>
+        <p>Equal Earth projection, centered on the Pacific for All events and Global M4.5+, fitted to the region's box otherwise (the dashed outline). Coastlines are Natural Earth at 1:110 million; thin lines are plate boundaries from the PB2002 model.</p>
+        <p id="h-map"></p>
+        <p>Color is depth on a log scale from 0 to 700 km. Dots fade from full strength to 25% over the week. Rings ripple outward from every earthquake of the last hour, and once from any that arrived since you opened the page; with reduced motion they are drawn still. The callout shows the most recent earthquake of M 2.5 or more in the region, or the newest one if there is none.</p>
+      </div></details>
+    </div>
+  </section>
+
+  <div class="kpis">
+    <div class="kpi kpi--hero"><div class="kpi__l">Earthquakes in the last 24 hours</div><div class="kpi__v num" id="k-day">&ndash;</div><div class="kpi__s" id="k-day-s">Loading the past week</div></div>
+    <div class="kpi"><div class="kpi__l">b-value: rarity per magnitude step</div><div class="kpi__v num" id="k-b">&ndash;</div><div class="kpi__s" id="k-b-s"></div></div>
+    <div class="kpi"><div class="kpi__l">Smallest size fully recorded (Mc)</div><div class="kpi__v num" id="k-mc">&ndash;</div><div class="kpi__s" id="k-mc-s"></div></div>
+    <div class="kpi"><div class="kpi__l">Earthquakes in the last hour</div><div class="kpi__v num" id="k-hr">&ndash;</div><div class="kpi__s" id="k-hr-s"></div></div>
+    <div class="kpi"><div class="kpi__l">Catalog changes seen</div><div class="kpi__v num" id="k-rev">&ndash;</div><div class="kpi__s" id="k-rev-s"></div></div>
+    <div class="kpi"><div class="kpi__l">Data age</div><div class="kpi__v num" id="k-age">&ndash;</div><div class="kpi__s" id="k-age-s"></div></div>
+  </div>
+
+  <div class="grid">
+    <section class="card card--4" id="fmd">
+      <div class="card__h"><div class="card__t"><h2>How much rarer is each bigger quake?</h2><p>Earthquakes per 0.1 of magnitude (bars) and at or above each size (dots), log scale, with the Gutenberg-Richter fit</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="fmd-leg"></div><div id="fmd-mount"></div></div>
+      <div class="card__f"><p id="fmd-f">Waiting for the catalog.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Small quakes are missed more often than large ones, so the fit starts at the magnitude of completeness, Mc. Mc is the 0.1 bin with the most events (maximum curvature) plus 0.2, the correction of Woessner and Wiemer (2005). It needs at least 50 earthquakes.</p>
+          <p>The b-value is the Aki (1965) maximum likelihood estimate with Utsu's correction for magnitudes rounded to dM = 0.1, using events at or above Mc; its error is the Shi and Bolt (1982) formula. A fit needs 50 events at or above Mc.</p>
+          <span class="eq">log10 N(&ge;M) = a - b M
+b       = log10(e) / ( mean(M) - (Mc - dM/2) )
+sigma_b = 2.30 b^2 sqrt( sum (M_i - mean)^2 / (n (n - 1)) )
+a       = log10 N(&ge;Mc) + b Mc</span>
+          <p>The 95% range comes from 200 bootstrap resamples of the whole regional catalog; each resample recomputes Mc and then b, so the range includes the uncertainty in Mc. The seed is fixed, so the same catalog gives the same range. A step of one magnitude unit changes the count by a factor of 10^b.</p>
+          <p id="h-fmd"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--4" id="omori">
+      <div class="card__h"><div class="card__t"><h2>How fast do aftershocks fade?</h2><p>Aftershocks per day after the week's busiest mainshock, against days since it, both on log scales, with the Omori-Utsu fit</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="omori-leg"></div><div id="omori-mount"></div></div>
+      <div class="card__f"><p id="omori-f">Waiting for the catalog.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Every earthquake of M 4 or more in the region is a candidate mainshock. Its aftershocks are the later events inside the Gardner and Knopoff (1974) window. A candidate followed by a larger event inside its own window is a foreshock and is skipped; the one with the most aftershocks is plotted.</p>
+          <span class="eq">d = 10^(0.1238 M + 0.983) km
+t = 10^(0.032 M + 2.7389) days    if M &ge; 6.5
+t = 10^(0.5409 M - 0.547) days    otherwise</span>
+          <p>With 30 or more aftershocks, n(t) = K / (t + c)^p is fitted by maximum likelihood (Ogata 1983) on the aftershock times t_i in days over [0, T], with K profiled out. c is searched on 61 log spaced values from 0.001 to 1 day, p from 0.40 to 2.00 in steps of 0.02. The p range is the 95% profile likelihood interval, where 2 (log L_max - log L) &le; 3.84.</p>
+          <span class="eq">log L = sum log( K (t_i + c)^(-p) ) - K I(c, p)
+I(c, p) = ((T + c)^(1-p) - c^(1-p)) / (1 - p),   ln((T + c)/c) at p = 1
+K = n / I(c, p)</span>
+          <p>Dots are counts in log time bins, four per decade, divided by bin width; ticks along the bottom are single aftershocks. All magnitudes in the window are used, so the missed small events right after the mainshock are absorbed into c.</p>
+          <p id="h-omori"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--4" id="revs">
+      <div class="card__h"><div class="card__t"><h2>What the catalog changed while you watched</h2><p>Every revision and deletion USGS made since this page opened, newest first (revision log)</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div><div class="viz" id="rev-list"><div class="empty">Waiting for the first check.</div></div></div>
+      <div class="card__f"><p id="rev-f">Nothing compared yet.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Each event carries an <code>updated</code> time. When a poll brings a larger one, the page compares the two versions and logs any change to magnitude, magnitude type, review status, depth, epicenter (0.5 km or more), place name or event type. An equal or older version is ignored, since the three feeds are cached separately.</p>
+          <p>When another network's solution becomes preferred, the event id changes; the feed lists every associated id, so this is logged as one revision ("id A to B"). An event that was in the previous past day response, is missing from the current one under all its ids, and is still 10 minutes or more inside the 24 hour window is logged as deleted. It comes back, with a log entry, if a later response has it again. A past day response that is not newer than the previous one is never compared.</p>
+          <p id="h-rev"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--12" id="hourly">
+      <div class="card__h"><div class="card__t"><h2>Were any hours unusually busy?</h2><p>Earthquakes in each UTC hour of the past 7 days; set apart bars had more quakes than chance would give (a Poisson test)</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="hourly-leg"></div><div id="hourly-mount"></div></div>
+      <div class="card__f"><p id="hourly-f">Waiting for the catalog.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Each hour's count k is compared with a Poisson rate lambda equal to the median of the previous 24 hourly counts, so a burst does not raise its own baseline. In quiet regions that median is often 0; then the mean of the same 24 hours is used, and lambda is never below 1/24 (one quake a day). An hour is flagged when the chance of k or more under Poisson(lambda) is below 0.001.</p>
+          <span class="eq">flag hour h  if  P(X &ge; k_h) &lt; 0.001,   X ~ Poisson(lambda_h)</span>
+          <p>The first 24 hours of the week have no full baseline and are not tested; the last bar is the current, partial hour. A flag marks clustering, usually an aftershock sequence or a swarm, and it is not a forecast.</p>
+          <p id="h-hourly"></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--8" id="latest">
+      <div class="card__h"><div class="card__t"><h2>The newest earthquakes</h2><p>The 30 most recent in the region. "Automatic" means no seismologist has reviewed it yet</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div><div class="viz" id="latest-list"><div class="empty">Waiting for the catalog.</div></div></div>
+      <div class="card__f"><p id="latest-f">Times are UTC.</p></div>
+    </section>
+
+    <section class="card card--4" id="depth">
+      <div class="card__h"><div class="card__t"><h2>How deep are they?</h2><p>Depth below the surface against magnitude, one dot per earthquake</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend"></div><div id="depth-mount"></div></div>
+      <div class="card__f"><p id="depth-f">Waiting for the catalog.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Depth is the hypocenter depth reported by the network, plotted downward. Many automatic and global solutions fix the depth at a default, often 10 km, when the data cannot constrain it, which shows up as a flat line of dots. Negative depths (above sea level, common at volcanoes and in mountains) are drawn at 0 km.</p>
+          <p id="h-depth"></p>
+        </div></details>
+      </div>
+    </section>
+  </div>
+
+  <section class="method">
+    <h2>How this page works</h2>
+    <div class="method__cols">
+      <div>
+        <p>Everything on this page is computed in your browser from three public USGS feeds, with no server in between. This section covers the feeds, how they are merged into one catalog, the statistics behind each chart, and where those statistics stop being reliable.</p>
+
+        <h3>Feeds, merging and revisions</h3>
+        <p>The page loads the past week once (about 1.4 MB, roughly 2,000 events), then polls the past hour feed every 60 seconds and the past day feed every 5 minutes. All three are GeoJSON summary feeds from the USGS Earthquake Hazards Program. Every response is merged into one catalog keyed by event id, and anything older than seven days is dropped.</p>
+        <p>Each event carries an <code>updated</code> timestamp. When a poll returns a larger one, the page compares the two versions and logs which of magnitude, magnitude type, review status, depth, epicenter (moves of 0.5 km or more), place name, or event type changed. Updates that touch none of these, such as new felt reports, are counted but not listed. An equal or smaller <code>updated</code> is ignored, because the feeds are cached separately and an older copy can arrive after a newer one.</p>
+        <p>When another network's solution becomes preferred, the event's id changes. The feed lists every associated id, so the page logs this as a revision of the same event (&ldquo;id A to B&rdquo;) rather than a deletion plus a new event. An event that was in the previous past day response, is missing from the current one under all of its ids, and is still at least 10 minutes inside the 24 hour window is logged as deleted. If a response built after that comes back with the event, it is restored and the log says so. A past day response that is not newer than the previous one is never compared, since it would lack the events added in between.</p>
+        <p>Explosions, quarry blasts and other non tectonic events stay in the merge and the revision log, but are left out of every count, chart and fit.</p>
+
+        <h3>Magnitude of completeness</h3>
+        <p>Small earthquakes are missed more often than large ones, so below some magnitude the catalog is incomplete and the frequency magnitude distribution bends over. Every estimate here uses only events at or above the magnitude of completeness, Mc. Mc is found by maximum curvature (MAXC): the 0.1 magnitude bin with the most events. MAXC tends to underestimate Mc, so the page adds 0.2, the correction recommended by Woessner and Wiemer (2005). MAXC is attempted only with at least 50 earthquakes in the region.</p>
+        <div class="eq">Mc = (bin with the largest count n(M)) + 0.2</div>
+
+        <h3>b-value</h3>
+        <p>Above Mc, magnitudes follow the Gutenberg-Richter law. The b-value is the Aki (1965) maximum likelihood estimate with Utsu's correction for magnitudes rounded into bins of width dM = 0.1; its standard error is the Shi and Bolt (1982) formula.</p>
+        <div class="eq">log10 N(&ge;M) = a - b M
+
+b       = log10(e) / ( mean(M) - (Mc - dM/2) ),   M &ge; Mc
+sigma_b = 2.30 b^2 sqrt( sum (M_i - mean)^2 / (n (n - 1)) )
+a       = log10 N(&ge;Mc) + b Mc</div>
+        <p>The bootstrap resamples the whole regional catalog with replacement 200 times, recomputes Mc on every resample, and refits b. The interval is the 2.5th to 97.5th percentile of those values, with a fixed seed so the same catalog always gives the same interval. Because Mc is recomputed each time, the interval carries the uncertainty in Mc, which the Shi and Bolt error does not. A b-value needs at least 50 events at or above Mc; resamples that fall short are dropped and counted.</p>
+        <p>The test suite checks this on synthetic catalogs with a known b = 1. Over 300 catalogs of 5,000 events the estimates averaged 0.9965 with a spread of 0.0183, close to the mean Shi and Bolt error of 0.0176, and the bootstrap interval covered the true value 93.7% of the time. A single seeded catalog can still land outside its own interval, so the suite checks coverage across 20 catalogs instead of trusting one.</p>
+      </div>
+      <div>
+        <h3>Aftershocks and the Omori-Utsu law</h3>
+        <p>For every earthquake of M 4 or more in the region, the page draws the space and time window of Gardner and Knopoff (1974) and counts the later events inside it. A candidate followed by a larger event inside its own window is a foreshock and is skipped. The mainshock with the most aftershocks is the one plotted.</p>
+        <div class="eq">d = 10^(0.1238 M + 0.983) km
+t = 10^(0.032 M + 2.7389) days    if M &ge; 6.5
+t = 10^(0.5409 M - 0.547) days    otherwise</div>
+        <p>For M 4 the time window is already 41 days, longer than the catalog, so in practice every later event within distance d counts. With 30 or more aftershocks, the rate n(t) = K / (t + c)^p is fitted by maximum likelihood (Ogata 1983) on the aftershock times t_i, in days since the mainshock, over [0, T], where T runs from the mainshock to now. K is profiled out, which leaves a search over c and p.</p>
+        <div class="eq">log L = sum log( K (t_i + c)^(-p) ) - K I(c, p)
+I(c, p) = ((T + c)^(1-p) - c^(1-p)) / (1 - p)
+        = ln((T + c) / c)                 when p = 1
+K = n / I(c, p)</div>
+        <p>c is searched on a logarithmic grid of 61 values from 0.001 to 1 day and p from 0.40 to 2.00 in steps of 0.02. The footer gives the 95% profile likelihood range of p (where 2 (log L_max - log L) &le; 3.84) and says when the best value sits on the edge of the grid. The dots are counts in logarithmic time bins, four per decade, divided by the bin width. Empty bins cannot be drawn on a log axis; the table view lists them.</p>
+        <p>With few aftershocks p is loose. On synthetic sequences with p = 1.1 and c = 0.05 days, p varied by 0.21 across catalogs of 120 aftershocks over 3 days and by 0.065 at 1,000; the profile range covered the true p in 95% and 93% of 200 catalogs. The suite therefore checks that the range covers the true value rather than holding the point estimate to a fixed tolerance.</p>
+
+        <h3>Busy hours</h3>
+        <p>Each UTC hour's count k is tested against a Poisson baseline. The rate lambda is the median of the previous 24 hourly counts, so the burst being tested does not inflate its own baseline. In quiet regions that median is often zero, so the mean of the same 24 hours is used instead, and lambda is never below 1/24 (one event a day). An hour is flagged when P(X &ge; k) &lt; 0.001 under Poisson(lambda). The first 24 hours of the week have no full baseline and are not tested; the current hour is partial and is tested as it stands. A flag marks clustering, usually an aftershock sequence or a swarm. It is not a forecast.</p>
+
+        <h3>Limitations</h3>
+        <ul>
+          <li>The feed is not one catalog. US regional networks report down to M 0 or below with local (ml) and duration (md) magnitudes, while elsewhere only events of roughly M 4 and above appear, mostly as body wave (mb) and moment (mww) magnitudes. Mc and b for All events mostly describe that mixture, so a departure from b = 1 there says more about the catalog than about the crust. Even inside one region, ml and md are not the same scale.</li>
+          <li>One week is short. Regional b-values from a few hundred events carry wide intervals, and a single sequence can dominate a week.</li>
+          <li>Right after a large earthquake, small events are hidden in the mainshock's coda and its early aftershocks, so completeness is temporarily worse than the single weekly Mc suggests. In the Omori-Utsu fit this early deficit is absorbed into c, and all magnitudes in the window are used.</li>
+          <li>Automatic solutions change. Magnitudes move by tenths of a unit, types change, and some events are deleted, so numbers computed in the first minutes after an event are provisional. The revision log shows this directly.</li>
+          <li>The Gardner-Knopoff windows were calibrated on Southern California; elsewhere they are a convention. Region boxes are rectangles in latitude and longitude, and coastlines are Natural Earth at 1:110 million, coarse at regional zoom.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <p class="foot">Data: U.S. Geological Survey, Earthquake Hazards Program, public domain. Coastlines: Natural Earth via world-atlas, public domain. Plate boundaries: PB2002 model by Peter Bird (2003), converted to GeoJSON by Hugo Ahlenius, Nordpil, used under ODC-BY 1.0. Projection: d3-geo. <a href="index.html">All dashboards</a> &middot; <a href="../index.html">Back to the portfolio</a></p>
+</main>
+<script type="module" src="quakes/app.js"></script>
+</body>
+</html>
