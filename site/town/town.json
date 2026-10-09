@@ -1,7 +1,7 @@
 {
   "buildings": [
     {"id": "observatory", "name": "Observatory", "color": "#9AA7F5", "about": "Space and the sky",
-     "projects": ["ZTF Transient Pipeline", "Multi Horizon Geomagnetic Kp Index Prediction", "Live Earthquake Statistics"]},
+     "projects": ["ZTF Transient Pipeline", "Multi Horizon Geomagnetic Kp Index Prediction", "Space Weather Nowcast", "Live Earthquake Statistics"]},
     {"id": "tower", "name": "Control tower", "color": "#6FD1C2", "about": "AI agents, and who tells them what to do",
      "projects": ["Tool Dependency Graph", "handoff", "comms-agent"]},
     {"id": "library", "name": "Library", "color": "#C3B8FF", "about": "Search, and answering questions from documents",
@@ -27,6 +27,7 @@
     {"id": "post", "name": "Post office", "color": "#FF8C89", "about": "How to reach me", "section": "post"}
   ],
   "short": {
+    "Space Weather Nowcast": "Space weather",
     "Live Earthquake Statistics": "Earthquakes",
     "Order Book Microstructure": "Order book",
     "Wikipedia Edit Stream": "Edit stream",
@@ -42,6 +43,7 @@
     "ZTF Transient Pipeline": "ZTF pipeline"
   },
   "plain": {
+    "Space Weather Nowcast": "Live readings from a spacecraft about 1.5 million km toward the Sun, turned into a countdown for when that solar wind reaches Earth, and a map of the aurora's reach compared with Syracuse.",
     "Live Earthquake Statistics": "Every earthquake the US Geological Survey recorded this week, refreshed every minute. It tests a classic law about how much rarer big quakes are, and logs each time the catalog quietly corrects itself.",
     "Order Book Microstructure": "A live copy of a Bitcoin exchange's order book, rebuilt from more than a hundred updates a second and checked against the exchange's own fingerprint after every single one.",
     "Wikipedia Edit Stream": "Every edit to Wikipedia and its sister sites, live, about 30 a second. The page counts them two ways at once, exactly and with memory saving shortcuts, so you can watch how far off the shortcuts drift.",
