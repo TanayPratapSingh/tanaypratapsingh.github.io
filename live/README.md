@@ -33,7 +33,7 @@ node can test it directly:
 node --test live/tests/*.test.mjs
 ```
 
-Node 22 or newer. There is no package.json and nothing to install. The suite has 87 tests: 24 for the edit stream, 16 for the order book, 27 for the earthquake statistics and 20 for space weather.
+Node 22 or newer. There is no package.json and nothing to install. The suite has 89 tests: 24 for the edit stream, 16 for the order book, 27 for the earthquake statistics, 20 for space weather and 2 for the shared helpers.
 
 Two slower calibration checks for the earthquake statistics live in `tests/sim/` and run on their own:
 
