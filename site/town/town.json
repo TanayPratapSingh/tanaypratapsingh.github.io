@@ -19,7 +19,7 @@
     {"id": "hall", "name": "Town hall", "color": "#FFC93C", "about": "Health, money and schooling across countries",
      "projects": ["Challenging \"Wealth Equals Health\""]},
     {"id": "yard", "name": "Train yard", "color": "#D9CFC0", "about": "Moving data from place to place",
-     "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow", "Wikipedia Edit Stream"]},
+     "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow", "Wikipedia Edit Stream", "Order Book Microstructure"]},
     {"id": "travel", "name": "Travel agency", "color": "#9FE0D6", "about": "Trip planning",
      "projects": ["Travel Itinerary Management System"]},
     {"id": "school", "name": "University", "color": "#D8E0F2", "about": "Where I studied", "section": "school"},
@@ -27,6 +27,7 @@
     {"id": "post", "name": "Post office", "color": "#FF8C89", "about": "How to reach me", "section": "post"}
   ],
   "short": {
+    "Order Book Microstructure": "Order book",
     "Wikipedia Edit Stream": "Edit stream",
     "Replicating Dr. GRPO": "Dr. GRPO",
     "Distributed ViT on CIFAR-10": "Distributed ViT",
@@ -40,6 +41,7 @@
     "ZTF Transient Pipeline": "ZTF pipeline"
   },
   "plain": {
+    "Order Book Microstructure": "A live copy of a Bitcoin exchange's order book, rebuilt from more than a hundred updates a second and checked against the exchange's own fingerprint after every single one.",
     "Wikipedia Edit Stream": "Every edit to Wikipedia and its sister sites, live, about 30 a second. The page counts them two ways at once, exactly and with memory saving shortcuts, so you can watch how far off the shortcuts drift.",
     "Replicating Dr. GRPO": "I re-ran a 2025 paper about training AI models to reason. Its accuracy result held up. Its two claims about answer length came out the other way, in one training run.",
     "Tool Dependency Graph": "AI assistants fail when they call tools in the wrong order. I worked out the right order for 1,391 tools using nothing but each tool's written spec.",
