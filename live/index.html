@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Data Dashboards</title>
+<meta name="description" content="Four dashboards on real public data: every Wikipedia edit, a Bitcoin order book, the week's earthquakes, and the solar wind on its way to Earth. Every number is computed in your browser as the data arrives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/live.css">
+<style>
+  .intro{max-width:880px;margin:10px 0 26px}
+  .intro h1{font-family:var(--serif);font-size:clamp(34px,4.6vw,58px);line-height:1.02;letter-spacing:-0.025em}
+  .intro p{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink-2);margin-top:14px;max-width:62ch}
+  .intro .hero__k{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin:0 0 8px}
+  .hub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .dash{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule-2);text-decoration:none;color:inherit;
+    overflow:hidden;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}
+  .dash:hover{border-color:var(--link);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .dash:hover h2{color:var(--link)}
+  /* screenshots of each dashboard's stage, letterboxed on the stage's own surface so no caption is cropped */
+  .shot{position:relative;aspect-ratio:2816/1064;background:var(--surface);overflow:hidden}
+  .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;transition:transform .5s ease}
+  .dash:hover .shot img{transform:scale(1.02)}
+  .shot img.dk{display:none}
+  :root[data-theme="dark"] .shot img.lt{display:none}
+  :root[data-theme="dark"] .shot img.dk{display:block}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .shot img.lt{display:none}
+    :root:not([data-theme="light"]) .shot img.dk{display:block}
+  }
+  /* the live reading: a strip between the screenshot and the card text */
+  .now{display:flex;align-items:center;gap:8px;padding:9px 20px;background:var(--sunk);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    font-family:var(--mono);font-size:12px;color:var(--ink);min-width:0}
+  .now .now__v{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .now i{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+  .now[data-state="live"] i{background:var(--good);animation:pulse 1.6s ease-out infinite}
+  .dash__in{padding:18px 20px 16px;display:flex;flex-direction:column;flex:1}
+  .dash__k{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dash h2{font-family:var(--serif);font-size:27px;letter-spacing:-0.017em;line-height:1.12;margin:6px 0 8px}
+  .dash p{font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink-2)}
+  .dash ul{margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;flex:1}
+  .dash li{font-size:13.5px;color:var(--ink);padding-left:16px;position:relative;line-height:1.4}
+  .dash li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:2px;background:var(--ink-3)}
+  .dash__f{margin-top:14px;padding-top:10px;border-top:1px solid var(--rule);display:flex;gap:6px 16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .dash__f b{font-weight:500;color:var(--ink-2)}
+  .why{margin-top:12px}
+  @media (max-width:860px){.hub{grid-template-columns:1fr}.intro p{font-size:17.5px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top__in">
+  <a class="top__brand" href="../index.html">Tanay Pratap Singh<span>/ live</span></a>
+  <nav aria-label="Dashboards">
+    <a href="index.html" aria-current="page">Overview</a>
+    <a href="wiki.html">Edit stream</a>
+    <a href="book.html">Order book</a>
+    <a href="quakes.html">Earthquakes</a>
+    <a href="sun.html">Space weather</a>
+  </nav>
+  <button class="top__theme" type="button">Dark theme</button>
+</div></header>
+
+<main class="page">
+  <section class="intro">
+    <p class="hero__k">Four dashboards &middot; real public data &middot; computed in your browser</p>
+    <h1>Live data, measured as it arrives</h1>
+    <p>Each dashboard connects your browser straight to a public source and does the math on the page, with no server in between and no simulated numbers. Every estimate is checked against something it can be held to: an exact count, the exchange's own checksum, a published law, or a physical model.</p>
+  </section>
+
+  <div class="hub">
+    <a class="dash" href="wiki.html">
+      <div class="shot">
+        <img class="lt" src="img/wiki-light.jpg" alt="The edit stream dashboard: edits flowing past in lanes by wiki, above live counts" loading="lazy">
+        <img class="dk" src="img/wiki-dark.jpg" alt="" loading="lazy">
+      </div>
+      <div class="now" id="now-wiki"><i aria-hidden="true"></i><span class="now__v">connecting to Wikimedia</span></div>
+      <div class="dash__in">
+        <span class="dash__k">01 &middot; Wikipedia</span>
+        <h2>Wikipedia, edit by edit</h2>
+        <p>Every change to Wikipedia and its sister sites flows past as it happens. Three memory saving counting methods run beside exact counts, so you can watch how far each one drifts from the truth.</p>
+        <ul>
+          <li>Counts distinct editors from 4 KB of memory, next to the exact count (HyperLogLog)</li>
+          <li>Finds the busiest pages, with a guaranteed error on every count (Space-Saving)</li>
+          <li>Flags sudden bursts of editing as they happen</li>
+        </ul>
+        <div class="dash__f"><span><b>Source</b> Wikimedia EventStreams</span><span><b>Arrives as</b> a continuous event stream</span></div>
+      </div>
+    </a>
+    <a class="dash" href="book.html">
+      <div class="shot">
+        <img class="lt" src="img/book-light.jpg" alt="The order book dashboard: a heatmap of waiting buy and sell orders with trades drawn over it" loading="lazy">
+        <img class="dk" src="img/book-dark.jpg" alt="" loading="lazy">
+      </div>
+      <div class="now" id="now-book"><i aria-hidden="true"></i><span class="now__v">connecting to Kraken</span></div>
+      <div class="dash__in">
+        <span class="dash__k">02 &middot; Bitcoin order book</span>
+        <h2>A Bitcoin order book you can trust</h2>
+        <p>The page rebuilds Kraken's order book from more than a hundred updates a second and checks it against the exchange's own checksum after every one. Then it measures how buying and selling pressure moves the price.</p>
+        <ul>
+          <li>Every update verified, with automatic recovery on a mismatch</li>
+          <li>A heatmap of where buyers and sellers are waiting, with every trade</li>
+          <li>Price impact of order flow and volatility, computed live</li>
+        </ul>
+        <div class="dash__f"><span><b>Source</b> Kraken public WebSocket</span><span><b>Arrives as</b> a snapshot, then changes</span></div>
+      </div>
+    </a>
+    <a class="dash" href="quakes.html">
+      <div class="shot">
+        <img class="lt" src="img/quakes-light.jpg" alt="The earthquake dashboard: a world map of the week's earthquakes colored by depth" loading="lazy">
+        <img class="dk" src="img/quakes-dark.jpg" alt="" loading="lazy">
+      </div>
+      <div class="now" id="now-quakes"><i aria-hidden="true"></i><span class="now__v">checking the USGS feed</span></div>
+      <div class="dash__in">
+        <span class="dash__k">03 &middot; Earthquakes</span>
+        <h2>Earthquakes, and how the record changes</h2>
+        <p>The past week of earthquakes from the US Geological Survey, refreshed every minute. The page tests the classic law of how often big quakes happen, fits how aftershocks fade, and logs every time the catalog corrects itself.</p>
+        <ul>
+          <li>How much rarer each bigger magnitude is, with an uncertainty range (Gutenberg-Richter)</li>
+          <li>How fast aftershocks die away, fitted from the data (Omori-Utsu)</li>
+          <li>Every magnitude revision and deletion, as it happens</li>
+        </ul>
+        <div class="dash__f"><span><b>Source</b> USGS earthquake feeds</span><span><b>Arrives as</b> a poll every minute, merged</span></div>
+      </div>
+    </a>
+    <a class="dash" href="sun.html">
+      <div class="shot">
+        <img class="lt" src="img/sun-light.jpg" alt="The space weather dashboard: solar wind travelling from a spacecraft at L1 toward Earth" loading="lazy">
+        <img class="dk" src="img/sun-dark.jpg" alt="" loading="lazy">
+      </div>
+      <div class="now" id="now-sun"><i aria-hidden="true"></i><span class="now__v">checking NOAA</span></div>
+      <div class="dash__in">
+        <span class="dash__k">04 &middot; Space weather</span>
+        <h2>The solar wind, on its way to Earth</h2>
+        <p>A spacecraft about 1.5 million km toward the Sun measures the solar wind roughly an hour before it reaches us. The page follows it to Earth, shows how hard it presses on Earth's magnetic field, and maps the aurora against Syracuse.</p>
+        <ul>
+          <li>An arrival countdown from the spacecraft's real position</li>
+          <li>The edge of Earth's magnetic field, drawn live (Shue model)</li>
+          <li>X-ray flares, the storm forecast, and the aurora map</li>
+        </ul>
+        <div class="dash__f"><span><b>Source</b> NOAA Space Weather Prediction Center</span><span><b>Arrives as</b> nine feeds, joined on time</span></div>
+      </div>
+    </a>
+  </div>
+
+  <section class="method why">
+    <h2>How these are built</h2>
+    <div class="method__cols">
+      <div>
+        <p>Your browser connects straight to each public source. Nothing passes through a server of mine and nothing is stored between visits. Data arrives as fast as the source sends it, and the page redraws a few times a second on its own schedule, so a burst of messages never freezes the screen.</p>
+        <p>The math lives apart from the drawing code and has its own test suite. Each method is checked against something with a known answer: the sketches against their error bounds, the order book against a captured exchange checksum, the earthquake statistics against synthetic catalogs, and the physics against published reference values. The run logs behind every number in the write ups sit in the repository beside the code.</p>
+      </div>
+      <div>
+        <p>Every chart has a table view. Colors are checked for color blindness, and each feed's status shows as a shape and a word as well as a color. Pausing the display freezes the drawing while the data keeps flowing in, so counts stay correct.</p>
+        <p>Where a number rests on an assumption, the caveat sits beside it: clock offset in delay figures, mixed magnitude scales in the earthquake statistics, and the simple travel time model behind the solar wind countdown.</p>
+      </div>
+    </div>
+  </section>
+  <p class="foot">Data: Wikimedia EventStreams, Kraken public WebSocket API, U.S. Geological Survey, NOAA Space Weather Prediction Center. None of this is investment advice. <a href="../index.html">Back to the portfolio</a></p>
+</main>
+<script type="module" src="assets/hub.js"></script>
+</body>
+</html>
