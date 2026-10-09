@@ -1,0 +1,16 @@
+[3.2s] snapshot BTC/USD verified; bids 100 asks 100 precision 1/8
+switch to ETH/USD
+[30.3s] snapshot ETH/USD verified; bids 100 asks 100 precision 2/8
+switch to SOL/USD
+[60.3s] snapshot SOL/USD verified; bids 100 asks 100 precision 2/8
+---- summary
+start_utc 2026-10-08T19:03:53.311Z duration_s 95.0 symbol SOL/USD depth 100
+messages 10405 bytes 2577241 by_type {"status":1,"ack":12,"instrument":1,"heartbeat":93,"trade":62,"snapshot":3,"update":10211}
+snapshots 3 updates_applied 10211 checksums_verified 10214 mismatched 0 resyncs 0 ignored 24 trades 145 forced_corruptions 0
+per_symbol_updates {"BTC/USD":2813,"ETH/USD":3835,"SOL/USD":3563}
+ofi_1s window_s 34 n 33 beta 0.00005097811561774539 r2 0.49459817876224 se 0.0000092553975076741 intercept -0.0006064835801339442
+rv_1s raw 0.0006856889136288559 n 33 annualized 0.6703065470573383 rel_se 0.12309149097933272
+rv_10s raw 0.0002520265406369543 n 3 annualized 0.258397884854587 rel_se 0.4082482904638631
+lag_ms p50 82.59912109375 p95 133.4635009765625 n 10211
+last bbo {"pb":108.67,"qb":98.52242712,"pa":108.68,"qa":23.91900365} mid 108.67500000000001
+closed 1005 

@@ -1,0 +1,12 @@
+[4.2s] snapshot BTC/USD verified; bids 100 asks 100 precision 1/8
+---- summary
+start_utc 2026-10-08T19:21:01.432Z duration_s 330.0 symbol BTC/USD depth 100
+messages 47595 bytes 9821562 by_type {"status":1,"ack":4,"instrument":1,"heartbeat":326,"trade":371,"snapshot":1,"update":46891}
+snapshots 1 updates_applied 46891 checksums_verified 46892 mismatched 0 resyncs 0 ignored 0 trades 849 forced_corruptions 0
+per_symbol_updates {"BTC/USD":46891}
+ofi_1s window_s 300 n 300 beta 1.1048903412613393 r2 0.5441811081384151 se 0.05857812617951825 intercept -0.32279131349340284
+rv_1s raw 0.0008341300672467658 n 300 annualized 0.27044344050138297 rel_se 0.040824829046386304
+rv_10s raw 0.0009837556436664587 n 30 annualized 0.31895536599462054 rel_se 0.12909944487358055
+lag_ms p50 88.820068359375 p95 143.1309814453125 n 46891
+last bbo {"pb":81657.9,"qb":0.94691926,"pa":81658,"qa":0.18416437} mid 81657.95
+closed 1005 

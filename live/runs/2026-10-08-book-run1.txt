@@ -1,0 +1,13 @@
+[3.1s] snapshot BTC/USD verified; bids 100 asks 100 precision 1/8
+fixture written (copied to live/tests/fixtures/kraken-book-btcusd.json) messages 601
+---- summary
+start_utc 2026-10-08T19:03:53.178Z duration_s 330.0 symbol BTC/USD depth 100
+messages 45253 bytes 9395394 by_type {"status":1,"ack":4,"instrument":1,"heartbeat":327,"snapshot":1,"update":44533,"trade":386}
+snapshots 1 updates_applied 44533 checksums_verified 44534 mismatched 0 resyncs 0 ignored 0 trades 994 forced_corruptions 0
+per_symbol_updates {"BTC/USD":44533}
+ofi_1s window_s 300 n 300 beta 1.451587811581829 r2 0.396292769980073 se 0.1037863634049451 intercept -0.42769622019643005
+rv_1s raw 0.0010484678060175784 n 299 annualized 0.34050446330025785 rel_se 0.040893041005476534
+rv_10s raw 0.0014574008162321927 n 29 annualized 0.4805994981140519 rel_se 0.13130643285972254
+lag_ms p50 84.876953125 p95 129.72280273437502 n 44533
+last bbo {"pb":81398.4,"qb":0.94935007,"pa":81398.5,"qa":0.42553583} mid 81398.45
+closed 1005 
