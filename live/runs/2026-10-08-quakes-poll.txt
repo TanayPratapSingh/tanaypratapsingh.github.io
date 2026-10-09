@@ -1,0 +1,74 @@
+2026-10-08T19:19:30.376Z all_week generated 2026-10-08T19:19:00Z 1949 features
+2026-10-08T19:19:30.554Z all_day  generated 2026-10-08T19:18:58Z features 213: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:19:30.716Z all_hour generated 2026-10-08T19:18:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:20:31.182Z all_hour generated 2026-10-08T19:19:58Z features 3: added 1, revised 0, deleted 0, touched 0
+    added aka2026tyqteo M 1.9 ml 19 km NW of Larsen Bay, Alaska (event 2026-10-08T19:18:03.785Z, automatic)
+2026-10-08T19:21:31.781Z all_hour generated 2026-10-08T19:20:58Z features 3: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:22:32.239Z all_hour generated 2026-10-08T19:21:59Z features 4: added 1, revised 0, deleted 0, touched 0
+    added ci41345167 M 1.03785262293983 ml 23 km ESE of Anza, CA (event 2026-10-08T19:18:56.500Z, automatic)
+2026-10-08T19:23:32.735Z all_hour generated 2026-10-08T19:22:59Z features 4: added 0, revised 1, deleted 0, touched 0
+    revised ci41345167 M 0.8 22 km ESE of Anza, CA (event 2026-10-08T19:18:56.580Z): M 1.04 to 0.8; depth 3.75 to 2.19 km; place renamed; moved 1.1 km
+2026-10-08T19:24:33.372Z all_day  generated 2026-10-08T19:23:58Z features 213: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:24:33.547Z all_hour generated 2026-10-08T19:23:59Z features 4: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:25:34.022Z all_hour generated 2026-10-08T19:25:00Z features 4: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:26:34.470Z all_hour generated 2026-10-08T19:26:00Z features 4: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:27:35.016Z all_hour generated 2026-10-08T19:27:00Z features 4: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:28:35.483Z all_hour generated 2026-10-08T19:28:00Z features 4: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:29:36.232Z all_day  generated 2026-10-08T19:28:58Z features 214: added 1, revised 1, deleted 0, touched 0
+    added nc75446521 M 1.1 md 5 km NW of The Geysers, CA (event 2026-10-08T19:26:29.960Z, automatic)
+    revised ci41345143 M 1.32 17 km NE of Little Lake, CA (event 2026-10-08T18:00:34.430Z): automatic to reviewed
+2026-10-08T19:29:36.387Z all_hour generated 2026-10-08T19:29:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:30:36.840Z all_hour generated 2026-10-08T19:30:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:31:37.297Z all_hour generated 2026-10-08T19:31:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:32:37.749Z all_hour generated 2026-10-08T19:32:00Z features 6: added 1, revised 0, deleted 0, touched 0
+    added aka2026tyrdxy M 1.6 ml 17 km ENE of Ferry, Alaska (event 2026-10-08T19:30:23.474Z, automatic)
+2026-10-08T19:33:38.215Z all_hour generated 2026-10-08T19:33:00Z features 6: added 0, revised 1, deleted 0, touched 0
+    revised aka2026tyrdxy M 1.9 18 km E of Ferry, Alaska (event 2026-10-08T19:30:23.474Z): M 1.6 to 1.9; depth 0.4 to 0.2 km; place renamed; moved 3.6 km
+2026-10-08T19:34:38.972Z all_day  generated 2026-10-08T19:33:58Z features 215: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:34:39.129Z all_hour generated 2026-10-08T19:34:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:35:39.596Z all_hour generated 2026-10-08T19:35:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:36:40.078Z all_hour generated 2026-10-08T19:36:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:37:40.537Z all_hour generated 2026-10-08T19:37:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:38:40.998Z all_hour generated 2026-10-08T19:38:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:39:41.599Z all_day  generated 2026-10-08T19:38:58Z features 214: added 0, revised 1, deleted 0, touched 0
+    revised ci41345039 M 1.19 11 km E of Carpinteria, CA (event 2026-10-08T13:48:38.010Z): M 1.2 to 1.19; automatic to reviewed; depth 1.87 to 1.57 km; place renamed; moved 0.7 km
+2026-10-08T19:39:41.758Z all_hour generated 2026-10-08T19:39:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:40:42.222Z all_hour generated 2026-10-08T19:40:00Z features 5: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:41:42.675Z all_hour generated 2026-10-08T19:41:00Z features 6: added 1, revised 0, deleted 0, touched 0
+    added ci41345175 M 1.46660089265345 ml 9 km NNW of Big Bear City, CA (event 2026-10-08T19:38:48.120Z, automatic)
+2026-10-08T19:42:43.136Z all_hour generated 2026-10-08T19:42:00Z features 6: added 0, revised 0, deleted 0, touched 1
+2026-10-08T19:43:43.598Z all_hour generated 2026-10-08T19:43:00Z features 6: added 0, revised 1, deleted 0, touched 0
+    revised ci41345175 M 1.23 10 km NNW of Big Bear City, CA (event 2026-10-08T19:38:48.150Z): M 1.47 to 1.23; depth -0.34 to 0.43 km; place renamed; moved 0.8 km
+2026-10-08T19:44:44.210Z all_day  generated 2026-10-08T19:43:58Z features 214: added 0, revised 1, deleted 0, touched 1
+    revised us6000u106 M 3.5 119 km SW of Nikolski, Alaska (event 2026-10-08T13:15:14.685Z): id aka2026tyeqtv to us6000u106; M 3.6 to 3.5; depth 20.9 to 35 km; place renamed; moved 10.1 km
+2026-10-08T19:44:44.369Z all_hour generated 2026-10-08T19:44:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:45:44.841Z all_hour generated 2026-10-08T19:45:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:46:45.299Z all_hour generated 2026-10-08T19:46:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:47:45.799Z all_hour generated 2026-10-08T19:47:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:48:46.249Z all_hour generated 2026-10-08T19:48:00Z features 6: added 0, revised 0, deleted 0, touched 1
+2026-10-08T19:49:46.850Z all_day  generated 2026-10-08T19:48:58Z features 214: added 1, revised 0, deleted 0, touched 0
+    added us6000u10n M 4.8 mb 46 km N of Waingapu, Indonesia (event 2026-10-08T18:06:00.577Z, reviewed)
+2026-10-08T19:49:47.004Z all_hour generated 2026-10-08T19:49:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:50:47.475Z all_hour generated 2026-10-08T19:50:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:51:47.930Z all_hour generated 2026-10-08T19:51:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:52:48.386Z all_hour generated 2026-10-08T19:52:00Z features 6: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:53:48.854Z all_hour generated 2026-10-08T19:53:00Z features 7: added 1, revised 0, deleted 0, touched 0
+    added hv75052337 M 2.12 ml 12 km SSW of Volcano, Hawaii (event 2026-10-08T19:49:09.630Z, automatic)
+2026-10-08T19:54:49.456Z all_day  generated 2026-10-08T19:53:58Z features 216: added 1, revised 0, deleted 0, touched 2
+    added ci41345183 M 1.42705798642247 ml 11 km NE of Borrego Springs, CA (event 2026-10-08T19:51:26.180Z, automatic)
+2026-10-08T19:54:49.614Z all_hour generated 2026-10-08T19:54:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:55:50.083Z all_hour generated 2026-10-08T19:55:00Z features 8: added 0, revised 1, deleted 0, touched 0
+    revised ci41345183 M 1.15 11 km NE of Borrego Springs, CA (event 2026-10-08T19:51:26.160Z): M 1.43 to 1.15; depth 7.92 to 8.12 km
+2026-10-08T19:56:50.547Z all_hour generated 2026-10-08T19:56:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:57:51.010Z all_hour generated 2026-10-08T19:57:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:58:51.617Z all_hour generated 2026-10-08T19:58:00Z features 8: added 0, revised 0, deleted 0, touched 1
+2026-10-08T19:59:52.372Z all_day  generated 2026-10-08T19:58:58Z features 215: added 0, revised 0, deleted 0, touched 1
+2026-10-08T19:59:52.532Z all_hour generated 2026-10-08T19:59:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T20:00:52.991Z all_hour generated 2026-10-08T20:00:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T20:01:53.471Z all_hour generated 2026-10-08T20:01:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T20:02:53.998Z all_hour generated 2026-10-08T20:02:00Z features 8: added 0, revised 0, deleted 0, touched 0
+2026-10-08T20:03:54.453Z all_hour generated 2026-10-08T20:03:00Z features 8: added 0, revised 0, deleted 0, touched 1
+2026-10-08T20:04:55.200Z all_day  generated 2026-10-08T20:03:58Z features 216: added 1, revised 0, deleted 0, touched 0
+    added av94464466 M 1.14 ml 69 km WSW of Nikolski, Alaska (event 2026-10-07T21:25:01.190Z, reviewed)
+2026-10-08T20:04:55.357Z all_hour generated 2026-10-08T20:04:00Z features 8: added 0, revised 0, deleted 0, touched 0
+summary 2026-10-08T20:04:55.358Z: new 9, revisions 7, deletions 0, touched 8, magnitude revisions 6, mean |dM| 0.194; fields {"mag":6,"depth":6,"place":5,"epicenter":5,"status":2,"id":1}

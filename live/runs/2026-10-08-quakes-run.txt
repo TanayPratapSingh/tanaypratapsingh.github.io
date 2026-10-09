@@ -1,0 +1,67 @@
+all_week fetched 2026-10-08T19:09:00.400Z, generated 2026-10-08T19:08:00Z, 1949 features
+catalog after initial merge: 1949 events
+
+=== per region analysis at 2026-10-08T19:09:00.407Z (now = client clock) ===
+
+[All events] earthquakes n=1905 (excluded: 23 explosion, 19 quarry blast, 2 ice quake); last 24 h 212; last hour 3
+  largest 24 h: M 6.3 mww 102 km NE of Norsup, Vanuatu at 2026-10-08T09:00:07.768Z
+  Mc = 2.0 (MAXC 1.8 + 0.2); n above Mc = 511
+  b = 0.343 +- 0.013 (Shi and Bolt); a = 3.39; 95% bootstrap [0.317, 0.403] from 200 resamples (0 dropped)
+  magnitude types above Mc: ml 51%, mb 29%, md 15%, mww 4%
+  aftershocks: best candidate mainshock M 5.5 ml 92 km NNW of Aleneva, Alaska at 2026-10-06T18:34:31.760Z; window 46.1 km, 267.9 days; 12 aftershocks; T = 2.02 d; 151 candidates; no fit (need 30)
+  hourly: 144 hours tested, 0 flagged
+
+[Global M4.5+] earthquakes n=120 (excluded: none); last 24 h 14; last hour 0
+  largest 24 h: M 6.3 mww 102 km NE of Norsup, Vanuatu at 2026-10-08T09:00:07.768Z
+  Mc = 4.8 (MAXC 4.6 + 0.2); n above Mc = 62
+  b = 1.496 +- 0.195 (Shi and Bolt); a = 8.97; 95% bootstrap [1.156, 2.041] from 161 resamples (39 dropped)
+  magnitude types above Mc: mb 71%, mww 27%, ml 2%
+  aftershocks: best candidate mainshock M 5.8 mww 165 km SSE of Vilyuchinsk, Russia at 2026-10-02T16:34:41.010Z; window 50.2 km, 389.2 days; 9 aftershocks; T = 6.11 d; 105 candidates; no fit (need 30)
+  hourly: 144 hours tested, 2 flagged
+
+[California] earthquakes n=610 (excluded: 5 explosion, 7 quarry blast); last 24 h 74; last hour 2
+  largest 24 h: M 2.7 ml 2 km WNW of Fontana, CA at 2026-10-08T08:09:03.190Z
+  Mc = 0.9 (MAXC 0.7 + 0.2); n above Mc = 370
+  b = 0.727 +- 0.033 (Shi and Bolt); a = 3.22; 95% bootstrap [0.661, 0.851] from 200 resamples (0 dropped)
+  magnitude types above Mc: ml 52%, md 47%, mwr 1%, mw 0%
+  aftershocks: no candidate mainshock with M >= 4 (0 candidates)
+  hourly: 144 hours tested, 1 flagged
+
+[Alaska] earthquakes n=594 (excluded: 2 ice quake); last 24 h 66; last hour 1
+  largest 24 h: M 3.6 ml 124 km SW of Nikolski, Alaska at 2026-10-08T13:15:13.242Z
+  Mc = 1.9 (MAXC 1.7 + 0.2); n above Mc = 183
+  b = 0.717 +- 0.050 (Shi and Bolt); a = 3.62; 95% bootstrap [0.609, 0.843] from 200 resamples (0 dropped)
+  magnitude types above Mc: ml 97%, mb 3%
+  aftershocks: best candidate mainshock M 5.5 ml 92 km NNW of Aleneva, Alaska at 2026-10-06T18:34:31.760Z; window 46.1 km, 267.9 days; 12 aftershocks; T = 2.02 d; 5 candidates; no fit (need 30)
+  hourly: 144 hours tested, 0 flagged
+
+[Hawaii] earthquakes n=120 (excluded: none); last 24 h 12; last hour 0
+  largest 24 h: M 2.24 md 6 km NE of Hawaiian Ocean View, Hawaii at 2026-10-08T09:08:55.180Z
+  no b-value: Mc 2, 34 events above Mc, need 50
+  aftershocks: no candidate mainshock with M >= 4 (0 candidates)
+  hourly: 144 hours tested, 1 flagged
+
+[Puerto Rico] earthquakes n=39 (excluded: none); last 24 h 3; last hour 0
+  largest 24 h: M 3.59 md 51 km SE of Punta Cana, Dominican Republic at 2026-10-08T04:12:32.910Z
+  no b-value: 39 events, need 50 for MAXC
+  aftershocks: no candidate mainshock with M >= 4 (0 candidates)
+  hourly: 144 hours tested, 1 flagged
+
+=== polling: all_day at 0 and 5 min (and 10 min), all_hour every 60 s ===
+2026-10-08T19:09:00.646Z all_day  generated 2026-10-08T19:08:58Z features 218: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:09:00.803Z all_hour generated 2026-10-08T19:08:58Z features 3: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:10:01.411Z all_hour generated 2026-10-08T19:09:58Z features 3: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:11:02.047Z all_hour generated 2026-10-08T19:10:58Z features 3: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:12:02.518Z all_hour generated 2026-10-08T19:11:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:13:02.983Z all_hour generated 2026-10-08T19:12:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:14:03.585Z all_day  generated 2026-10-08T19:13:58Z features 214: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:14:03.737Z all_hour generated 2026-10-08T19:13:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:15:04.345Z all_hour generated 2026-10-08T19:14:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:16:04.958Z all_hour generated 2026-10-08T19:15:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:17:05.426Z all_hour generated 2026-10-08T19:16:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:18:05.889Z all_hour generated 2026-10-08T19:17:58Z features 2: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:19:06.581Z all_day  generated 2026-10-08T19:18:58Z features 213: added 0, revised 0, deleted 0, touched 0
+2026-10-08T19:19:06.761Z all_hour generated 2026-10-08T19:18:58Z features 2: added 0, revised 0, deleted 0, touched 0
+
+summary 2026-10-08T19:19:06.761Z: new events 0, revisions 0, deletions 0, touched 0, magnitude revisions 0, mean |dM| NaN
+fields changed: {}
