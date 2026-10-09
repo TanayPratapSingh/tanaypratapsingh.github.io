@@ -305,9 +305,10 @@
     const k = cur.projects[j], i = idx[k], p = PROJECTS[i];
     [...$('pTabs').children].forEach((t, m) => { t.setAttribute('aria-selected', String(m === j)); t.tabIndex = m === j ? 0 : -1; });
     if (cur.projects.length > 1) $('pBody').setAttribute('aria-labelledby', 'ptab-' + j);
-    const v = VIDEOS[i], r = REPOS[i];
+    const v = VIDEOS[i], r = REPOS[i], l = LIVE[i];
     const chips = p.badge.split('&middot;').map(s => '<span>' + s.trim() + '</span>').join('');
-    const acts = (v || r) ? '<div class="acts">' +
+    const acts = (v || r || l) ? '<div class="acts">' +
+      (l ? '<a class="btn" href="' + l + '">Open the live dashboard</a>' : '') +
       (v ? '<button class="btn" type="button" data-play>Watch the walkthrough</button>' : '') +
       (r ? '<a class="btn btn--2" href="' + r + '" target="_blank" rel="noopener">See the code on GitHub</a>' : '') +
       '</div>' : '';
