@@ -1,0 +1,14 @@
+run at 2026-10-08T23:39:32Z
+== node live/tests/sim/quakes_b_coverage.mjs
+{
+  N: 300,
+  coverage: 0.9366666666666666,
+  within005: 0.9966666666666667,
+  meanB: '0.9965',
+  sdB: '0.0183',
+  meanShiBolt: '0.0176',
+  meanWidth: '0.0676'
+}
+== node live/tests/sim/quakes_omori_spread.mjs
+{ n: 120, meanP: '1.129', sdP: '0.211', profileCoverage: 0.95 }
+{ n: 1000, meanP: '1.098', sdP: '0.065', profileCoverage: 0.93 }
