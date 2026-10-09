@@ -19,7 +19,7 @@
     {"id": "hall", "name": "Town hall", "color": "#FFC93C", "about": "Health, money and schooling across countries",
      "projects": ["Challenging \"Wealth Equals Health\""]},
     {"id": "yard", "name": "Train yard", "color": "#D9CFC0", "about": "Moving data from place to place",
-     "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow"]},
+     "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow", "Wikipedia Edit Stream"]},
     {"id": "travel", "name": "Travel agency", "color": "#9FE0D6", "about": "Trip planning",
      "projects": ["Travel Itinerary Management System"]},
     {"id": "school", "name": "University", "color": "#D8E0F2", "about": "Where I studied", "section": "school"},
@@ -27,6 +27,7 @@
     {"id": "post", "name": "Post office", "color": "#FF8C89", "about": "How to reach me", "section": "post"}
   ],
   "short": {
+    "Wikipedia Edit Stream": "Edit stream",
     "Replicating Dr. GRPO": "Dr. GRPO",
     "Distributed ViT on CIFAR-10": "Distributed ViT",
     "Digit Recognition Neural Network from Scratch": "Digit recognition",
@@ -39,6 +40,7 @@
     "ZTF Transient Pipeline": "ZTF pipeline"
   },
   "plain": {
+    "Wikipedia Edit Stream": "Every edit to Wikipedia and its sister sites, live, about 30 a second. The page counts them two ways at once, exactly and with memory saving shortcuts, so you can watch how far off the shortcuts drift.",
     "Replicating Dr. GRPO": "I re-ran a 2025 paper about training AI models to reason. Its accuracy result held up. Its two claims about answer length came out the other way, in one training run.",
     "Tool Dependency Graph": "AI assistants fail when they call tools in the wrong order. I worked out the right order for 1,391 tools using nothing but each tool's written spec.",
     "Distributed ViT on CIFAR-10": "I split one model's training across two GPUs and nearly doubled the speed. Switching to a smaller number format shrank the gain to 1.15x, and I traced the slowdown to the machine's 4 CPUs.",
