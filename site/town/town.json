@@ -18,7 +18,7 @@
      "projects": ["The Perfect Lap"]},
     {"id": "hall", "name": "Town hall", "color": "#FFC93C", "about": "Health, money and schooling across countries",
      "projects": ["Challenging \"Wealth Equals Health\""]},
-    {"id": "yard", "name": "Train yard", "color": "#D9CFC0", "about": "Moving data from place to place",
+    {"id": "yard", "name": "Train yard", "color": "#D9CFC0", "about": "Moving data from place to place, some of it live",
      "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow", "Wikipedia Edit Stream", "Order Book Microstructure"]},
     {"id": "travel", "name": "Travel agency", "color": "#9FE0D6", "about": "Trip planning",
      "projects": ["Travel Itinerary Management System"]},
