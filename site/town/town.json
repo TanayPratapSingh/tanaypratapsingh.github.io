@@ -1,6 +1,6 @@
 {
   "buildings": [
-    {"id": "observatory", "name": "Observatory", "color": "#9AA7F5", "about": "Space and the sky",
+    {"id": "observatory", "name": "Observatory", "color": "#9AA7F5", "about": "Space, the sky, and the shaking ground",
      "projects": ["ZTF Transient Pipeline", "Multi Horizon Geomagnetic Kp Index Prediction", "Space Weather Nowcast", "Live Earthquake Statistics"]},
     {"id": "tower", "name": "Control tower", "color": "#6FD1C2", "about": "AI agents, and who tells them what to do",
      "projects": ["Tool Dependency Graph", "handoff", "comms-agent"]},
