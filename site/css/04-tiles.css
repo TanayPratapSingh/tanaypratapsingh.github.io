@@ -18,3 +18,7 @@
 .tile__foot{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule);
   display:flex;flex-wrap:wrap;gap:2px 9px;font-family:var(--mono);font-size:10.6px;color:var(--met)}
 .tile__foot .rec{color:var(--ink-3)}
+.tile__foot .live{color:var(--ink);display:inline-flex;align-items:center;gap:5px}
+.tile__foot .live::before{content:"";width:7px;height:7px;border-radius:50%;background:#0ca30c;
+  animation:live-dot 1.6s ease-out infinite}
+@keyframes live-dot{0%{box-shadow:0 0 0 0 rgba(12,163,12,.45)}100%{box-shadow:0 0 0 6px rgba(12,163,12,0)}}
