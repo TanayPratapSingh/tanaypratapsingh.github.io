@@ -1,0 +1,22 @@
+run at 2026-10-08T19:38:30.561Z
+active source: plasma SOLAR1 | field SOLAR1 | ephemeris active SOLAR1 x_gse 1581830 at 2026-10-08 19:00Z
+coverage: plasma 1265 of 1435 | field 1427 of 1437 | matched 1265 | changes 0 0 | gaps>5min 1 1
+latest joined 2026-10-08 19:32Z v 360.5 n 5.71 Bz -1.7 By 4.01 Bt 4.47
+Pd 1.241 nPa | Newell 4214 | Shue r0 10.93 Re alpha 0.595 | delay 73.5 min (x 1581830 vx -358.6 )
+min r0 24h 10.66 at 2026-10-08 19:19Z Pd 1.21 Bz -4.5
+arriving now: sample 2026-10-08 18:24Z arrival 2026-10-08 19:38Z
+Kp est now 2 at 2026-10-08 19:35Z G strict 0 G noaa 0
+forecast current window 2026-10-08 18:00Z kp 1.67 (estimated) | 1 min so far: max 2 mean 1.05 n 96
+peak forecast ahead 2026-10-09 06:00Z 5.67 predicted NOAA label G2 G noaa 2 G strict 1
+GOES class now C1.1 1.138e-6 at 2026-10-08 19:35Z sat 18 | max M6.7 at 2026-10-08 15:48Z
+OVATION obs 2026-10-08 19:29Z fc 2026-10-08 20:45Z | Syracuse p 0 | 10% boundary at 76.13 W 64 | max 26
+   Fairbanks 1 NaN
+   Reykjavik 13 63
+   Tromso 24 63
+   Edinburgh 0 64
+subsolar -6.11 -117.77 EoT 12.56 min
+scales 2026-10-08 19:36:00 R 0 S 0 G 0 | tomorrow G 0 2026-10-09 2
+newest sample age:
+  wind 6.5 min | mag 5.5 min | eph(active) 38.5 min
+  kp1m 3.5 min | kp3h (window end) 98.5 min Kp 1.33 stations 7
+  kpfc (Last-Modified) 1.7 min | xray 3.5 min | ovation obs 9.5 min | scales 2.5 min
