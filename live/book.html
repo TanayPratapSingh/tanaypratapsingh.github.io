@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Book Microstructure</title>
+<meta name="description" content="A live copy of Kraken's order book, checked against the exchange's checksum after every update. Where buyers and sellers wait, how tight the market is, whether buying pressure moves the price, and how much the price swings, computed in the browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/live.css">
+<style>
+  /* ---- stage: the liquidity heatmap ---- */
+  #stage .stage__viz canvas{cursor:crosshair}
+  @media (min-width:761px){
+    /* the legend wraps on the right instead of running under the caption */
+    #stage .stage__legend{max-width:calc(100% - 500px);justify-content:flex-end}
+  }
+  #stage .stage__foot{align-items:center}
+  #stage .stage__sp{flex:1}
+  #stage .stage__foot .how{flex-basis:100%;margin-top:0}
+  #stage .tv{margin:0 16px 12px}
+  #stage[data-view="table"] .viz,#stage[data-view="table"] .spot{display:none}
+  #stage:not([data-view="table"]) .tv{display:none}
+  #stage[data-view="table"] .stage__cap,#stage[data-view="table"] .stage__legend{position:static;margin:12px 16px 10px;max-width:none}
+  #stage .card__a button{border:1px solid var(--rule);background:transparent;padding:3px 7px;font-family:var(--mono);font-size:11px;cursor:pointer;color:var(--ink-2)}
+  #stage .card__a button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  #spot{width:236px}
+  #spot .side i{width:8px;height:8px}
+  .scale{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--ink-2);white-space:nowrap}
+  .scale__bar{display:inline-block;width:120px;height:8px;border-radius:4px;
+    background:linear-gradient(to right,var(--seq-1),var(--seq-2),var(--seq-3),var(--seq-4),var(--seq-5))}
+  .scale__k{display:inline-flex;align-items:center;gap:6px;margin-left:8px}
+  .scale__nd{display:inline-block;width:10px;height:10px;border:1px solid var(--rule-2);
+    background:repeating-linear-gradient(135deg,var(--sunk) 0 3px,var(--rule-2) 3px 4px)}
+  /* ---- KPI tiles: a waiting tile shows a one line progress state ---- */
+  @media (min-width:1200px){ .kpis{grid-template-columns:repeat(8,minmax(0,1fr))} }
+  @media (min-width:761px) and (max-width:1199px){ .kpis{grid-template-columns:repeat(4,minmax(0,1fr))} }
+  .kpi__v[data-wait]{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:500;letter-spacing:0;color:var(--ink-3);min-height:30px;white-space:nowrap}
+  .kpi--hero .kpi__v[data-wait]{min-height:58px}
+  .wait__bar{flex:none;width:46px;height:4px;border-radius:2px;background:var(--sunk);overflow:hidden}
+  .wait__bar i{display:block;height:100%;background:var(--ink-3)}
+  .kpi__s .badge{margin-right:6px;vertical-align:1px}
+  .kpis__how{margin:0 0 10px}
+  /* ---- cards ---- */
+  .card__f .lead{color:var(--ink)}
+  .card__f .lead b{font-variant-numeric:tabular-nums}
+  .pair__lab{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:2px 0 0}
+  .pair__lab+.chart{margin-bottom:8px}
+  #tape{max-height:318px;overflow-y:auto}
+  .tape__r{grid-template-columns:62px 54px minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .tape__r .v{text-align:right}
+  .tape__h{font-family:var(--mono);font-size:11px;color:var(--ink-3);border-bottom:1px solid var(--rule-2);position:sticky;top:0;background:var(--surface)}
+  .tape__h .v{color:var(--ink-3)}
+  .side{font-family:var(--mono);font-size:11px;color:var(--ink-2);white-space:nowrap}
+  .side i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:0}
+  .integ{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:8px 26px;align-items:start}
+  .integ .row__l{color:var(--ink-2)}
+  .integ h3{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-3);margin:0 0 4px}
+  .method__lede{margin-bottom:6px}
+  @media (max-width:760px){
+    .status{max-width:100%}
+    .feed{row-gap:2px}
+    #spot{width:auto}
+    .scale{flex-wrap:wrap;white-space:normal;row-gap:4px}
+    .scale__bar{width:84px}
+    .kpi--hero .kpi__v[data-wait]{min-height:46px}
+    .integ{grid-template-columns:1fr}
+    .tape__r{grid-template-columns:56px 46px minmax(0,1fr) minmax(0,1fr)}
+    .tape__r .n{display:none}
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="top__in">
+  <a class="top__brand" href="../index.html">Tanay Pratap Singh<span>/ live</span></a>
+  <nav aria-label="Dashboards">
+    <a href="index.html">Overview</a>
+    <a href="wiki.html">Edit stream</a>
+    <a href="book.html" aria-current="page">Order book</a>
+    <a href="quakes.html">Earthquakes</a>
+    <a href="sun.html">Space weather</a>
+  </nav>
+  <button class="top__theme" type="button">Dark theme</button>
+</div></header>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <p class="hero__k">02 &middot; WebSocket &middot; snapshot plus deltas &middot; computed in your browser</p>
+      <h1>Order book microstructure, checksum verified</h1>
+      <p class="hero__dek">This page keeps its own copy of Kraken's order book, the list of prices where people are waiting to buy or sell and how much, and checks it against the exchange's fingerprint of the book (a CRC32 checksum) after every update. From that copy it shows where buyers and sellers wait, how tight the market is, whether buying pressure moves the price, and how much the price swings.</p>
+      <p class="hero__src">Source <a href="https://docs.kraken.com/api/docs/websocket-v2/book">Kraken WebSocket API v2</a> (book, trade and instrument channels) &middot; Transport: one WebSocket to wss://ws.kraken.com/v2, public, no authentication &middot; Terms: <a href="https://www.kraken.com/legal">Kraken legal and terms of service</a></p>
+    </div>
+    <div class="status" id="status"></div>
+  </section>
+
+  <div class="controls">
+    <label class="ctl">Symbol
+      <select id="sym">
+        <option value="BTC/USD" selected>BTC/USD</option>
+        <option value="ETH/USD">ETH/USD</option>
+        <option value="SOL/USD">SOL/USD</option>
+      </select>
+    </label>
+    <span class="ctl"><span id="win-l">Price window</span>
+      <span class="seg" id="win" role="group" aria-labelledby="win-l">
+        <button type="button" data-w="0.0005" aria-pressed="true">&plusmn;0.05%</button>
+        <button type="button" data-w="0.0015" aria-pressed="false">&plusmn;0.15%</button>
+        <button type="button" data-w="0.005" aria-pressed="false">&plusmn;0.5%</button>
+      </span>
+    </span>
+    <span class="ctl" id="since" aria-live="polite">connecting</span>
+    <span class="controls__sp"></span>
+    <button class="btn" id="pause" type="button" aria-pressed="false">Pause display</button>
+  </div>
+
+  <section class="stage" id="stage" aria-label="Live heatmap of waiting orders by price and time, with the best bid, the best ask and every trade">
+    <div class="stage__cap">
+      <h2>Where buyers and sellers are waiting</h2>
+      <p>Each column is the order book, half a second apart. Stronger color means more <span data-base>BTC</span> waiting at that price; dots are trades, sized by amount.</p>
+    </div>
+    <div class="legend stage__legend"></div>
+    <div class="tv" tabindex="0"></div>
+    <div class="spot" id="spot" hidden>
+      <div class="spot__k">Largest trade, last minute</div>
+      <div class="spot__v num" id="spot-v"></div>
+      <div id="spot-d"></div>
+    </div>
+    <div class="stage__foot">
+      <span>Mid <b id="sf-mid">waiting</b></span>
+      <span>Gap <b id="sf-gap">waiting</b></span>
+      <span>Checksums verified <b id="sf-chk">waiting</b></span>
+      <span>Trades per minute <b id="sf-tpm">waiting</b></span>
+      <span class="scale" id="sf-scale" hidden><span id="sf-lo"></span><span class="scale__bar" aria-hidden="true"></span><span id="sf-hi"></span><span class="scale__k"><span class="scale__nd" aria-hidden="true"></span>not observed</span></span>
+      <span class="stage__sp"></span>
+      <span class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></span>
+      <details class="how"><summary>How this is measured</summary><div class="how__b">
+        <p>Every 500 ms the page copies the whole local book (100 price levels per side) into a new column. Each pixel row is a price bucket of <span id="h-bucket">a fixed width</span>, and its color is the total size resting in that bucket, on a log scale between the 2nd and 99.5th percentile of visible buckets, <span id="h-scale">once data arrives</span>. Hatched grey marks prices past the 100th level, which the subscription does not return, and moments with no connection.</p>
+        <p>The window is a fraction of mid either side (the price window control). It recenters only when mid leaves the middle 60% of the window, so the picture does not jitter. Until 4 minutes of columns exist, the time axis spans from the first column to now. Lines are the best bid and best ask, drawn 1 px outside their own price so both stay visible when the gap is one tick. Trade circles have area proportional to size; time is arrival time on this computer.</p>
+      </div></details>
+    </div>
+  </section>
+
+  <div class="kpis">
+    <div class="kpi kpi--hero">
+      <div class="kpi__l">Price, <span data-sym>BTC/USD</span></div>
+      <div class="kpi__v num" id="k-mid" data-wait>connecting</div>
+      <div class="kpi__s" id="k-mid-s">the mid between best bid and best ask</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__l">Gap, bid to ask</div>
+      <div class="kpi__v num" id="k-spr" data-wait>connecting</div>
+      <div class="kpi__s" id="k-spr-s">best ask minus best bid</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__l">Buyers' share at top</div>
+      <div class="kpi__v num" id="k-imb" data-wait>connecting</div>
+      <div class="kpi__s" id="k-imb-s">bid size at the best prices</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__l">Book verified</div>
+      <div class="kpi__v num" id="k-int" data-wait>connecting</div>
+      <div class="kpi__s" id="k-int-s">checked after every update</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__l">Trades per minute</div>
+      <div class="kpi__v num" id="k-tpm" data-wait>connecting</div>
+      <div class="kpi__s" id="k-tpm-s">counted over the last 60 s</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__l">Price swings, 1 s</div>
+      <div class="kpi__v num" id="k-rv1" data-wait>connecting</div>
+      <div class="kpi__s" id="k-rv1-s">yearly volatility from 1 s moves</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__l">Price swings, 10 s</div>
+      <div class="kpi__v num" id="k-rv10" data-wait>connecting</div>
+      <div class="kpi__s" id="k-rv10-s">same, from 10 s moves</div>
+    </div>
+  </div>
+  <details class="how kpis__how"><summary>How these numbers are measured</summary><div class="how__b">
+    <span class="eq">mid = (Pb + Pa) / 2        microprice = (Pb * Qa + Pa * Qb) / (Qa + Qb)
+gap, bps = (Pa - Pb) / mid * 10,000        bid share = Qb / (Qb + Qa)</span>
+    <p>Pb and Pa are the best bid and ask prices, Qb and Qa the sizes waiting there. A basis point (bps) is 0.01%. One tick is the smallest price step, read from the instrument's precision. <span id="h-top">Waiting for the first verified book.</span></p>
+    <p>For Book verified, after every book message the page computes a CRC32 over its own top 10 levels per side and compares it with the exchange's. <span id="h-int">No messages yet.</span></p>
+    <p>Trades per minute counts trades by arrival time over the last 60 s and appears once 60 s have passed.</p>
+    <p>Price swings is realized volatility. The mid is sampled at the end of every exchange second, log returns r are taken at 1 s or 10 s spacing over the last 5 minutes, RV = sqrt(sum r^2), and the result is annualized by sqrt(365 * 86,400 / window seconds). If returns were independent and Gaussian, its relative error would be about 1/sqrt(2n) for n returns. <span id="h-rv">It appears after 120 s of data.</span></p>
+  </div></details>
+
+  <div class="grid">
+    <section class="card card--6" id="c-depth">
+      <div class="card__h">
+        <div class="card__t"><h2>How much is waiting near the price?</h2><p>Coins waiting to buy (left) and to sell (right), added up from the best price outward (cumulative depth, 100 levels a side).</p></div>
+        <div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div>
+      </div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f">
+        <p class="lead" id="f-depth">Waiting for the first verified book.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>The band is a fixed 5 basis points (0.05%) either side of mid. Each curve stops at the 100th level, the deepest the subscription returns, so a band total is a lower bound whenever level 100 falls inside it. <span id="h-depth"></span></p>
+          <p>Hover reads the size and the dollar value (notional) between the best price and the pointer.</p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-ofi">
+      <div class="card__h">
+        <div class="card__t"><h2>Does buying pressure move the price?</h2><p>Each dot is one second: net buying pressure at the best prices against how far the mid moved, last 5 minutes (order flow imbalance).</p></div>
+        <div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div>
+      </div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f">
+        <p class="lead" id="f-ofi">Collecting seconds.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Order flow imbalance follows Cont, Kukanov and Stoikov (2014). Every change of the best quotes adds an event e, with primes marking the previous state:</p>
+          <span class="eq">e = 1{Pb &gt;= Pb'} Qb - 1{Pb &lt;= Pb'} Qb' - 1{Pa &lt;= Pa'} Qa + 1{Pa &gt;= Pa'} Qa'</span>
+          <p>Events are summed per second of exchange time (x, in <span data-base>BTC</span>), and y is the change in mid over the same second (<span data-quote>USD</span>). The line is ordinary least squares, dP = a + b OFI, over the last 300 seconds, drawn once 30 seconds are available. <span id="h-ofi"></span></p>
+          <p>The paper found a linear relation for equities; this tests it live on crypto. A second containing a resync is left out, because its price change has no measured flow behind it. The standard error assumes independent residuals; per second crypto moves are heavy tailed and clustered, so read it as a lower bound on the uncertainty.</p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-si">
+      <div class="card__h">
+        <div class="card__t"><h2>How tight is the market, and which side is heavier?</h2><p>The gap between best bid and ask, and the bids' share of size at the best prices, every half second for 5 minutes.</p></div>
+        <div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div>
+      </div>
+      <div class="card__b"></div>
+      <div class="card__f">
+        <p class="lead" id="f-si">Waiting for the first verified book.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Spread in basis points is (Pa - Pb) / mid * 10,000. Imbalance is Qb / (Qb + Qa) at the best level only; size one tick away is ignored. Both are sampled every 500 ms by arrival time. Dashed lines mark resyncs and reconnects. <span id="h-si"></span></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-flow">
+      <div class="card__h">
+        <div class="card__t"><h2>Who is trading, buyers or sellers?</h2><p>Coins traded every 10 seconds, split by the side that crossed the gap to trade, last 10 minutes.</p></div>
+        <div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div>
+      </div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f">
+        <p class="lead" id="f-flow">Waiting for the first trade.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>The side is the taker side as Kraken reports it. A buy lifted the ask; a sell hit the bid. The average price is the volume weighted average price (VWAP), sum(price * size) / sum(size). <span id="h-flow"></span></p>
+          <p>Bins use arrival time on this computer; the bin still filling and the partial bin at subscription are left out.</p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-sizes">
+      <div class="card__h">
+        <div class="card__t"><h2>How big are the trades?</h2><p>Trades counted by dollar value (price times size), in tenfold steps, since subscribing.</p></div>
+        <div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div>
+      </div>
+      <div class="card__b"><div class="legend"></div></div>
+      <div class="card__f">
+        <p class="lead" id="f-sizes">Waiting for the first trade.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Notional is price times size in <span data-quote>USD</span>. Bins are log10 steps, from under $10 through $10 to $100 up to $1M and above. One large order that fills several resting orders appears as several trades. <span id="h-sizes"></span></p>
+        </div></details>
+      </div>
+    </section>
+
+    <section class="card card--6" id="c-tape">
+      <div class="card__h">
+        <div class="card__t"><h2>Latest trades</h2><p>The last 20, newest first, with exchange time in your time zone.</p></div>
+      </div>
+      <div class="card__b"><div class="tape" id="tape" tabindex="0" aria-label="Last 20 trades"><div class="empty">Waiting for the first trade.</div></div></div>
+      <div class="card__f">
+        <p class="lead" id="f-tape">A buy lifted the ask; a sell hit the bid.</p>
+      </div>
+    </section>
+
+    <section class="card card--12" id="c-integ">
+      <div class="card__h">
+        <div class="card__t"><h2>Is the copy exact, and how fresh is it?</h2><p>Checks against the exchange after every update, and how long each update takes to arrive.</p></div>
+        <div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div>
+      </div>
+      <div class="card__b">
+        <div class="integ">
+          <div><h3>Counts since subscribing</h3><div class="rows" id="integ-rows"></div></div>
+          <div class="viz"><h3>Arrival delay of book updates, ms</h3><div class="legend"></div><div id="lag-chart"></div></div>
+        </div>
+      </div>
+      <div class="card__f">
+        <p class="lead" id="f-integ">Waiting for book updates.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Delay (lag) is arrival time on this computer minus the exchange timestamp, shown per second as the median (p50) and the 95th percentile (p95). It includes the offset between your clock and Kraken's, so its changes over time are more trustworthy than its level. <span id="h-integ"></span></p>
+          <p>A checksum mismatch counts as a mismatch and triggers a resync: the page unsubscribes and resubscribes the book and ignores updates until the fresh snapshot verifies. A closed socket reconnects with exponential backoff.</p>
+        </div></details>
+      </div>
+    </section>
+  </div>
+
+  <section class="method">
+    <h2>Method</h2>
+    <p class="method__lede">An order book is the list of prices where people wait to buy (bids) or sell (asks), with the amount at each price. Kraken sends the full list once and then only the changes. This page applies each change, checks its copy against the exchange's checksum, and computes every number above from that copy and the stream of trades.</p>
+    <div class="method__cols">
+      <div>
+        <h3>Book maintenance</h3>
+        <p>The page subscribes to Kraken's book channel at depth 100. The first message is a snapshot of the best 100 price levels on each side. Every later message lists only the levels that changed, each with its new total size, and a size of zero removes the level. Each side is held as a sorted array (bids descending, asks ascending) with binary search for insert, update and delete.</p>
+        <p>After every update both sides are cut back to 100 levels. The exchange stops sending changes for a level once it falls past the subscribed depth, so a level kept beyond that point would carry a stale size. The checksum covers only the top 10 levels and cannot catch a missed truncation, so the test suite checks it separately against a captured stream.</p>
+
+        <h3>Checksum</h3>
+        <p>Every book message carries a CRC32 of the exchange's own book. The page builds the same string from its local copy, taking the 10 best asks in ascending price, then the 10 best bids in descending price, each price and size printed with the instrument's precision, decimal point removed, leading zeros stripped. Precision is read from the instrument channel when the connection opens (for BTC/USD, 1 decimal for price and 8 for size).</p>
+        <div class="eq">field(x)  = strip leading zeros( remove point( x printed with precision p ) )
+string    = for each of asks[0..9], then bids[0..9]: field(price) + field(qty)
+checksum  = CRC32(string), compared as an unsigned 32 bit integer</div>
+        <p>Formatting is where implementations fail. A size of 0.0157 must print as 0.01570000 and contribute 1570000; printing the shortest decimal form, 0.0157, gives a different string and every checksum fails. On a mismatch the page counts it, unsubscribes and resubscribes the book, ignores updates until the fresh snapshot verifies, and counts the resync.</p>
+
+        <h3>Top of book</h3>
+        <p>With best bid price Pb and size Qb, and best ask price Pa and size Qa:</p>
+        <div class="eq">mid         = (Pb + Pa) / 2
+spread, bps = (Pa - Pb) / mid * 10,000
+microprice  = (Pb * Qa + Pa * Qb) / (Qa + Qb)
+imbalance   = Qb / (Qb + Qa)</div>
+        <p>The microprice weights each price by the size on the opposite side, so a heavy bid pulls it toward the ask. It is a better guess than the mid at where the next trade will print only to the extent that touch size carries information, which the imbalance chart lets you watch.</p>
+      </div>
+      <div>
+        <h3>Order flow imbalance</h3>
+        <p>Following Cont, Kukanov and Stoikov (2014), every change of the best quotes contributes an event e, where primes mark the previous state:</p>
+        <div class="eq">e = 1{Pb &gt;= Pb'} Qb - 1{Pb &lt;= Pb'} Qb' - 1{Pa &lt;= Pa'} Qa + 1{Pa &gt;= Pa'} Qa'</div>
+        <p>An unchanged quote contributes its size change. A bid that moves up adds its whole new size, a bid that moves down removes its whole old size, and the ask side mirrors this with the opposite sign. Events are summed over each second of exchange time to give OFI, and the change in mid over the same second is dP. The scatter fits dP = a + b OFI by ordinary least squares over the last 300 seconds:</p>
+        <div class="eq">b     = sum (x - mean x)(y - mean y) / sum (x - mean x)^2
+R^2   = 1 - SSE / SST
+se(b) = sqrt( SSE / (n - 2) / sum (x - mean x)^2 )</div>
+        <p>The paper found a linear relation between order flow imbalance and short horizon price changes for US equities. Here it is tested live on one crypto venue. A second that contains a resync is left out, because its price change has no measured flow behind it. The standard error assumes independent residuals with equal variance; per second crypto returns are heavy tailed and clustered, so read it as a lower bound on the uncertainty.</p>
+
+        <h3>Realized volatility</h3>
+        <p>The mid is sampled on a fixed grid, taking the last mid at the end of each exchange second, carried forward through quiet seconds. With log returns r = ln(m_i / m_(i-1)) over a window of T seconds:</p>
+        <div class="eq">RV         = sqrt( sum r^2 )
+annualized = RV * sqrt( 365 * 86,400 / T )</div>
+        <p>The window is the last 300 seconds, which gives 300 returns at 1 s sampling and 30 at 10 s. Using 365 days reflects a market that trades every day; the annualized figure rescales five minutes of movement and says nothing about the coming year. If returns were independent and Gaussian, the relative standard error from n returns would be about 1/sqrt(2n), roughly 4% at 300 returns and 13% at 30.</p>
+        <p>Finer sampling usually reads higher. The observed mid is the underlying price plus noise from tick discreteness and quotes that flicker back and forth, and that noise adds about 2 n &eta;&sup2; to the sum of squares for n returns with noise variance &eta;&sup2;. It grows with the number of returns while the underlying variance does not, so the gap between the two figures is a live estimate of microstructure noise. When the 10 s figure is the higher one, price moved in short runs within the window, which noise cannot produce; with 30 returns that can also be sampling error. The tile compares the gap with twice its standard error before naming either cause.</p>
+
+        <h3>Limitations</h3>
+        <ul>
+          <li>One venue. Kraken's book is a slice of the market for each pair; other exchanges are not seen.</li>
+          <li>Depth 100 only. Nothing past the 100th level on either side is visible, and the heatmap hatches that unobserved range in grey.</li>
+          <li>The trade side is the taker side exactly as the exchange reports it.</li>
+          <li>Delay includes the offset between your clock and Kraken's. Its level is only as good as your clock sync; its changes over time are more trustworthy.</li>
+          <li>OFI, mid changes and realized volatility use exchange timestamps. The heatmap, spread chart, trade flow and trades per minute use arrival time on this computer.</li>
+          <li>Everything resets when the symbol changes or the page reloads; nothing is stored. Painting runs at a few frames a second, decoupled from the message rate, and pausing the display stops painting but not ingestion or verification.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <p class="foot">Market data from the Kraken public WebSocket API. Not investment advice. <a href="../index.html">Back to the portfolio</a></p>
+</main>
+<script type="module" src="book/app.js"></script>
+</body>
+</html>
