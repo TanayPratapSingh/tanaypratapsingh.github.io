@@ -8,6 +8,7 @@ function openSheet(i){
     '<h3 id="sheetTitle">'+p.title+'</h3>'+
     '<div class="sheet__badge">'+p.badge+'</div>'+
     '<div class="sheet__tags">'+p.tags.join(' &middot; ')+'</div>'+
+    (LIVE[i]?'<a class="sheet__code sheet__code--live" href="'+LIVE[i]+'">Open the live dashboard</a> ':'')+
     (REPOS[i]?'<a class="sheet__code" href="'+REPOS[i]+'" target="_blank" rel="noopener">View code on GitHub</a>':'')+
     (VIDEOS[i]?'<video src="'+VIDEOS[i]+'" poster="'+VIDEOS[i].replace(/\.mp4$/,'.jpg')+'" controls preload="none" playsinline></video>':'')+
     '<div class="body">'+p.body+'</div>';
