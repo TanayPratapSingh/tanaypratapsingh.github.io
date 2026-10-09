@@ -1,0 +1,12 @@
+UTC start 2026-10-08T19:07:09.961Z planned duration 120 s
+HTTP 200 text/event-stream; charset=utf-8
+UTC end   2026-10-08T19:09:09.971Z stream duration (first event to end) 118.2 s
+messages 3903 events counted 3903 canary 0 duplicates 0 bad json 0
+events/s 33.03 bot share 44.5% new pages 76 kinds {"edit":1636,"log":271,"categorize":1920,"new":76}
+HLL estimate 533.3 exact distinct users 535 relative error -0.327% regime linear SE 1.625%
+Space-Saving N 1712 k 200 N/k 8.56 tracked 200 checks 200 violations 0 pages above N/k 2 missing 0 top15 overlap with exact 6/15 distinct pages 1513
+CMS N 3903 eps 0.00265 delta 0.0183 eps*N 10.36 distinct wikis 87 underestimates 0 over bound 0 inflated at all 0 max overestimate 0 expected inflated share 0.004% top12 within bound 12/12
+lag p50 0.30 s p95 1.01 s (n=2000) min lag 0.27 s
+per second by arrival: secs 117 mean 33.04 sd 10.79 min 12 max 66 bursts 3
+per second by meta.dt: secs 117 mean 32.97 sd 12.00 min 8 max 67 bursts 0
+edit size human 2,4,46,63,61,32,85,239,331,50,4 bot 2,15,4,55,52,12,55,58,213,252,1
