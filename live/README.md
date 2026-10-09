@@ -14,6 +14,17 @@ is stored between visits.
 
 [`index.html`](index.html) is the overview, with one live reading per dashboard.
 
+## Standalone repositories
+
+Each dashboard also has its own repository, with its commit history, tests, run logs and README:
+
+- [wikipedia-edit-stream](https://github.com/TanayPratapSingh/wikipedia-edit-stream)
+- [orderbook-microstructure](https://github.com/TanayPratapSingh/orderbook-microstructure)
+- [live-earthquake-statistics](https://github.com/TanayPratapSingh/live-earthquake-statistics)
+- [space-weather-nowcast](https://github.com/TanayPratapSingh/space-weather-nowcast)
+
+The copies in this folder are the hosted ones. A change to the shared code in `assets/` belongs in all five places.
+
 ## Run it
 
 Any static file server works. From the repository root:
