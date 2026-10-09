@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Space Weather Nowcast</title>
+<meta name="description" content="The solar wind measured at L1, followed to Earth's magnetic field and the aurora, live from nine NOAA feeds: travel time, energy input, magnetopause distance, flares, Kp and NOAA's storm forecast.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/live.css">
+<style>
+  /* aurora probability: one green hue, light to dark; near zero recedes to the surface.
+     night shading on the map (overlay and its legend swatch), the Earth glyph, and the Sun's glow, per theme */
+  :root{ --aur-0:#FCFBF9; --aur-1:#d6eedc; --aur-2:#9fd6ac; --aur-3:#5cb575; --aur-4:#2a8a49; --aur-5:#0f5a2a;
+    --night:rgba(21,23,27,0.075); --night-swatch:#EAE9E7; --earth-day:#FCFBF9; --earth-night:#15171B;
+    --sun-core:#f5b335; --sun-glow:rgba(237,161,0,0.30); --bubble:rgba(42,120,214,0.045); }
+  @media (prefers-color-scheme:dark){
+    :root:where(:not([data-theme="light"])){ --aur-0:#18191C; --aur-1:#173622; --aur-2:#1f5c33; --aur-3:#2f8a4c; --aur-4:#5fbf7a; --aur-5:#b5e8c2;
+      --night:rgba(0,0,0,0.32); --night-swatch:#101113; --earth-day:#C3C2B7; --earth-night:#0F1012;
+      --sun-core:#e8a530; --sun-glow:rgba(201,133,0,0.32); --bubble:rgba(57,135,229,0.07); }
+  }
+  :root[data-theme="dark"]{ --aur-0:#18191C; --aur-1:#173622; --aur-2:#1f5c33; --aur-3:#2f8a4c; --aur-4:#5fbf7a; --aur-5:#b5e8c2;
+    --night:rgba(0,0,0,0.32); --night-swatch:#101113; --earth-day:#C3C2B7; --earth-night:#0F1012;
+    --sun-core:#e8a530; --sun-glow:rgba(201,133,0,0.32); --bubble:rgba(57,135,229,0.07); }
+
+  /* stage */
+  .stage__cv{position:relative}
+  .stage__cv canvas{display:block;width:100%;touch-action:pan-y}
+  .stage__legend{max-width:min(330px,46%)}
+  @media (max-width:760px){ .stage__legend{max-width:none} }
+  .stage .spot p{margin:0}
+  .stage__foot span{white-space:nowrap}
+  .stage__foot .muted{color:var(--ink-3)}
+
+  /* tiles */
+  @media (min-width:1101px){ .kpis{grid-template-columns:repeat(5,minmax(0,1fr))} }
+  .kpi__v .badge{font-size:11px;font-weight:500;letter-spacing:0;vertical-align:middle;margin-left:8px;color:var(--ink)}
+  .kpi--hero .kpi__v .badge{vertical-align:14px}
+  .kpi__s{min-height:1.35em}
+
+  /* cards */
+  .card__f .f{color:var(--ink)}
+  .card__f .f b{font-weight:600}
+  .how__b .eq{max-width:100%}
+  .sm__h{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px;margin:2px 0 2px}
+  .sm__h + .chart{margin-bottom:8px}
+  .sm__t{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .sm__h .legend{margin:0}
+  .mp svg{display:block;width:100%;overflow:hidden}
+  .mp text{font-family:var(--mono);font-size:10.5px;fill:var(--ink-2)}
+  .mp .muted{fill:var(--ink-3)}
+  .mp-stats{margin-top:10px}
+  .au{display:flex;justify-content:center}
+  .au canvas{display:block;max-width:100%}
+
+  /* freshness: compact */
+  .fr .tv{max-height:none;border:0}
+  .fr .tv table{font-size:11.5px}
+  .fr .tv th,.fr .tv td{padding:4px 8px}
+  .fr td .badge{white-space:nowrap}
+  .fr td.note{white-space:normal;min-width:200px;text-align:left;color:var(--ink-2)}
+  .fr td a{color:var(--ink);text-decoration-color:var(--rule-2)}
+
+  .ctl-l{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+  @media (max-width:600px){
+    .seg--wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);width:100%}
+    .seg--wrap button{background:var(--surface);border-left:0!important;padding:7px 4px}
+    .seg--wrap button[aria-pressed="true"]{background:var(--ink)}
+    .seg--wrap button:last-child{grid-column:span 2}
+    .controls .btn{width:100%}
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="top__in">
+  <a class="top__brand" href="../index.html">Tanay Pratap Singh<span>/ live</span></a>
+  <nav aria-label="Dashboards">
+    <a href="index.html">Overview</a>
+    <a href="wiki.html">Edit stream</a>
+    <a href="book.html">Order book</a>
+    <a href="quakes.html">Earthquakes</a>
+    <a href="sun.html" aria-current="page">Space weather</a>
+  </nav>
+  <button class="top__theme" type="button">Dark theme</button>
+</div></header>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <p class="hero__k">04 &middot; Space weather &middot; nine NOAA feeds, computed in your browser</p>
+      <h1>Space weather nowcast: from L1 to the aurora</h1>
+      <p class="hero__dek">A spacecraft 1.5 million km toward the Sun (at the L1 point) measures the solar wind about an hour before it reaches Earth. This page follows that wind into Earth's magnetic field and on to the aurora, live from NOAA's public data.</p>
+      <p class="hero__src">Source: <a href="https://www.swpc.noaa.gov/">NOAA Space Weather Prediction Center</a> &middot; polled every 1 to 30 minutes &middot; public domain</p>
+    </div>
+    <div class="status" id="status" aria-label="Feed status"></div>
+  </section>
+
+  <section class="stage" id="stage" aria-label="Live drawing of the solar wind travelling from the L1 spacecraft to Earth">
+    <div class="stage__cap"><h2>The solar wind, on its way to Earth</h2><p>Each dot is one minute of wind measured at L1, drawn where its own speed has carried it since.</p></div>
+    <div class="legend stage__legend" id="stage-legend"></div>
+    <div class="stage__cv" id="stage-cv">
+      <div class="spot" id="spot" hidden><p class="spot__k">Next to arrive</p><p class="spot__v num" id="spot-v">&ndash;</p><p id="spot-t"></p></div>
+    </div>
+    <div class="stage__foot" id="stage-foot"><span class="muted">Loading the last 2 hours of solar wind</span></div>
+  </section>
+
+  <div class="controls">
+    <span class="ctl-l" id="loc-l">Aurora location</span>
+    <div class="seg seg--wrap" id="loc" role="group" aria-labelledby="loc-l">
+      <button type="button" data-loc="syr" aria-pressed="true">Syracuse NY</button>
+      <button type="button" data-loc="fai" aria-pressed="false">Fairbanks AK</button>
+      <button type="button" data-loc="rey" aria-pressed="false">Reykjavik</button>
+      <button type="button" data-loc="tro" aria-pressed="false">Tromso</button>
+      <button type="button" data-loc="edi" aria-pressed="false">Edinburgh</button>
+    </div>
+    <span class="controls__sp"></span>
+    <button class="btn" id="pause" type="button" aria-pressed="false">Pause display</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi kpi--hero">
+      <p class="kpi__l">Magnetic disturbance now (Kp, 0 to 9)</p>
+      <p class="kpi__v num"><span id="kv-kp">&ndash;</span><span class="badge" id="kv-g">loading</span></p>
+      <p class="kpi__s" id="ks-kp">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Solar wind speed</p>
+      <p class="kpi__v num"><span id="kv-v">&ndash;</span><small>km/s</small></p>
+      <p class="kpi__s" id="ks-v">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Solar wind density</p>
+      <p class="kpi__v num"><span id="kv-n">&ndash;</span><small>per cm&sup3;</small></p>
+      <p class="kpi__s" id="ks-n">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Field direction</p>
+      <p class="kpi__v num"><span id="kv-bz">&ndash;</span><small>nT</small></p>
+      <p class="kpi__s" id="ks-bz">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Solar wind pressure</p>
+      <p class="kpi__v num"><span id="kv-pd">&ndash;</span><small>nPa</small></p>
+      <p class="kpi__s" id="ks-pd">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Magnetic shield edge</p>
+      <p class="kpi__v num"><span id="kv-r0">&ndash;</span><small>Re</small></p>
+      <p class="kpi__s" id="ks-r0">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Travel time to Earth</p>
+      <p class="kpi__v num"><span id="kv-dl">&ndash;</span><small>min</small></p>
+      <p class="kpi__s" id="ks-dl">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l">Solar flare level</p>
+      <p class="kpi__v num"><span id="kv-xr">&ndash;</span></p>
+      <p class="kpi__s" id="ks-xr">loading</p>
+    </div>
+    <div class="kpi">
+      <p class="kpi__l" id="kl-au">Aurora, Syracuse NY</p>
+      <p class="kpi__v num"><span id="kv-au">&ndash;</span><small>%</small></p>
+      <p class="kpi__s" id="ks-au">loading</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <section class="card card--8" id="c-sw">
+      <div class="card__h"><div class="card__t"><h2>The solar wind over the last day</h2><p>Speed, density, magnetic field and pressure at L1, minute by minute. The vertical line marks the wind reaching Earth now.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="viz" id="sw-panels"></div></div>
+      <div class="card__f"><p class="f" id="f-sw">Loading the solar wind feeds.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p id="h-sw"></p>
+          <p>Plasma and magnetic field come from separate NOAA RTSW files. Only rows flagged active are used; rows are matched on the UTC minute, and a gap longer than 5 minutes breaks the line. Speed is the proton bulk speed, density the proton density, Bz the north south part of the interplanetary magnetic field in GSM coordinates (negative is southward) and Bt the total field.</p>
+          <span class="eq">delay = x_GSE / |Vx|      arrival = t_sample + delay
+Pd [nPa] = 1.6726e-6 &times; n [cm^-3] &times; v^2 [km/s]^2</span>
+          <p>The arrival time is ballistic: it assumes the wind travels straight down the Sun Earth line at its measured speed. Tilted structures in the wind can shift the real arrival by several minutes either way.</p>
+        </div></details></div>
+    </section>
+
+    <section class="card card--4" id="c-mp">
+      <div class="card__h"><div class="card__t"><h2>How far out is Earth's magnetic shield?</h2><p>The magnetopause, where Earth's field meets the solar wind, drawn to scale.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="lg-mp"></div><div class="viz mp" id="mp"></div><div class="viz rows mp-stats" id="mp-stats"></div></div>
+      <div class="card__f"><p class="f" id="f-mp">Loading.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p id="h-mp"></p>
+          <p>Shue et al. (1998), J. Geophys. Res. 103(A8), 17691. An empirical fit to magnetopause crossings that uses the solar wind pressure Pd and the field's Bz. r0 is the distance toward the Sun (subsolar standoff), alpha sets how much the flanks flare.</p>
+          <span class="eq">r0    = (10.22 + 1.29 tanh(0.184 (Bz + 8.14))) Pd^(-1/6.6)   [Re]
+alpha = (0.58 - 0.007 Bz)(1 + 0.024 ln Pd)
+r(th) = r0 (2 / (1 + cos th))^alpha</span>
+          <p>The model is symmetric about the Sun Earth line and ignores the tilt of Earth's dipole. It uses the latest L1 sample, which reaches Earth one travel time later. Geostationary satellites orbit at 6.6 Earth radii (Re).</p>
+        </div></details></div>
+    </section>
+
+    <section class="card card--6" id="c-nw">
+      <div class="card__h"><div class="card__t"><h2>How much energy is getting in?</h2><p>Newell coupling, a measure of how hard the solar wind drives Earth's magnetic field, over the last 24 hours.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="lg-nw"></div><div id="nw"></div></div>
+      <div class="card__f"><p class="f" id="f-nw">Loading.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p id="h-nw"></p>
+          <p>Newell et al. (2007), J. Geophys. Res. 112, A01206, fitted this function against ten measures of magnetospheric activity. It is proportional to the rate magnetic flux is opened at the dayside magnetopause, zero for a due north field and largest for due south. Bt here is the field across the Sun Earth line.</p>
+          <span class="eq">dPhi/dt = v^(4/3) Bt^(2/3) sin^(8/3)(theta/2)
+Bt = sqrt(By^2 + Bz^2),   theta = atan2(By, Bz)   (GSM)
+units: (km/s)^(4/3) nT^(2/3)</span>
+          <p>The 30 minute mean is trailing and needs at least 15 samples in its window. The value is a predictor computed at L1; it acts on Earth one travel time later.</p>
+        </div></details></div>
+    </section>
+
+    <section class="card card--6" id="c-kp">
+      <div class="card__h"><div class="card__t"><h2>Is a geomagnetic storm coming?</h2><p>Kp rates how disturbed Earth's magnetic field is, from 0 to 9; 5 and above is a storm. The last 3 days and NOAA's forecast for the next 3.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="lg-kp"></div><div id="kp"></div></div>
+      <div class="card__f"><p class="f" id="f-kp">Loading.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p id="h-kp"></p>
+          <p>Kp is a planetary index built from ground magnetometers over 3 hour windows, quasi logarithmic, in thirds (4.67 is written 5&minus;). NOAA labels each window observed, estimated or predicted. The 1 min estimate is provisional and NOAA rewrites its newest minutes; the page keeps the latest version and counts the rewrites.</p>
+          <p>G1 to G5 are NOAA's storm levels for Kp 5 to 9. This page rounds Kp to the nearest whole value first, which reproduces the labels in NOAA's own forecast file (4.67 is G1 there, 5.67 is G2). These feeds hold no archive of past forecasts, so the page does not score them.</p>
+        </div></details></div>
+    </section>
+
+    <section class="card card--6" id="c-xr">
+      <div class="card__h"><div class="card__t"><h2>Is the Sun flaring?</h2><p>The Sun's X-ray brightness from a GOES satellite over 6 hours, on the A to X flare scale.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="lg-xr"></div><div id="xr"></div></div>
+      <div class="card__f"><p class="f" id="f-xr">Loading.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p id="h-xr"></p>
+          <p>The class comes from the 0.1 to 0.8 nm channel. The letter is the decade of the flux in W/m&sup2; (A from 1e-8, B from 1e-7, C from 1e-6, M from 1e-5, X from 1e-4) and the number is the flux over the start of that decade, truncated to one decimal, so 1.94e-6 is C1.9 and X continues past 10. The 0.05 to 0.4 nm channel is shown for context. The plotted flux is NOAA's corrected value.</p>
+        </div></details></div>
+    </section>
+
+    <section class="card card--6" id="c-au">
+      <div class="card__h"><div class="card__t"><h2>Could you see an aurora in the next hour?</h2><p>NOAA's OVATION model gives the chance of aurora overhead about an hour ahead. The night side is shaded.</p></div><div class="card__a"><button type="button" data-act="table" aria-pressed="false">Table</button></div></div>
+      <div class="card__b"><div class="legend" id="lg-au"></div><div class="viz au" id="au"></div></div>
+      <div class="card__f"><p class="f" id="f-au">Loading.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p id="h-au"></p>
+          <p>OVATION, driven by solar wind measured at L1, gives the probability of visible aurora on a 1 degree grid. Overhead chance is the nearest cell. The southern edge is the first cell at or above 10% walking north along the place's longitude. The map is a north polar orthographic view with the place's meridian at the bottom.</p>
+          <p>Night is everything more than 90 degrees from the subsolar point (geometric terminator, no twilight), computed from the Astronomical Almanac's low precision solar coordinates. Aurora low on the horizon can be seen from farther south, and cloud and light pollution are not in the model.</p>
+        </div></details></div>
+    </section>
+
+    <section class="card card--12 fr" id="c-fr" data-view="table">
+      <div class="card__h"><div class="card__t"><h2>Is the data current?</h2><p>For each NOAA feed, when it was last fetched and how old its newest sample is.</p></div></div>
+      <div class="card__b"><div class="tv" id="fr" tabindex="0"></div></div>
+      <div class="card__f"><p class="f" id="f-fr">Loading.</p>
+        <details class="how"><summary>How this is measured</summary><div class="how__b">
+          <p>Sample age is your clock minus the newest time stamp inside the file, so a skewed system clock shifts every age by the same amount. Each row states its own fresh and late thresholds. The header status says whether each fetch succeeded; this table says whether the data inside is current.</p>
+        </div></details></div>
+    </section>
+  </div>
+
+  <section class="method">
+    <h2>Method</h2>
+    <p>The Sun blows a thin wind of charged particles past Earth at 300 to 800 km/s. A spacecraft parked upstream measures it about an hour before it arrives, and every number on this page follows from those measurements and from NOAA's own products: how hard the wind pushes on Earth's magnetic field, how much energy gets in, how disturbed the field is, and where the aurora is likely. The sections below give the equations, the sources and the limits.</p>
+    <div class="method__cols">
+      <div>
+        <h3>Why L1 gives lead time</h3>
+        <p>The L1 Lagrange point sits about 1.5 million km from Earth toward the Sun. A monitor there samples the solar wind before it reaches the magnetosphere; at 300 to 800 km/s that head start is roughly 30 to 85 minutes. The RTSW files list several spacecraft (the feed labels them ACE, IMAP and SOLAR1) and flag one as active. Only active rows are used, and the labels are shown exactly as the feed writes them.</p>
+
+        <h3>Joining the feeds</h3>
+        <p>Plasma and magnetic field arrive in separate files. Rows are matched on the UTC minute (time tags are floored to the minute, because some sources stamp seconds). The join keeps a minute that has only one of the two, so each chart uses every sample it has, while every derived quantity needs both. A gap longer than 5 minutes breaks the plotted line, and the solar wind card reports coverage, the longest gap and any change of active spacecraft.</p>
+
+        <h3>Ballistic propagation</h3>
+        <div class="eq">delay = x_GSE / |Vx|        arrival = t_sample + delay</div>
+        <p>x_GSE is the active spacecraft's distance sunward of Earth from the hourly ephemeris file, taken at the hour nearest each sample, and Vx is the measured GSE x velocity (the bulk speed if Vx is missing). This assumes the plasma travels straight down the Sun Earth line at its measured speed and that structures in it are flat sheets perpendicular to that line. Real phase fronts are tilted, and the spacecraft sits well off the line (its y and z offsets are in the ephemeris), so actual arrival can differ by several minutes either way. The delay is to Earth's centre; the bow shock is met a few minutes earlier. When fast wind overtakes slow wind the mapping stops being one to one, and the line marked "reaching Earth now" picks the sample whose arrival time is nearest to the present.</p>
+
+        <h3>The drawing at the top</h3>
+        <div class="eq">progress = (now - t_sample) &times; |Vx| / x_GSE</div>
+        <p>Every dot is a real 1 minute plasma sample from the last 2 hours, placed by its own progress under the same ballistic assumption. Its colour is that minute's Bz on a diverging scale (southward and northward, grey near zero, full colour at 6 nT along a (|Bz|/6)^0.7 curve), its size grows with the square root of density (a minute with plasma but no field sample is an empty ring), and its trail is the distance it covers in 4 minutes. Distances are not to scale. The Sun to L1 leg (computed from the Almanac's Sun distance minus x_GSE) is shortened, the L1 to Earth leg is stretched, and Earth's magnetosphere is drawn larger again. A dot moves linearly in distance from L1 until it meets the Shue magnetopause at its height, then slides along the boundary and fades by its ballistic arrival time. The magnetopause is drawn for the sample reaching Earth now. Dots are spread vertically by a fixed golden ratio sequence of their minute so they do not overlap; their height carries no data.</p>
+
+        <h3>Dynamic pressure</h3>
+        <div class="eq">Pd [nPa] = 1.6726e-6 &times; n [cm^-3] &times; v^2 [km/s]^2</div>
+        <p>This is the proton ram pressure, m_p n v^2 with the unit conversions folded into the constant. Alpha particles carry a few percent of the mass flux but their columns are empty in these files, so they are left out.</p>
+
+        <h3>Newell coupling</h3>
+        <div class="eq">dPhi/dt = v^(4/3) Bt^(2/3) sin^(8/3)(theta/2)
+Bt = sqrt(By^2 + Bz^2),   theta = atan2(By, Bz)   (GSM)</div>
+        <p>Newell et al. (2007, J. Geophys. Res. 112, A01206) fitted this form against ten magnetospheric state variables. It is proportional to the rate at which magnetic flux is opened at the dayside magnetopause; with v in km/s and B in nT the value is in (km/s)<sup>4/3</sup> nT<sup>2/3</sup>. It is zero for a due north field and largest for due south. Bt here is the field transverse to the Sun Earth line; the solar wind card plots the total field. The function is a predictor evaluated at L1, and it acts on Earth one propagation delay later.</p>
+
+        <h3>Shue magnetopause</h3>
+        <div class="eq">r0    = (10.22 + 1.29 tanh(0.184 (Bz + 8.14))) Pd^(-1/6.6)   [Re]
+alpha = (0.58 - 0.007 Bz)(1 + 0.024 ln Pd)
+r(th) = r0 (2 / (1 + cos th))^alpha</div>
+        <p>Shue et al. (1998, J. Geophys. Res. 103(A8), 17691) fitted this shape to magnetopause crossings including extreme solar wind conditions. r0 is the subsolar standoff distance and alpha sets how much the flanks flare. The model is symmetric about the Sun Earth line and ignores the tilt of Earth's dipole, so the drawing is a cross section through any plane containing that line. The tiles and the to scale card use the latest L1 sample, which reaches Earth one delay later. If r0 falls below 6.6 Re, geosynchronous satellites near local noon are outside the model magnetopause.</p>
+      </div>
+      <div>
+        <h3>Kp and the G scale</h3>
+        <p>Kp is a planetary index of geomagnetic disturbance over 3 hour windows, built from a network of ground magnetometers, on a quasi logarithmic scale from 0 to 9 in thirds (4.67 is written 5&minus;). The forecast product labels each window observed, estimated or predicted, and the chart keeps those labels. NOAA's 1 min estimated Kp is a provisional nowcast, and NOAA rewrites its newest minutes after first publishing them (while this page was being built, minutes first published as 2.67 were rewritten to 1.33 a few minutes later). The page keeps the file's latest version of each minute and counts the revisions it sees. NOAA's G scale starts at Kp 5 (G1) and ends at Kp 9 (G5). Fractional values can be read two ways; this page rounds to the nearest whole Kp before mapping, because that reproduces the noaa_scale labels in NOAA's own forecast file (4.67 is labelled G1 there and 5.67 is labelled G2). A strict threshold, under which 4.67 would be below G1, is implemented and tested alongside it.</p>
+        <p>The comparison in that card is narrow on purpose. It sets NOAA's value for the current 3 hour window against the maximum and mean of the 1 min estimate so far inside it. These feeds carry no archive of past forecasts, so the page does not claim to score them.</p>
+
+        <h3>GOES flare classes</h3>
+        <p>The class comes from the 0.1 to 0.8 nm channel. The letter is the decade of the flux in W/m&sup2; (A from 1e-8, B from 1e-7, C from 1e-6, M from 1e-5, X from 1e-4) and the number is the flux divided by the start of that decade, truncated to one decimal, so 1.94e-6 is C1.9 and X continues past 10. The words small (A to C), medium (M) and large (X) are the usual plain descriptions of the classes. The 0.05 to 0.4 nm channel is plotted for context. The plotted flux is NOAA's corrected value; the file also flags minutes it considers affected by electron contamination.</p>
+
+        <h3>OVATION aurora</h3>
+        <p>SWPC's OVATION model, driven by solar wind measured at L1, gives the probability of visible aurora on a 1 degree grid. Each file states an observation time and a forecast time, and the gap between them is the lead time the model claims; the aurora card prints both as written. Overhead probability is the value of the nearest grid cell. The southernmost 10% latitude is found by walking north along the location's longitude from the equator. Aurora low on the horizon can be seen from farther south than either number suggests, and cloud, moonlight and city light are not in the model.</p>
+
+        <h3>Day and night on the map</h3>
+        <p>The subsolar point comes from the low precision solar coordinates in the Astronomical Almanac: mean longitude and mean anomaly give the Sun's ecliptic longitude, which with the obliquity gives declination and right ascension. The equation of time is mean longitude minus right ascension, and the subsolar longitude is where apparent solar time is noon. The Almanac quotes these formulas to about 0.01 degree for 1950 to 2050, and the tests check the equinox, both solstices and the equation of time extremes. The shaded hemisphere is everything more than 90 degrees from the subsolar point, the geometric terminator with no refraction and no twilight; aurora is usually seen only once the Sun is well below the horizon.</p>
+
+        <h3>Freshness</h3>
+        <p>Each feed has two clocks. The poll clock (header) says whether the last fetch succeeded. The sample clock (freshness card) is the age of the newest time stamp inside the file, judged against a per feed threshold: 1 minute products are fresh within 10 minutes and late within 30, the hourly ephemeris within 4 and 12 hours, the final 3 hour Kp within 4 and 7 hours of its window's end, OVATION within 20 and 60 minutes of its observation time, the forecast file within 3 and 12 hours of its Last-Modified header, and the scales file within 3 and 12 hours of the time stamp on its current entry.</p>
+
+        <h3>Link to the Kp forecasting project</h3>
+        <p>My <a href="../index.html#projects">multi horizon Kp forecasting project</a> trained an LSTM on hourly NASA OMNI2 history. OMNI2 is a cleaned archive, already shifted from the spacecraft to Earth, merged across missions, with gaps marked. This page is the live input such a model would need in production, with everything the archive smooths over: plasma minutes that go missing, a spacecraft label that can change mid stream, ephemerides that lag the data, and propagation that has to be done before the inputs match the training distribution. That model's strongest predictors were ap and the auroral electrojet indices, which are not in these feeds, so a production version would need a source for them or a retrain on solar wind inputs alone.</p>
+      </div>
+    </div>
+  </section>
+  <p class="foot">Data: NOAA Space Weather Prediction Center, services.swpc.noaa.gov (real time solar wind, planetary K index, GOES X-ray flux, OVATION aurora, NOAA scales), public domain. Land outlines: Natural Earth via the world-atlas package. Map projection: d3-geo and topojson-client. Spacecraft labels are shown exactly as the feeds give them. <a href="../index.html">Back to the portfolio</a></p>
+</main>
+<script type="module" src="sun/app.js"></script>
+</body>
+</html>
