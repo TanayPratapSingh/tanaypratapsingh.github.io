@@ -3,3 +3,6 @@
 .sec{padding:30px 0;border-top:1px solid var(--rule-2)}
 .sec:first-child{padding-top:0;border-top:0}
 .sec > h2{font-size:20px;margin-bottom:18px}
+.sec__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.sec__head h2{font-size:20px;margin:0}
+.sec__prep{padding:6px 16px}
