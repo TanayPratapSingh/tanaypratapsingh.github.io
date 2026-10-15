@@ -46,7 +46,7 @@ a{color:inherit}
 .rail__btn:hover{background:var(--rule);color:var(--met)}
 .rail__btn--town{font-size:16px}
 .rail__btn--live{display:flex;align-items:center;justify-content:center;gap:8px}
-.rail__btn--live::before{content:"";width:8px;height:8px;border-radius:50%;background:#0ca30c;flex:none;
+.rail__btn--live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink-2);flex:none;
   animation:live-dot 1.6s ease-out infinite}
 .rail__c{border-top:1px solid var(--rule);padding-top:14px}
 .rail__c a{display:block;font-size:13.6px;line-height:1.75;color:var(--met);
@@ -58,6 +58,9 @@ a{color:inherit}
 .sec{padding:30px 0;border-top:1px solid var(--rule-2)}
 .sec:first-child{padding-top:0;border-top:0}
 .sec > h2{font-size:20px;margin-bottom:18px}
+.sec__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.sec__head h2{font-size:20px;margin:0}
+.sec__prep{padding:6px 16px}
 /* ---------- tiles: separated objects, clear division ---------- */
 /* Minimum width tracks the viewport (14vw) so wide monitors get fewer, larger tiles
    instead of more small ones; 226px is the floor on laptops. */
@@ -79,9 +82,9 @@ a{color:inherit}
   display:flex;flex-wrap:wrap;gap:2px 9px;font-family:var(--mono);font-size:10.6px;color:var(--met)}
 .tile__foot .rec{color:var(--ink-3)}
 .tile__foot .live{color:var(--ink);display:inline-flex;align-items:center;gap:5px}
-.tile__foot .live::before{content:"";width:7px;height:7px;border-radius:50%;background:#0ca30c;
+.tile__foot .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink-2);
   animation:live-dot 1.6s ease-out infinite}
-@keyframes live-dot{0%{box-shadow:0 0 0 0 rgba(12,163,12,.45)}100%{box-shadow:0 0 0 6px rgba(12,163,12,0)}}
+@keyframes live-dot{0%{box-shadow:0 0 0 0 rgba(86,91,98,.45)}100%{box-shadow:0 0 0 6px rgba(86,91,98,0)}}
 /* ---------- overlay ---------- */
 .ov{position:fixed;inset:0;z-index:40;display:none;background:rgba(21,23,27,.45)}
 .ov.on{display:block}
@@ -206,7 +209,7 @@ a{color:inherit}
 <main class="main">
 
   <section class="sec" id="projects">
-    <h2>Projects</h2>
+    <div class="sec__head"><h2>Projects</h2><a class="rail__btn sec__prep" href="https://tanaypratapsingh.github.io/ml-interview-prep/">prep</a></div>
     <div class="grid" id="grid"></div>
   </section>
 
