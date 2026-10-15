@@ -46,8 +46,6 @@ a{color:inherit}
 .rail__btn:hover{background:var(--rule);color:var(--met)}
 .rail__btn--town{font-size:16px}
 .rail__btn--live{display:flex;align-items:center;justify-content:center;gap:8px}
-.rail__btn--live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink-2);flex:none;
-  animation:live-dot 1.6s ease-out infinite}
 .rail__c{border-top:1px solid var(--rule);padding-top:14px}
 .rail__c a{display:block;font-size:13.6px;line-height:1.75;color:var(--met);
   text-decoration:none;word-break:break-word}
@@ -82,9 +80,6 @@ a{color:inherit}
   display:flex;flex-wrap:wrap;gap:2px 9px;font-family:var(--mono);font-size:10.6px;color:var(--met)}
 .tile__foot .rec{color:var(--ink-3)}
 .tile__foot .live{color:var(--ink);display:inline-flex;align-items:center;gap:5px}
-.tile__foot .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink-2);
-  animation:live-dot 1.6s ease-out infinite}
-@keyframes live-dot{0%{box-shadow:0 0 0 0 rgba(86,91,98,.45)}100%{box-shadow:0 0 0 6px rgba(86,91,98,0)}}
 /* ---------- overlay ---------- */
 .ov{position:fixed;inset:0;z-index:40;display:none;background:rgba(21,23,27,.45)}
 .ov.on{display:block}
