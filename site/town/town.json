@@ -19,7 +19,7 @@
     {"id": "hall", "name": "Town hall", "color": "#FFC93C", "about": "Health, money and schooling across countries",
      "projects": ["Challenging \"Wealth Equals Health\""]},
     {"id": "yard", "name": "Train yard", "color": "#D9CFC0", "about": "Moving data from place to place, some of it live",
-     "projects": ["Uber Data Engineering Pipeline", "Real Time Big Data Inflow", "Wikipedia Edit Stream", "Order Book Microstructure"]},
+     "projects": ["afterlife", "Uber Data Engineering Pipeline", "Real Time Big Data Inflow", "Wikipedia Edit Stream", "Order Book Microstructure"]},
     {"id": "travel", "name": "Travel agency", "color": "#9FE0D6", "about": "Trip planning",
      "projects": ["Travel Itinerary Management System"]},
     {"id": "school", "name": "University", "color": "#D8E0F2", "about": "Where I studied", "section": "school"},
@@ -27,6 +27,7 @@
     {"id": "post", "name": "Post office", "color": "#FF8C89", "about": "How to reach me", "section": "post"}
   ],
   "short": {
+    "afterlife": "Retraction registry",
     "Space Weather Nowcast": "Space weather",
     "Live Earthquake Statistics": "Earthquakes",
     "Order Book Microstructure": "Order book",
@@ -43,6 +44,7 @@
     "ZTF Transient Pipeline": "ZTF pipeline"
   },
   "plain": {
+    "afterlife": "Four public lists of withdrawn scientific papers, combined into one and checked against each other. They disagree far more than you would expect, retracted papers keep getting cited, and the whole thing runs every night on AWS and Databricks.",
     "Space Weather Nowcast": "Live readings from a spacecraft about 1.5 million km toward the Sun, turned into a countdown for when that solar wind reaches Earth, and a map of the aurora's reach compared with Syracuse.",
     "Live Earthquake Statistics": "Every earthquake the US Geological Survey recorded this week, refreshed every minute. It tests a classic law about how much rarer big quakes are, and logs each time the catalog quietly corrects itself.",
     "Order Book Microstructure": "A live copy of a Bitcoin exchange's order book, rebuilt from more than a hundred updates a second and checked against the exchange's own fingerprint after every single one.",
