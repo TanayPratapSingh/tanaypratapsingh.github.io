@@ -7,7 +7,7 @@
     {"id": "library", "name": "Library", "color": "#C3B8FF", "about": "Search, and answering questions from documents",
      "projects": ["Replicating BEIR", "Groundwork"]},
     {"id": "gym", "name": "Gym", "color": "#FF9A80", "about": "Where models get trained",
-     "projects": ["Replicating Dr. GRPO", "Distributed ViT on CIFAR-10", "Digit Recognition Neural Network from Scratch"]},
+     "projects": ["loophole", "Replicating Dr. GRPO", "Distributed ViT on CIFAR-10", "Digit Recognition Neural Network from Scratch"]},
     {"id": "factory", "name": "Factory", "color": "#FFB199", "about": "Factories, machines, and the people who run them",
      "projects": ["ShopFloor AI", "JMA Wireless"]},
     {"id": "power", "name": "Power station", "color": "#FFD56A", "about": "Energy use in a heat wave",
@@ -27,6 +27,7 @@
     {"id": "post", "name": "Post office", "color": "#FF8C89", "about": "How to reach me", "section": "post"}
   ],
   "short": {
+    "loophole": "Leaky graders",
     "afterlife": "Retraction registry",
     "Space Weather Nowcast": "Space weather",
     "Live Earthquake Statistics": "Earthquakes",
@@ -44,6 +45,7 @@
     "ZTF Transient Pipeline": "ZTF pipeline"
   },
   "plain": {
+    "loophole": "Practice tasks for AI models, each with an honest grader and a sloppy one. Training against the sloppy SQL grader taught the model a query that gets the right answers in the wrong order, in two of three runs. Training against the honest grader never did.",
     "afterlife": "Four public lists of withdrawn scientific papers, combined into one and checked against each other. They disagree far more than you would expect, retracted papers keep getting cited, and the whole thing runs every night on AWS and Databricks.",
     "Space Weather Nowcast": "Live readings from a spacecraft about 1.5 million km toward the Sun, turned into a countdown for when that solar wind reaches Earth, and a map of the aurora's reach compared with Syracuse.",
     "Live Earthquake Statistics": "Every earthquake the US Geological Survey recorded this week, refreshed every minute. It tests a classic law about how much rarer big quakes are, and logs each time the catalog quietly corrects itself.",
