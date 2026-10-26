@@ -11,7 +11,7 @@ function openSheet(i){
     (LIVE[i]?'<a class="sheet__code sheet__code--live" href="'+LIVE[i]+'">Open the live dashboard</a> ':'')+
     (REPOS[i]?'<a class="sheet__code" href="'+REPOS[i]+'" target="_blank" rel="noopener">View code on GitHub</a>':'')+
     (VIDEOS[i]?'<video src="'+VIDEOS[i]+'" poster="'+VIDEOS[i].replace(/\.mp4$/,'.jpg')+'" controls preload="none" playsinline></video>':'')+
-    '<div class="body">'+p.body+'</div>';
+    versionsHtml(p,'body','tech');
   last=document.activeElement;
   ov.classList.add('on'); document.body.classList.add('locked');
   sheet.scrollTop=0; sheet.focus();
