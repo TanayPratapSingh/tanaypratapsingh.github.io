@@ -510,7 +510,12 @@
     'MLOps and deployment': '<path class="ic-line" d="M12 3 20 7.5v9L12 21l-8-4.5v-9ZM12 12l8-4.5M12 12 4 7.5M12 12v9"/>',
     'Deep learning': '<path class="ic-line" d="M12 4 21 9l-9 5-9-5ZM3 14l9 5 9-5"/>',
     'ML and data science libraries': '<path class="ic-line" d="M5 20v-8M10 20V6M15 20v-9M20 20V9"/>',
-    'Databases and data engineering': '<ellipse class="ic-line" cx="12" cy="6" rx="7" ry="3"/><path class="ic-line" d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>'
+    'Databases and data engineering': '<ellipse class="ic-line" cx="12" cy="6" rx="7" ry="3"/><path class="ic-line" d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>',
+    'Reinforcement learning and post training': '<path class="ic-line" d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/>',
+    'Cloud and lakehouse': '<path class="ic-line" d="M7 18h10a4 4 0 0 0 .6-8A6 6 0 0 0 6.2 9 4.5 4.5 0 0 0 7 18Z"/>',
+    'Statistics and classical ML': '<path class="ic-line" d="M3 20h18M4 18c3 0 4-12 8-12s5 12 8 12"/>',
+    'BI and process improvement': '<circle class="ic-line" cx="12" cy="12" r="8"/><path class="ic-line" d="M12 4v8h8"/>',
+    'Testing and tooling': '<rect class="ic-line" x="4" y="4" width="16" height="16" rx="3"/><path class="ic-line" d="m8 12 3 3 5-6"/>'
   };
   const TAG = ['#FF9A80', '#9AA7F5', '#6FD1C2', '#FFD56A', '#FF9EC4', '#C3B8FF'];
   tpl('t-skills').querySelectorAll('.skills > div').forEach((g, n) => {
