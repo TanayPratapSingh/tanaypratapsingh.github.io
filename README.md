@@ -8,7 +8,7 @@ An applied data science portfolio covering projects, experience, skills and educ
 
 | Section | Covers |
 | --- | --- |
-| Projects | Case studies with visuals, including RL environments with leaky graders, a retraction registry deployed on AWS and Databricks, aurora forecasting, energy demand, Formula 1 strategy, travel and wealth analysis |
+| Projects | Case studies with visuals, each readable three ways (technical, simple, and a flowchart), including RL environments with leaky graders, a retraction registry deployed on AWS and Databricks, aurora forecasting, energy demand, Formula 1 strategy, travel and wealth analysis |
 | Live dashboards | Four dashboards on real public data streams (Wikipedia edits, a Bitcoin order book, USGS earthquakes, NOAA space weather), computed in the browser; see [live/](live/) |
 | Experience | Research Assistant on Gravity Spy 2.0, Cybersecurity Teaching Assistant, Data and Product Analyst Intern |
 | Technical Skills | Languages, frameworks and tooling |
