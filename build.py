@@ -56,7 +56,7 @@ def build():
     return len(page)
 
 def check_town(town, projects, experience):
-    """Every project sits in exactly one building and every job has a plain line."""
+    """Every project sits in exactly one building, has all three versions, and every job has a plain line."""
     keys = [pr["title"].split(":")[0].strip() for pr in projects]
     placed = [k for b in town["buildings"] for k in b.get("projects", [])]
     jobs = re.findall(r'<div class="job__t"><h3>(.*?)</h3>', experience)
@@ -66,6 +66,7 @@ def check_town(town, projects, experience):
         "projects in two buildings": sorted({k for k in placed if placed.count(k) > 1}),
         "projects with no plain line": sorted(set(keys) - set(town["plain"])),
         "jobs with no plain line": sorted(set(jobs) - set(town["jobs"])),
+        "projects missing a simple or flowchart version": sorted(k for k, pr in zip(keys, projects) if not pr.get("simple") or not pr.get("flow")),
     }
     problems = {k: v for k, v in problems.items() if v}
     if problems:
