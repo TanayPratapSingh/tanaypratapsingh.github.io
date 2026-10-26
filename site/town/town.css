@@ -195,10 +195,10 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
 @keyframes pop{50%{transform:scale(1.2)}}
 .stop__card{background:var(--paper);border-radius:20px;padding:22px clamp(18px,2.6vw,30px)}
 .stop__when{font-size:14px;color:var(--ink-2);font-weight:600}
-.stop__plain{font-size:clamp(19px,1.9vw,23px);font-weight:600;line-height:1.3;letter-spacing:-0.01em;margin:6px 0 14px;max-width:46ch}
+.stop__plain{font-size:clamp(19px,1.9vw,23px);font-weight:600;line-height:1.3;letter-spacing:-0.01em;margin:6px 0 14px}
 .stop h3{font-size:19px}
 .stop__org{color:var(--ink-2);font-size:15px;margin-top:2px}
-.stop__body p{margin-top:10px;max-width:72ch}
+.stop__body p{margin-top:10px}
 
 .shed{background-color:#D8B88C;background-image:radial-gradient(circle,#9A7550 2.2px,transparent 2.8px);
   background-size:26px 26px;padding:68px 0}
@@ -290,7 +290,7 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
 .ver__p .fc__n--start,.ver__p .fc__n--end{border-radius:22px}
 .ver__p .fc__split{border-radius:14px}
 .ver__p .fc__n--result{background:color-mix(in srgb,var(--c) 18%,#fff)}
-.proj__plain{font-size:clamp(21px,2.3vw,27px);font-weight:600;line-height:1.28;letter-spacing:-0.012em;margin:18px 0 6px;max-width:42ch}
+.proj__plain{font-size:clamp(21px,2.3vw,27px);font-weight:600;line-height:1.28;letter-spacing:-0.012em;margin:18px 0 6px}
 .vid video{display:block;width:100%;border-radius:14px;margin:4px 0 8px;background:var(--ink)}
 .tech{margin-top:28px;padding-top:20px;border-top:3px dashed var(--c)}
 .tech h3{font-size:clamp(20px,2vw,25px);margin-top:6px}
@@ -300,7 +300,6 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
 .wu{margin-top:16px}
 .wu>*+*{margin-top:12px}
 .wu h4{font-size:20px;font-weight:700;margin-top:30px;letter-spacing:-0.01em}
-.wu p,.wu li{max-width:70ch}
 .wu ul,.wu ol{padding-left:22px}
 .wu li+li{margin-top:6px}
 .wu .metric{font-family:var(--mono);font-size:13px;line-height:1.7;background:var(--mist);border-radius:12px;padding:12px 14px}
