@@ -8,11 +8,11 @@
 .ver__t[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--v-box)}
 .ver__p[hidden]{display:none!important}
 /* flowchart: one spine of nodes joined by arrows; a check forks into yes and no, a split runs lanes side by side */
-.ver__p .fc__legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin:0 auto 18px;max-width:700px;
+.ver__p .fc__legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin:0 0 18px;
   font-size:13px;color:var(--v-mute)}
 .ver__p .fc__legend span{display:inline-flex;align-items:center;gap:6px}
 .ver__p .fc__sw{display:inline-block;width:22px;height:13px;border:1.5px solid var(--v-line);background:var(--v-box)}
-.ver__p .fc{list-style:none;margin:0 auto;padding:0;max-width:700px}
+.ver__p .fc{list-style:none;margin:0;padding:0}
 .ver__p .fc li{margin:0;max-width:none}
 .ver__p .fc>li+li{position:relative;padding-top:32px}
 .ver__p .fc>li+li::before{content:"";position:absolute;left:50%;top:4px;height:18px;border-left:2px solid var(--v-line)}
