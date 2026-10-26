@@ -316,8 +316,8 @@
     body.innerHTML =
       '<p class="proj__plain">' + TOWN.plain[k] + '</p>' +
       '<div class="chips">' + chips + '</div>' + acts + '<div class="vid"></div>' +
-      '<section class="tech"><p class="tech__label">The technical version</p><h3>' + p.title + '</h3>' +
-      '<p class="tech__meta">' + p.meta + '</p><div class="wu">' + p.body + '</div>' +
+      '<section class="tech"><h3>' + p.title + '</h3>' +
+      '<p class="tech__meta">' + p.meta + '</p>' + versionsHtml(p, 'wu', 'simple') +
       '<p class="tags">Built with ' + p.tags.join(', ') + '.</p></section>';
     body.querySelectorAll('.wu table').forEach(t => {
       const w = document.createElement('div');

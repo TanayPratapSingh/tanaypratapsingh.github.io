@@ -283,7 +283,6 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
 .proj__plain{font-size:clamp(21px,2.3vw,27px);font-weight:600;line-height:1.28;letter-spacing:-0.012em;margin:18px 0 6px;max-width:42ch}
 .vid video{display:block;width:100%;border-radius:14px;margin:4px 0 8px;background:var(--ink)}
 .tech{margin-top:28px;padding-top:20px;border-top:3px dashed var(--c)}
-.tech__label{font-size:14px;font-weight:700;color:var(--ink-2)}
 .tech h3{font-size:clamp(20px,2vw,25px);margin-top:6px}
 .tech__meta{color:var(--ink-2);font-size:14.5px;margin-top:6px}
 .tags{margin-top:24px;font-size:14px;color:var(--ink-2)}
