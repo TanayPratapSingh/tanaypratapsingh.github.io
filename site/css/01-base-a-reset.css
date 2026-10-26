@@ -1,7 +1,7 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--serif);font-size:16.5px;line-height:1.5;
+  font-family:var(--serif);font-size:16.5px;line-height:1.5;text-align:justify;
   font-size-adjust:0.46; /* Garamond's x-height is 0.40 of its size; this reads like the old faces without retuning every size */
   font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
 body.locked{overflow:hidden}
