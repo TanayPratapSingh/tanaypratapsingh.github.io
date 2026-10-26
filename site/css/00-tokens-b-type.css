@@ -1,1 +1,1 @@
-  --serif:'Newsreader',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --serif:'EB Garamond',Garamond,Georgia,serif; --mono:var(--serif); /* every face on this page is Garamond */
