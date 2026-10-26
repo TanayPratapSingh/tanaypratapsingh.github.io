@@ -51,7 +51,7 @@
     "Live Earthquake Statistics": "Every earthquake the US Geological Survey recorded this week, refreshed every minute. It tests a classic law about how much rarer big quakes are, and logs each time the catalog quietly corrects itself.",
     "Order Book Microstructure": "A live copy of a Bitcoin exchange's order book, rebuilt from more than a hundred updates a second and checked against the exchange's own fingerprint after every single one.",
     "Wikipedia Edit Stream": "Every edit to Wikipedia and its sister sites, live, about 30 a second. The page counts them two ways at once, exactly and with memory saving shortcuts, so you can watch how far off the shortcuts drift.",
-    "Replicating Dr. GRPO": "I re-ran a 2025 paper about training AI models to reason. Its accuracy result held up. Its two claims about answer length came out the other way, in one training run.",
+    "Replicating Dr. GRPO": "I reran a 2025 paper about training AI models to reason. Its accuracy result held up. Its two claims about answer length came out the other way, in one training run.",
     "Tool Dependency Graph": "AI assistants fail when they call tools in the wrong order. I worked out the right order for 1,391 tools using nothing but each tool's written spec.",
     "Distributed ViT on CIFAR-10": "I split one model's training across two GPUs and nearly doubled the speed. Switching to a smaller number format shrank the gain to 1.15x, and I traced the slowdown to the machine's 4 CPUs.",
     "ZTF Transient Pipeline": "A sky survey telescope sends alerts whenever something in the sky changes. I replayed one real night of them, 27,378 alerts, through a pipeline that streams them, scores a 500 alert sample, and stores the results.",
