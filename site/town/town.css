@@ -280,6 +280,16 @@ h1{font-size:clamp(36px,min(3.9vw,6.2vh),60px);font-weight:800;letter-spacing:-0
   border-radius:999px;padding:6px 15px;cursor:pointer}
 .tab:hover{background:var(--mist)}
 .tab[aria-selected="true"]{background:var(--c)}
+/* the three versions of a write up, in the building's colour (structure lives in site/css/06-writeup-d-versions.css) */
+.ver,.ver__p{--v-acc:var(--c);--v-line:#C9D3E6}
+.ver{margin:16px 0 4px}
+.ver__t{font-weight:600;font-size:14.5px;border:2px solid var(--c);border-radius:999px;padding:6px 15px}
+.ver__t:hover{background:var(--mist);border-color:var(--c)}
+.ver__t[aria-selected="true"]{background:var(--c);border-color:var(--c);color:var(--ink)}
+.ver__p .fc__n,.ver__p .fc__yn p{border-radius:12px}
+.ver__p .fc__n--start,.ver__p .fc__n--end{border-radius:22px}
+.ver__p .fc__split{border-radius:14px}
+.ver__p .fc__n--result{background:color-mix(in srgb,var(--c) 18%,#fff)}
 .proj__plain{font-size:clamp(21px,2.3vw,27px);font-weight:600;line-height:1.28;letter-spacing:-0.012em;margin:18px 0 6px;max-width:42ch}
 .vid video{display:block;width:100%;border-radius:14px;margin:4px 0 8px;background:var(--ink)}
 .tech{margin-top:28px;padding-top:20px;border-top:3px dashed var(--c)}
