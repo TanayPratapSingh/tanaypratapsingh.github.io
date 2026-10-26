@@ -8,7 +8,7 @@
   color:var(--ink);font:inherit;font-size:13.5px;padding:5px 12px;cursor:pointer}
 .sheet__x:hover{border-color:var(--met);color:var(--met)}
 .sheet__meta{font-family:var(--mono);font-size:12.2px;color:var(--ink-3)}
-.sheet h3{font-size:clamp(23px,2.7vw,31px);margin:7px 0 12px;max-width:34ch}
+.sheet h3{font-size:clamp(23px,2.7vw,31px);margin:7px 0 12px}
 .sheet__badge{font-family:var(--mono);font-size:13px;background:var(--sunk);
   padding:10px 12px;line-height:1.7;margin-bottom:12px}
 .sheet__tags{font-family:var(--mono);font-size:11.8px;color:var(--ink-3);line-height:1.8;margin-bottom:16px}
