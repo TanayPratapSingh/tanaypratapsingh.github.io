@@ -88,9 +88,10 @@ def build_town():
     templates = "\n".join('<template id="t-%s">\n%s\n</template>' % (name, read(p / f).rstrip())
                           for name, f in [("rail", "rail.html"), ("exp", "experience.html"),
                                           ("skills", "skills.html"), ("edu", "education.html")])
-    scripts = "\n".join([data, "const TOWN=" + json.dumps(town, ensure_ascii=False) + ";", read(t / "town.js").rstrip()])
+    scripts = "\n".join([data, "const TOWN=" + json.dumps(town, ensure_ascii=False) + ";",
+                         read(SITE / "js" / "00-versions.js").rstrip(), read(t / "town.js").rstrip()])
     page = read(t / "shell.html")
-    for slot, value in [("{{CSS}}", read(t / "town.css").rstrip()), ("{{MAP}}", town_map.render(labels)),
+    for slot, value in [("{{CSS}}", read(SITE / "css" / "06-writeup-d-versions.css").rstrip() + "\n" + read(t / "town.css").rstrip()), ("{{MAP}}", town_map.render(labels)),
                         ("{{TEMPLATES}}", templates), ("{{SCRIPTS}}", scripts)]:
         page = page.replace(slot, value)
     io.open(TOWN, "w", encoding="utf-8").write(page)
