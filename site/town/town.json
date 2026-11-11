@@ -5,7 +5,7 @@
     {"id": "tower", "name": "Control tower", "color": "#6FD1C2", "about": "AI agents, and who tells them what to do",
      "projects": ["Tool Dependency Graph", "handoff", "comms-agent"]},
     {"id": "library", "name": "Library", "color": "#C3B8FF", "about": "Search, and answering questions from documents",
-     "projects": ["Replicating BEIR", "Groundwork"]},
+     "projects": ["Citation Auditor", "Replicating BEIR", "Groundwork"]},
     {"id": "gym", "name": "Gym", "color": "#FF9A80", "about": "Where models get trained",
      "projects": ["loophole", "Replicating Dr. GRPO", "Distributed ViT on CIFAR-10", "Digit Recognition Neural Network from Scratch"]},
     {"id": "factory", "name": "Factory", "color": "#FFB199", "about": "Factories, machines, and the people who run them",
@@ -29,6 +29,7 @@
   "short": {
     "loophole": "Leaky graders",
     "afterlife": "Retraction registry",
+    "Citation Auditor": "Reference checker",
     "Space Weather Nowcast": "Space weather",
     "Live Earthquake Statistics": "Earthquakes",
     "Order Book Microstructure": "Order book",
@@ -48,6 +49,7 @@
   "plain": {
     "loophole": "Practice tasks for AI models, each with an honest grader and a sloppy one. Training against the sloppy SQL grader taught the model a query that gets the right answers in the wrong order, in two of three runs. Training against the honest grader never did.",
     "afterlife": "Four public lists of withdrawn scientific papers, combined into one and checked against each other. They disagree far more than you would expect, retracted papers keep getting cited, and the whole thing runs every night on AWS and Databricks.",
+    "Citation Auditor": "A checker for the reference list of a paper: does each cited paper exist, was it retracted, and does it say what it is cited for. On a planted test it caught all 10 invented references and all 15 retracted papers, with no false alarms on 30 clean ones.",
     "Space Weather Nowcast": "Live readings from a spacecraft about 1.5 million km toward the Sun, turned into a countdown for when that solar wind reaches Earth, and a map of the aurora's reach compared with Syracuse.",
     "Live Earthquake Statistics": "Every earthquake the US Geological Survey recorded this week, refreshed every minute. It tests a classic law about how much rarer big quakes are, and logs each time the catalog quietly corrects itself.",
     "Order Book Microstructure": "A live copy of a Bitcoin exchange's order book, rebuilt from more than a hundred updates a second and checked against the exchange's own fingerprint after every single one.",
