@@ -178,8 +178,9 @@ export function mergeCatalog(state, features, opts = {}) {
   if (win.key && isNum(win.end) && isNum(win.span)) {
     const prev = state.prev[win.key];
     // A response no newer than the previous one (a cache serving an older copy)
-    // is never compared: it would lack events added in between.
-    if (!prev || win.end > prev.end) {
+    // is never compared: it would lack events added in between. Nor is an empty
+    // one: all_day is never really empty, so that is a feed glitch, not deletions.
+    if ((!prev || win.end > prev.end) && present.size) {
       if (prev) {
         const edge = win.end - win.span + DELETE_MARGIN;
         for (const [id, t] of prev.ids) {

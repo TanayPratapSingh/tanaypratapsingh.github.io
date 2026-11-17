@@ -241,6 +241,20 @@ test('a response older than the previous one is never compared for deletions', (
   assert.equal(st.prev.day.end, now);
 });
 
+test('an empty newer day response deletes nothing and is not the next reference', () => {
+  const now = Date.UTC(2026, 9, 8, 12);
+  const st = createCatalog();
+  const all = Array.from({ length: 200 }, (_, i) => feat('e' + i, { time: now - HOUR - i * MIN }));
+  mergeCatalog(st, all, { window: { key: 'day', span: DAY, end: now }, initial: true });
+  const r = mergeCatalog(st, [], { window: { key: 'day', span: DAY, end: now + 5 * MIN } });
+  assert.equal(r.deleted.length, 0);
+  assert.equal(st.events.size, 200);
+  assert.equal(st.prev.day.end, now);
+  // the next good response neither restores nor deletes anything
+  const r2 = mergeCatalog(st, all, { window: { key: 'day', span: DAY, end: now + 10 * MIN } });
+  assert.equal(r2.revised.length + r2.deleted.length + r2.added.length, 0);
+});
+
 test('a change of preferred id is a revision, not a deletion plus an addition', () => {
   const now = Date.UTC(2026, 9, 8, 12);
   const st = createCatalog();
