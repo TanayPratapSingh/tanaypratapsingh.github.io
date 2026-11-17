@@ -22,5 +22,4 @@ An applied data science portfolio covering projects, experience, skills and educ
 index.html          The entire site
 live/               Live data dashboards, their tests and run logs
 images/             Project imagery
-Resume *.pdf        Dated resume versions (April, May and July 2026)
 ```
