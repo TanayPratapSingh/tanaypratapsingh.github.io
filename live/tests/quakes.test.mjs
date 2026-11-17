@@ -253,7 +253,7 @@ test('a change of preferred id is a revision, not a deletion plus an addition', 
   assert.equal(st.events.size, 1);
   assert.ok(st.events.has('us9'));
   // the old id arriving again from a stale hour feed is recognised and ignored
-  const r2 = mergeCatalog(st, [feat('ak1', { time: now - HOUR, mag: 3.1 })], {});
+  const r2 = mergeCatalog(st, [feat('ak1', { time: now - HOUR, mag: 3.1 })], { now: now + 6 * MIN });
   assert.equal(r2.added.length, 0);
   assert.equal(st.events.size, 1);
 });
